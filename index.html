@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Panel · Demo</title>
+<style>
+  @font-face {
+    font-family: "System Serif";
+    src: local("Georgia"), local("Iowan Old Style"), local("Times New Roman");
+  }
+
+  :root {
+    --bg: #f7f5f2;
+    --surface: #ffffff;
+    --surface-2: #fbf9f6;
+    --border: #e7e2da;
+    --ink: #241f2e;
+    --ink-muted: #6b6478;
+    --ink-faint: #9a93a6;
+    --accent: #b23a6b;
+    --accent-strong: #96305a;
+    --accent-soft: #f4dce7;
+    --accent-soft-ink: #7a2a4d;
+    --good: #2f9e64;
+    --good-soft: #dcf1e4;
+    --good-ink: #1f7248;
+    --warn: #c98a2c;
+    --warn-soft: #f7ecd4;
+    --warn-ink: #8a5f18;
+    --crit: #c94b4b;
+    --crit-soft: #f8dede;
+    --crit-ink: #93302f;
+    --shadow: 0 1px 2px rgba(36,31,46,0.04), 0 6px 20px -8px rgba(36,31,46,0.12);
+    --radius: 14px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16131c;
+      --surface: #1e1926;
+      --surface-2: #241e2f;
+      --border: #342c40;
+      --ink: #f1edf5;
+      --ink-muted: #b6adc7;
+      --ink-faint: #857c96;
+      --accent: #e08bb2;
+      --accent-strong: #eaa3c3;
+      --accent-soft: rgba(224,139,178,0.16);
+      --accent-soft-ink: #f0b6d1;
+      --good: #4cc389;
+      --good-soft: rgba(76,195,137,0.14);
+      --good-ink: #7fdcac;
+      --warn: #e3b25c;
+      --warn-soft: rgba(227,178,92,0.14);
+      --warn-ink: #f0c885;
+      --crit: #e07a7a;
+      --crit-soft: rgba(224,122,122,0.14);
+      --crit-ink: #f0a3a3;
+      --shadow: 0 1px 2px rgba(0,0,0,0.2), 0 10px 24px -10px rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #16131c; --surface: #1e1926; --surface-2: #241e2f; --border: #342c40;
+    --ink: #f1edf5; --ink-muted: #b6adc7; --ink-faint: #857c96;
+    --accent: #e08bb2; --accent-strong: #eaa3c3; --accent-soft: rgba(224,139,178,0.16); --accent-soft-ink: #f0b6d1;
+    --good: #4cc389; --good-soft: rgba(76,195,137,0.14); --good-ink: #7fdcac;
+    --warn: #e3b25c; --warn-soft: rgba(227,178,92,0.14); --warn-ink: #f0c885;
+    --crit: #e07a7a; --crit-soft: rgba(224,122,122,0.14); --crit-ink: #f0a3a3;
+    --shadow: 0 1px 2px rgba(0,0,0,0.2), 0 10px 24px -10px rgba(0,0,0,0.5);
+  }
+  :root[data-theme="light"] {
+    --bg: #f7f5f2; --surface: #ffffff; --surface-2: #fbf9f6; --border: #e7e2da;
+    --ink: #241f2e; --ink-muted: #6b6478; --ink-faint: #9a93a6;
+    --accent: #b23a6b; --accent-strong: #96305a; --accent-soft: #f4dce7; --accent-soft-ink: #7a2a4d;
+    --good: #2f9e64; --good-soft: #dcf1e4; --good-ink: #1f7248;
+    --warn: #c98a2c; --warn-soft: #f7ecd4; --warn-ink: #8a5f18;
+    --crit: #c94b4b; --crit-soft: #f8dede; --crit-ink: #93302f;
+    --shadow: 0 1px 2px rgba(36,31,46,0.04), 0 6px 20px -8px rgba(36,31,46,0.12);
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-variant-numeric: tabular-nums;
+  }
+  body { display: flex; min-height: 100vh; }
+
+  .banner {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    background: var(--accent); color: #fff;
+    font-size: 12.5px; text-align: center; padding: 6px 12px;
+    letter-spacing: .01em;
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar {
+    width: 236px; flex: 0 0 236px; background: var(--surface-2);
+    border-right: 1px solid var(--border);
+    padding: 40px 16px 16px; display: flex; flex-direction: column;
+    position: sticky; top: 0; height: 100vh; overflow-y: auto;
+  }
+  .profile { text-align: center; padding: 0 8px 16px; }
+  .avatar {
+    width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 10px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 20px; font-weight: 600;
+    box-shadow: var(--shadow);
+  }
+  .profile-name { font-weight: 700; font-size: 15px; }
+  .profile-updated { font-size: 11.5px; color: var(--ink-faint); margin-top: 2px; }
+  .score-pill {
+    margin-top: 10px; display: inline-flex; align-items: center; gap: 5px;
+    background: var(--warn-soft); color: var(--warn-ink);
+    border-radius: 999px; padding: 4px 12px; font-size: 12px; font-weight: 700;
+  }
+  .score-pill svg { width: 12px; height: 12px; }
+
+  nav { margin-top: 18px; display: flex; flex-direction: column; gap: 2px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 12px; border-radius: 10px; cursor: pointer;
+    font-size: 13.5px; color: var(--ink-muted); font-weight: 500;
+    border: none; background: none; text-align: left; width: 100%;
+  }
+  .nav-item svg { width: 17px; height: 17px; flex: 0 0 17px; opacity: .8; }
+  .nav-item:hover { background: var(--surface); color: var(--ink); }
+  .nav-item.active { background: var(--accent-soft); color: var(--accent-soft-ink); font-weight: 700; }
+  .nav-item.active svg { opacity: 1; }
+
+  .sidebar-footer {
+    margin-top: auto; padding-top: 14px; border-top: 1px solid var(--border);
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--ink-faint);
+  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--good); flex: 0 0 6px; }
+
+  /* ---------- Main ---------- */
+  main { flex: 1; padding: 40px 40px 60px; max-width: 980px; }
+  .view { display: none; }
+  .view.active { display: block; }
+
+  h1.greeting { font-size: 26px; margin: 0 0 2px; letter-spacing: -0.01em; }
+  .date-sub { color: var(--ink-muted); font-size: 13.5px; margin-bottom: 20px; }
+
+  .tabs { display: flex; gap: 6px; margin-bottom: 20px; }
+  .tab {
+    padding: 7px 14px; border-radius: 999px; font-size: 13px; font-weight: 600;
+    border: 1px solid var(--border); background: var(--surface); color: var(--ink-muted); cursor: pointer;
+  }
+  .tab.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 18px 20px; margin-bottom: 16px; box-shadow: var(--shadow);
+  }
+  .card h2 {
+    font-size: 12px; text-transform: uppercase; letter-spacing: .06em;
+    color: var(--ink-faint); margin: 0 0 12px; font-weight: 700;
+  }
+  .card h2 .icon { margin-right: 6px; }
+
+  .highlight-card { background: linear-gradient(135deg, var(--accent-soft), var(--surface)); border-color: var(--accent-soft); }
+  .highlight-card .label { font-size: 12.5px; font-weight: 700; color: var(--accent-soft-ink); display:flex; align-items:center; gap:6px; }
+  .highlight-card .stat { font-size: 24px; font-weight: 800; margin: 4px 0 2px; }
+  .highlight-card .sub { font-size: 12.5px; color: var(--ink-muted); }
+
+  .idea-card .quote { font-size: 12.5px; color: var(--ink-faint); font-style: italic; margin-bottom: 6px; }
+  .idea-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .tag {
+    display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .03em;
+    padding: 3px 9px; border-radius: 6px; text-transform: uppercase;
+  }
+  .tag.vlog { background: var(--accent-soft); color: var(--accent-soft-ink); }
+  .tag.story { background: var(--good-soft); color: var(--good-ink); }
+  .tag.reel { background: var(--warn-soft); color: var(--warn-ink); }
+
+  .agenda-item { display: flex; align-items: center; gap: 12px; }
+  .agenda-icon {
+    width: 34px; height: 34px; border-radius: 9px; background: var(--good-soft); color: var(--good-ink);
+    display: flex; align-items: center; justify-content: center; flex: 0 0 34px;
+  }
+  .agenda-title { font-weight: 700; font-size: 13.5px; }
+  .agenda-sub { font-size: 12px; color: var(--ink-muted); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .network-tile { display: flex; align-items: center; gap: 12px; }
+  .net-icon {
+    width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 15px; font-weight: 800; flex: 0 0 38px;
+  }
+  .net-icon.ig { background: linear-gradient(135deg,#e0558a,#b23a6b); }
+  .net-icon.tt { background: linear-gradient(135deg,#241f2e,#4a3f5c); }
+  .net-followers { font-size: 20px; font-weight: 800; }
+  .net-label { font-size: 11.5px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: .04em; }
+  .net-delta { font-size: 11px; font-weight: 700; color: var(--good-ink); background: var(--good-soft); border-radius: 6px; padding: 1px 6px; display: inline-block; margin-top: 3px; }
+  .net-er { font-size: 12px; color: var(--ink-muted); margin-top: 3px; }
+
+  .hero-stat { display: flex; align-items: center; gap: 20px; }
+  .hero-number { font-size: 32px; font-weight: 800; color: var(--accent); }
+  .hero-sub { font-size: 12.5px; color: var(--ink-muted); }
+
+  /* Posts view */
+  .filter-row { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .hashtag-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); }
+  .hashtag-row:last-child { border-bottom: none; }
+  .hashtag-name { width: 190px; font-size: 13px; font-weight: 600; flex: 0 0 190px; }
+  .hashtag-bar-track { flex: 1; height: 7px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+  .hashtag-bar-fill { height: 100%; border-radius: 4px; background: var(--accent); }
+  .hashtag-value { width: 62px; text-align: right; font-size: 12.5px; color: var(--ink-muted); flex: 0 0 62px; }
+
+  .series-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .series-card { border: 1px solid var(--border); border-radius: 12px; padding: 14px; background: var(--surface-2); }
+  .series-tag { font-weight: 700; font-size: 13.5px; }
+  .series-meta { font-size: 12px; color: var(--ink-muted); margin: 4px 0 6px; }
+  .series-mult { font-size: 12px; font-weight: 700; color: var(--warn-ink); background: var(--warn-soft); border-radius: 6px; padding: 2px 7px; display: inline-block; }
+
+  .pattern-row { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 10px; }
+  .pattern-item .k { font-size: 11px; text-transform: uppercase; color: var(--ink-faint); letter-spacing: .05em; }
+  .pattern-item .v { font-size: 13.5px; font-weight: 700; margin-top: 2px; }
+  .theme-tags { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
+  .theme-tag { background: var(--accent-soft); color: var(--accent-soft-ink); font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; }
+  .pattern-text { font-size: 13px; color: var(--ink-muted); line-height: 1.55; margin-top: 6px; }
+
+  /* Audience view */
+  .audience-desc { font-size: 14px; line-height: 1.6; color: var(--ink); margin-bottom: 4px; }
+  .sentiment-bar-track {
+    display: flex; height: 12px; border-radius: 6px; overflow: hidden; margin: 14px 0 8px;
+    border: 1px solid var(--border);
+  }
+  .sentiment-seg.good { background: var(--good); }
+  .sentiment-seg.neutral { background: var(--ink-faint); }
+  .sentiment-seg.crit { background: var(--crit); }
+  .sentiment-legend { display: flex; gap: 16px; font-size: 12px; color: var(--ink-muted); flex-wrap: wrap; }
+  .sentiment-legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+  .content-idea { padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .content-idea:last-child { border-bottom: none; }
+
+  .keyword-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .keyword-tag { background: var(--surface-2); border: 1px solid var(--border); font-size: 12.5px; padding: 4px 10px; border-radius: 999px; color: var(--ink-muted); }
+
+  .action-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+  .btn {
+    font-size: 12.5px; font-weight: 700; padding: 8px 14px; border-radius: 9px; cursor: pointer;
+    border: 1px solid var(--border); background: var(--surface); color: var(--ink); display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .comment-counts { display: flex; gap: 18px; margin-top: 14px; font-size: 12.5px; color: var(--ink-muted); }
+  .comment-counts b { color: var(--ink); }
+  .explore-link { margin-top: 10px; font-size: 12.5px; color: var(--accent); font-weight: 700; cursor: pointer; }
+
+  /* Placeholder view */
+  .placeholder { text-align: center; padding: 60px 20px; }
+  .placeholder .icon-wrap {
+    width: 56px; height: 56px; border-radius: 14px; background: var(--accent-soft); color: var(--accent-soft-ink);
+    display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;
+  }
+  .placeholder h3 { font-size: 17px; margin: 0 0 6px; }
+  .placeholder p { font-size: 13.5px; color: var(--ink-muted); max-width: 380px; margin: 0 auto; line-height: 1.6; }
+
+  @media (max-width: 760px) {
+    body { flex-direction: column; }
+    .sidebar { width: 100%; flex: none; height: auto; position: static; padding: 16px; }
+    nav { flex-direction: row; flex-wrap: wrap; }
+    main { padding: 24px 16px 40px; }
+    .grid-2, .series-grid { grid-template-columns: 1fr; }
+    .hashtag-name { width: 120px; flex-basis: 120px; }
+  }
+</style>
+</head>
+<body>
+<div class="banner">Vista de demostración — datos ficticios, para validar la estructura del panel</div>
+
+<aside class="sidebar" style="margin-top:28px;">
+  <div class="profile">
+    <div class="avatar">S</div>
+    <div class="profile-name">Sofía Lima</div>
+    <div class="profile-updated">Actualizado hace 5 min</div>
+    <div class="score-pill">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.9 6.3 6.9.7-5.2 4.6 1.6 6.8L12 17l-6.2 3.4 1.6-6.8L2.2 9l6.9-.7z"/></svg>
+      Score 72/100
+    </div>
+  </div>
+
+  <nav id="nav">
+    <button class="nav-item active" data-view="inicio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+      Inicio
+    </button>
+    <button class="nav-item" data-view="posts">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="7" height="7"/><rect x="14" y="4" width="7" height="7"/><rect x="3" y="15" width="7" height="5"/><rect x="14" y="13" width="7" height="7"/></svg>
+      Posts
+    </button>
+    <button class="nav-item" data-view="constancia">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V9M12 19V5M20 19v-6"/></svg>
+      Constancia
+    </button>
+    <button class="nav-item" data-view="ideas">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="9" r="6"/><path d="M9 21h6M10 18h4"/></svg>
+      Ideas IA
+    </button>
+    <button class="nav-item" data-view="asistente">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="13" rx="2"/><path d="M8 21h8M9 8h.01M15 8h.01"/></svg>
+      Asistente
+    </button>
+    <button class="nav-item" data-view="audiencia">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Mi audiencia
+    </button>
+    <button class="nav-item" data-view="voz">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3"/></svg>
+      Mi voz
+    </button>
+    <button class="nav-item" data-view="proximos">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5l3 2"/></svg>
+      Próximos
+    </button>
+    <button class="nav-item" data-view="calendario">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+      Calendario
+    </button>
+    <button class="nav-item" data-view="tendencias">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
+      Tendencias
+    </button>
+    <button class="nav-item" data-view="referentes">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20c0-3 2.5-5 6-5s6 2 6 5M14 20c0-2 1.8-3.5 4.5-3.5S23 18 23 20"/></svg>
+      Referentes
+    </button>
+    <button class="nav-item" data-view="campanas">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-7-6 18-3-8-8-3z"/></svg>
+      Campañas
+    </button>
+  </nav>
+
+  <div class="sidebar-footer"><span class="dot"></span> Actualizar datos</div>
+</aside>
+
+<main>
+
+  <!-- INICIO -->
+  <section class="view active" id="view-inicio">
+    <h1 class="greeting">Buenos días, Sofía 👋</h1>
+    <div class="date-sub" id="today-date"></div>
+
+    <div class="tabs">
+      <div class="tab active">Todo</div>
+      <div class="tab">Instagram</div>
+      <div class="tab">TikTok</div>
+    </div>
+
+    <div class="card highlight-card">
+      <div class="label">🔥 Tu último post está rompiendo</div>
+      <div class="stat">812K vistas</div>
+      <div class="sub">+142% sobre tu promedio en Instagram</div>
+    </div>
+
+    <div class="card idea-card">
+      <h2>⚡ Esto te toca hoy</h2>
+      <div class="quote">"¿Cómo logras que tus hijos coman verduras sin pelea? Cuéntame tu truco"</div>
+      <div class="idea-title">3 trucos que uso para que mis hijos coman verduras sin drama</div>
+      <span class="tag vlog">Vlog</span>
+    </div>
+
+    <div class="card">
+      <h2>📅 En tu agenda</h2>
+      <div class="agenda-item">
+        <div class="agenda-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12l3 3 5-6"/></svg>
+        </div>
+        <div>
+          <div class="agenda-title">Rutina de mañana con los niños</div>
+          <div class="agenda-sub">Carrusel · borrador guardado</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h2>📊 Mis redes</h2>
+        <div class="network-tile">
+          <div class="net-icon ig">IG</div>
+          <div>
+            <div class="net-followers">640K</div>
+            <div class="net-label">Seguidores</div>
+            <span class="net-delta">+1.240 esta semana</span>
+            <div class="net-er">ER: 8,4%</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>&nbsp;</h2>
+        <div class="network-tile">
+          <div class="net-icon tt">TT</div>
+          <div>
+            <div class="net-followers">410K</div>
+            <div class="net-label">Seguidores</div>
+            <span class="net-delta">+860 esta semana</span>
+            <div class="net-er">ER: 11,2%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>⏰ Mejor hora para publicar</h2>
+      <div class="hero-stat">
+        <div class="hero-number">19:00–21:00</div>
+        <div class="hero-sub">Tu franja horaria con más alcance,<br>basado en 64 posts analizados</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POSTS -->
+  <section class="view" id="view-posts">
+    <h1 class="greeting">Mis posts</h1>
+    <div class="date-sub">Análisis de todo tu contenido publicado</div>
+
+    <div class="filter-row">
+      <div class="tab active">Todos los tipos</div>
+      <div class="tab">Reels</div>
+      <div class="tab">Carruseles</div>
+      <div class="tab">Fotos</div>
+    </div>
+
+    <div class="card">
+      <h2>🏷️ Hashtags que más engagement te traen</h2>
+      <div class="hashtag-row"><div class="hashtag-name">#rutinamañanera</div><div class="hashtag-bar-track"><div class="hashtag-bar-fill" style="width:92%"></div></div><div class="hashtag-value">318K</div></div>
+      <div class="hashtag-row"><div class="hashtag-name">#mamáprimeriza</div><div class="hashtag-bar-track"><div class="hashtag-bar-fill" style="width:71%"></div></div><div class="hashtag-value">246K</div></div>
+      <div class="hashtag-row"><div class="hashtag-name">#recetasfaciles</div><div class="hashtag-bar-track"><div class="hashtag-bar-fill" style="width:52%"></div></div><div class="hashtag-value">178K</div></div>
+      <div class="hashtag-row"><div class="hashtag-name">#hogar</div><div class="hashtag-bar-track"><div class="hashtag-bar-fill" style="width:34%"></div></div><div class="hashtag-value">116K</div></div>
+      <div class="hashtag-row"><div class="hashtag-name">#familianumerosa</div><div class="hashtag-bar-track"><div class="hashtag-bar-fill" style="width:22%"></div></div><div class="hashtag-value">74K</div></div>
+    </div>
+
+    <div class="card">
+      <h2>📺 Tus series detectadas <span style="text-transform:none;font-weight:400;color:var(--ink-faint)">— por hashtags repetidos, rankeadas por performance</span></h2>
+      <div class="series-grid">
+        <div class="series-card">
+          <div class="series-tag">#rutinamañanera</div>
+          <div class="series-meta">6 posts · 318K eng. prom.</div>
+          <span class="series-mult">🔥 3.1x tu mediana</span>
+        </div>
+        <div class="series-card">
+          <div class="series-tag">#recetasfaciles</div>
+          <div class="series-meta">9 posts · 178K eng. prom.</div>
+          <span class="series-mult">🔥 1.8x tu mediana</span>
+        </div>
+        <div class="series-card">
+          <div class="series-tag">#mamáprimeriza</div>
+          <div class="series-meta">4 posts · 246K eng. prom.</div>
+          <span class="series-mult">🔥 2.4x tu mediana</span>
+        </div>
+        <div class="series-card">
+          <div class="series-tag">#hogar</div>
+          <div class="series-meta">5 posts · 116K eng. prom.</div>
+          <span class="series-mult">🔥 1.1x tu mediana</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🎬 Patrón de tus Reels <span style="text-transform:none;font-weight:400;color:var(--ink-faint)">— análisis automático de los 18 Reels más vistos</span></h2>
+      <div class="pattern-row">
+        <div class="pattern-item"><div class="k">Mejor audio</div><div class="v">Mix pop suave · tendencia actual</div></div>
+        <div class="pattern-item"><div class="k">Duración</div><div class="v">12 a 40 seg</div></div>
+      </div>
+      <div class="pattern-item"><div class="k">Temas que funcionan</div></div>
+      <div class="theme-tags">
+        <span class="theme-tag">Rutina familiar</span>
+        <span class="theme-tag">Trucos de cocina</span>
+        <span class="theme-tag">Momentos con los niños</span>
+      </div>
+      <div class="pattern-text">Los reels con más vistas combinan: rutina cotidiana relatable, ritmo corto-medio (bajo 40s), y un gancho de pregunta en los primeros 2 segundos.</div>
+    </div>
+  </section>
+
+  <!-- MI AUDIENCIA -->
+  <section class="view" id="view-audiencia">
+    <h1 class="greeting">Mi audiencia</h1>
+    <div class="date-sub">Qué siente y qué pide la gente que te sigue</div>
+
+    <div class="card">
+      <p class="audience-desc">Tu audiencia te ve como una mamá cercana y organizada, y valora especialmente los contenidos de rutina familiar y recetas rápidas. Buscan tips prácticos que puedan aplicar el mismo día.</p>
+      <div class="sentiment-bar-track">
+        <div class="sentiment-seg good" style="width:84%"></div>
+        <div class="sentiment-seg neutral" style="width:13%"></div>
+        <div class="sentiment-seg crit" style="width:3%"></div>
+      </div>
+      <div class="sentiment-legend">
+        <span><i class="legend-dot" style="background:var(--good)"></i>84% positivo</span>
+        <span><i class="legend-dot" style="background:var(--ink-faint)"></i>13% neutro</span>
+        <span><i class="legend-dot" style="background:var(--crit)"></i>3% negativo</span>
+        <span style="margin-left:auto">203 comentarios · guardado hoy</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>💡 Ideas de contenido</h2>
+      <div class="content-idea">
+        <div class="quote">"¿Cómo organizas las loncheras sin gastar tanto tiempo cada mañana?"</div>
+        <div class="idea-title">Así preparo 5 loncheras en 15 minutos los domingos</div>
+        <span class="tag reel">Reel</span>
+      </div>
+      <div class="content-idea">
+        <div class="quote">"Se nota que disfrutas mucho a tus hijos, ¿siempre fue así o costó?"</div>
+        <div class="idea-title">Lo que nadie me dijo del primer año de mamá</div>
+        <span class="tag story">Story</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Temas que dominan</h2>
+      <div class="keyword-tags">
+        <span class="keyword-tag">Rutina familiar</span>
+        <span class="keyword-tag">Recetas rápidas</span>
+        <span class="keyword-tag">Maternidad</span>
+        <span class="keyword-tag">Organización del hogar</span>
+        <span class="keyword-tag">Vida en pareja</span>
+      </div>
+      <h2 style="margin-top:16px">Palabras que repiten</h2>
+      <div class="keyword-tags">
+        <span class="keyword-tag">hermosa</span>
+        <span class="keyword-tag">practico</span>
+        <span class="keyword-tag">consejo</span>
+        <span class="keyword-tag">se nota el amor</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="action-row">
+        <button class="btn primary">↻ Regenerar análisis IA</button>
+        <button class="btn">⬇ Descargar comentarios nuevos</button>
+      </div>
+      <div class="comment-counts">
+        <span>Instagram: <b>203 comentarios</b></span>
+        <span>TikTok: <b>87 comentarios</b></span>
+      </div>
+      <div class="explore-link">🔍 Explorar comentarios uno por uno</div>
+    </div>
+  </section>
+
+  <!-- PLACEHOLDER VIEWS -->
+  <section class="view" id="view-constancia">
+    <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V9M12 19V5M20 19v-6"/></svg></div><h3>Constancia</h3><p>Aquí verías tu racha de publicaciones, huecos en el calendario y comparación semana a semana. Se arma cuando confirmemos qué métricas quieres seguir.</p></div>
+  </section>
+  <section class="view" id="view-ideas">
+    <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="9" r="6"/><path d="M9 21h6M10 18h4"/></svg></div><h3>Ideas IA</h3><p>Un banco de ideas de contenido generadas a partir de tus comentarios, tendencias y lo que mejor te funciona.</p></div>
+  </section>
+  <section class="view" id="view-asistente">
+    <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="13" rx="2"/><path d="M8 21h8M9 8h.01M15 8h.01"/></svg></div><h3>Asistente</h3><p>Un chat para pedir guiones, respuestas a comentarios o ajustes de estrategia, con el contexto de tu cuenta ya cargado.</p></div>
+  </section>
+  <section class="view" id="view-voz">
+    <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3"/></svg></div><h3>Mi voz</h3><p>Un perfil de tu tono habitual (cercano, directo, con humor, etc.) para que las ideas y guiones generados suenen como tú.</p></div>
+  </section>
+  <section class="view" id="view-proximos">
+    <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5l3 2"/></svg></div><h3>Próximos</h3><p>Los posts que tienes en borrador o agendados, con su fecha propuesta.</p></div>
+  </section>
+  <section class="view" id="view-calendario">
+    <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><h3>Calendario</h3><p>Vista mensual de todo lo publicado y lo planificado, cruzado con tu mejor horario para publicar.</p></div>
+  </section>
+  <section class="view" id="view-tendencias">
+    <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div><h3>Tendencias</h3><p>Audios, formatos y temas que están creciendo ahora mismo en tu nicho.</p></div>
+  </section>
+  <section class="view" id="view-referentes">
+    <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20c0-3 2.5-5 6-5s6 2 6 5M14 20c0-2 1.8-3.5 4.5-3.5S23 18 23 20"/></svg></div><h3>Referentes</h3><p>Cuentas parecidas a la tuya que te sirven de inspiración, con lo que les está funcionando.</p></div>
+  </section>
+  <section class="view" id="view-campanas">
+    <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-7-6 18-3-8-8-3z"/></svg></div><h3>Campañas</h3><p>Seguimiento de tus colaboraciones y campañas pagadas: qué posts, con quién y cómo rindieron.</p></div>
+  </section>
+
+</main>
+
+<script>
+  document.getElementById('today-date').textContent = new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+
+  document.querySelectorAll('.nav-item').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.nav-item').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.view').forEach(function (v) { v.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('view-' + btn.dataset.view).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
