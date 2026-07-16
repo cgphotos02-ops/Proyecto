@@ -31,6 +31,15 @@
     --crit: #c94b4b;
     --crit-soft: #f8dede;
     --crit-ink: #93302f;
+    --vc-ambiente: #d97a3f;
+    --vc-ambiente-soft: #f6e2d0;
+    --vc-ambiente-ink: #8a4a1f;
+    --vc-proyeccion: #3d6d9e;
+    --vc-proyeccion-soft: #dbe7f0;
+    --vc-proyeccion-ink: #234a6e;
+    --vc-infra: #6b7280;
+    --vc-infra-soft: #e4e5e8;
+    --vc-infra-ink: #43474f;
     --shadow: 0 1px 2px rgba(36,31,46,0.04), 0 6px 20px -8px rgba(36,31,46,0.12);
     --radius: 14px;
   }
@@ -57,6 +66,9 @@
       --crit: #e07a7a;
       --crit-soft: rgba(224,122,122,0.14);
       --crit-ink: #f0a3a3;
+      --vc-ambiente: #e5975c; --vc-ambiente-soft: rgba(229,151,92,0.16); --vc-ambiente-ink: #f0b483;
+      --vc-proyeccion: #6ea3d0; --vc-proyeccion-soft: rgba(110,163,208,0.16); --vc-proyeccion-ink: #9cc4e6;
+      --vc-infra: #9aa1ac; --vc-infra-soft: rgba(154,161,172,0.16); --vc-infra-ink: #c2c7cf;
       --shadow: 0 1px 2px rgba(0,0,0,0.2), 0 10px 24px -10px rgba(0,0,0,0.5);
     }
   }
@@ -67,6 +79,9 @@
     --good: #4cc389; --good-soft: rgba(76,195,137,0.14); --good-ink: #7fdcac;
     --warn: #e3b25c; --warn-soft: rgba(227,178,92,0.14); --warn-ink: #f0c885;
     --crit: #e07a7a; --crit-soft: rgba(224,122,122,0.14); --crit-ink: #f0a3a3;
+    --vc-ambiente: #e5975c; --vc-ambiente-soft: rgba(229,151,92,0.16); --vc-ambiente-ink: #f0b483;
+    --vc-proyeccion: #6ea3d0; --vc-proyeccion-soft: rgba(110,163,208,0.16); --vc-proyeccion-ink: #9cc4e6;
+    --vc-infra: #9aa1ac; --vc-infra-soft: rgba(154,161,172,0.16); --vc-infra-ink: #c2c7cf;
     --shadow: 0 1px 2px rgba(0,0,0,0.2), 0 10px 24px -10px rgba(0,0,0,0.5);
   }
   :root[data-theme="light"] {
@@ -76,6 +91,9 @@
     --good: #2f9e64; --good-soft: #dcf1e4; --good-ink: #1f7248;
     --warn: #c98a2c; --warn-soft: #f7ecd4; --warn-ink: #8a5f18;
     --crit: #c94b4b; --crit-soft: #f8dede; --crit-ink: #93302f;
+    --vc-ambiente: #d97a3f; --vc-ambiente-soft: #f6e2d0; --vc-ambiente-ink: #8a4a1f;
+    --vc-proyeccion: #3d6d9e; --vc-proyeccion-soft: #dbe7f0; --vc-proyeccion-ink: #234a6e;
+    --vc-infra: #6b7280; --vc-infra-soft: #e4e5e8; --vc-infra-ink: #43474f;
     --shadow: 0 1px 2px rgba(36,31,46,0.04), 0 6px 20px -8px rgba(36,31,46,0.12);
   }
 
@@ -415,6 +433,47 @@
     .do-dont-grid { grid-template-columns: 1fr; }
   }
 
+  /* Global account bar */
+  .account-bar {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 22px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 10px 14px; box-shadow: var(--shadow);
+  }
+  .account-bar label { font-size: 12px; font-weight: 700; color: var(--ink-muted); white-space: nowrap; }
+  .account-bar select {
+    flex: 1; max-width: 320px; font: inherit; font-size: 13.5px; padding: 7px 10px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--surface-2); color: var(--ink); font-weight: 700;
+  }
+
+  /* Variable Crítica chip */
+  .vc-chip { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-right: 6px; }
+  .vc-chip.ambiente { background: var(--vc-ambiente-soft); color: var(--vc-ambiente-ink); }
+  .vc-chip.proyeccion { background: var(--vc-proyeccion-soft); color: var(--vc-proyeccion-ink); }
+  .vc-chip.infraestructura { background: var(--vc-infra-soft); color: var(--vc-infra-ink); }
+  .vc-chip.ninguna { background: var(--surface-2); color: var(--ink-faint); border: 1px solid var(--border); }
+  .vc-note { font-size: 12px; color: var(--ink-muted); margin: 4px 0 10px; line-height: 1.5; }
+
+  /* Visual mockups (storyboard-style previews) */
+  .mock-strip { display: flex; gap: 12px; overflow-x: auto; padding: 4px 2px 12px; margin-bottom: 4px; }
+  .mock-slide-wrap { display: flex; flex-direction: column; align-items: center; gap: 5px; flex: 0 0 auto; }
+  .mock-slide-num { font-size: 10px; font-weight: 800; color: var(--ink-faint); }
+  .mock-time { font-size: 10px; font-weight: 700; color: var(--accent); }
+  .mock-arrow { align-self: center; color: var(--ink-faint); font-size: 16px; margin-top: -20px; }
+  .ig-mock {
+    position: relative; border-radius: 12px; overflow: hidden; color: #fff;
+    display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow);
+  }
+  .ig-mock.sq { width: 96px; height: 96px; }
+  .ig-mock.tall { width: 84px; height: 132px; }
+  .ig-mock.big { width: min(220px, 100%); height: 220px; margin-bottom: 10px; }
+  .ig-mock-icon { font-size: 30px; opacity: .92; filter: drop-shadow(0 1px 2px rgba(0,0,0,.25)); }
+  .ig-mock.big .ig-mock-icon { font-size: 52px; }
+  .ig-mock-caption {
+    position: absolute; left: 0; right: 0; bottom: 0; background: linear-gradient(transparent, rgba(0,0,0,.68));
+    font-size: 9px; line-height: 1.25; padding: 14px 6px 6px; text-align: center; font-weight: 700;
+  }
+  .ig-mock.big .ig-mock-caption { font-size: 12px; padding: 20px 12px 10px; }
+
   /* Placeholder view */
   .placeholder { text-align: center; padding: 60px 20px; }
   .placeholder .icon-wrap {
@@ -504,28 +563,38 @@
 
 <main>
 
+  <div class="account-bar">
+    <label for="global-cuenta">📍 Cuenta</label>
+    <select id="global-cuenta">
+      <option value="colegio-sanrafael">Colegio San Rafael</option>
+      <option value="colegio-losandes">Colegio Los Andes</option>
+      <option value="preescolar-genios">Preescolar Pequeños Genios</option>
+      <option value="preescolar-arcoiris">Preescolar Arcoíris</option>
+    </select>
+  </div>
+
   <!-- INICIO -->
   <section class="view active" id="view-inicio">
-    <h1 class="greeting">Buenos días, Sofía 👋</h1>
+    <h1 class="greeting" id="home-greeting">Buenos días 👋</h1>
     <div class="date-sub" id="today-date"></div>
 
     <div class="tabs">
       <div class="tab active">Todo</div>
       <div class="tab">Instagram</div>
-      <div class="tab">TikTok</div>
+      <div class="tab">Facebook</div>
     </div>
 
     <div class="card highlight-card">
       <div class="label">🔥 Tu último post está rompiendo</div>
-      <div class="stat">812K vistas</div>
-      <div class="sub">+142% sobre tu promedio en Instagram</div>
+      <div class="stat" id="home-lastpost-stat"></div>
+      <div class="sub" id="home-lastpost-sub"></div>
     </div>
 
     <div class="card idea-card">
-      <h2>⚡ Esto te toca hoy</h2>
-      <div class="quote">"¿Cómo logras que tus hijos coman verduras sin pelea? Cuéntame tu truco"</div>
-      <div class="idea-title">3 trucos que uso para que mis hijos coman verduras sin drama</div>
-      <span class="tag vlog">Vlog</span>
+      <h2>⚡ Esto te toca hoy <span id="home-idea-vc"></span></h2>
+      <div class="quote" id="home-idea-quote"></div>
+      <div class="idea-title" id="home-idea-title"></div>
+      <span class="tag vlog" id="home-idea-tag"></span>
     </div>
 
     <div class="card">
@@ -535,8 +604,8 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12l3 3 5-6"/></svg>
         </div>
         <div>
-          <div class="agenda-title">Rutina de mañana con los niños</div>
-          <div class="agenda-sub">Carrusel · borrador guardado</div>
+          <div class="agenda-title" id="home-agenda-title"></div>
+          <div class="agenda-sub" id="home-agenda-sub"></div>
         </div>
       </div>
     </div>
@@ -546,24 +615,14 @@
         <h2>📊 Mis redes</h2>
         <div class="network-tile">
           <div class="net-icon ig">IG</div>
-          <div>
-            <div class="net-followers">640K</div>
-            <div class="net-label">Seguidores</div>
-            <span class="net-delta">+1.240 esta semana</span>
-            <div class="net-er">ER: 8,4%</div>
-          </div>
+          <div id="home-ig-stats"></div>
         </div>
       </div>
       <div class="card">
         <h2>&nbsp;</h2>
         <div class="network-tile">
-          <div class="net-icon tt">TT</div>
-          <div>
-            <div class="net-followers">410K</div>
-            <div class="net-label">Seguidores</div>
-            <span class="net-delta">+860 esta semana</span>
-            <div class="net-er">ER: 11,2%</div>
-          </div>
+          <div class="net-icon tt">FB</div>
+          <div id="home-fb-stats"></div>
         </div>
       </div>
     </div>
@@ -571,8 +630,8 @@
     <div class="card">
       <h2>⏰ Mejor hora para publicar</h2>
       <div class="hero-stat">
-        <div class="hero-number">19:00–21:00</div>
-        <div class="hero-sub">Tu franja horaria con más alcance,<br>basado en 64 posts analizados</div>
+        <div class="hero-number" id="home-besttime"></div>
+        <div class="hero-sub" id="home-besttime-sub"></div>
       </div>
     </div>
   </section>
@@ -591,52 +650,26 @@
 
     <div class="card">
       <h2>🏷️ Hashtags que más engagement te traen</h2>
-      <div class="hashtag-row"><div class="hashtag-name">#rutinamañanera</div><div class="hashtag-bar-track"><div class="hashtag-bar-fill" style="width:92%"></div></div><div class="hashtag-value">318K</div></div>
-      <div class="hashtag-row"><div class="hashtag-name">#mamáprimeriza</div><div class="hashtag-bar-track"><div class="hashtag-bar-fill" style="width:71%"></div></div><div class="hashtag-value">246K</div></div>
-      <div class="hashtag-row"><div class="hashtag-name">#recetasfaciles</div><div class="hashtag-bar-track"><div class="hashtag-bar-fill" style="width:52%"></div></div><div class="hashtag-value">178K</div></div>
-      <div class="hashtag-row"><div class="hashtag-name">#hogar</div><div class="hashtag-bar-track"><div class="hashtag-bar-fill" style="width:34%"></div></div><div class="hashtag-value">116K</div></div>
-      <div class="hashtag-row"><div class="hashtag-name">#familianumerosa</div><div class="hashtag-bar-track"><div class="hashtag-bar-fill" style="width:22%"></div></div><div class="hashtag-value">74K</div></div>
+      <div id="posts-hashtags"></div>
     </div>
 
     <div class="card">
-      <h2>📺 Tus series detectadas <span style="text-transform:none;font-weight:400;color:var(--ink-faint)">— por hashtags repetidos, rankeadas por performance</span></h2>
-      <div class="series-grid">
-        <div class="series-card">
-          <div class="series-tag">#rutinamañanera</div>
-          <div class="series-meta">6 posts · 318K eng. prom.</div>
-          <span class="series-mult">🔥 3.1x tu mediana</span>
-        </div>
-        <div class="series-card">
-          <div class="series-tag">#recetasfaciles</div>
-          <div class="series-meta">9 posts · 178K eng. prom.</div>
-          <span class="series-mult">🔥 1.8x tu mediana</span>
-        </div>
-        <div class="series-card">
-          <div class="series-tag">#mamáprimeriza</div>
-          <div class="series-meta">4 posts · 246K eng. prom.</div>
-          <span class="series-mult">🔥 2.4x tu mediana</span>
-        </div>
-        <div class="series-card">
-          <div class="series-tag">#hogar</div>
-          <div class="series-meta">5 posts · 116K eng. prom.</div>
-          <span class="series-mult">🔥 1.1x tu mediana</span>
-        </div>
-      </div>
+      <h2>📺 Series detectadas <span style="text-transform:none;font-weight:400;color:var(--ink-faint)">— por hashtags repetidos, rankeadas por performance</span></h2>
+      <div class="series-grid" id="posts-series"></div>
     </div>
 
     <div class="card">
-      <h2>🎬 Patrón de tus Reels <span style="text-transform:none;font-weight:400;color:var(--ink-faint)">— análisis automático de los 18 Reels más vistos</span></h2>
-      <div class="pattern-row">
-        <div class="pattern-item"><div class="k">Mejor audio</div><div class="v">Mix pop suave · tendencia actual</div></div>
-        <div class="pattern-item"><div class="k">Duración</div><div class="v">12 a 40 seg</div></div>
-      </div>
+      <h2>🎬 Patrón de tus Reels/Carruseles</h2>
+      <div class="pattern-row" id="posts-pattern-row"></div>
       <div class="pattern-item"><div class="k">Temas que funcionan</div></div>
-      <div class="theme-tags">
-        <span class="theme-tag">Rutina familiar</span>
-        <span class="theme-tag">Trucos de cocina</span>
-        <span class="theme-tag">Momentos con los niños</span>
-      </div>
-      <div class="pattern-text">Los reels con más vistas combinan: rutina cotidiana relatable, ritmo corto-medio (bajo 40s), y un gancho de pregunta en los primeros 2 segundos.</div>
+      <div class="theme-tags" id="posts-theme-tags"></div>
+      <div class="pattern-text" id="posts-pattern-text"></div>
+    </div>
+
+    <div class="card">
+      <h2>💡 Ideas de contenido orgánico por variable crítica</h2>
+      <p class="vc-note" style="margin-top:-4px">Aspaen mide tres variables críticas de deseo: <span class="vc-chip ambiente">😊 Ambiente educativo</span><span class="vc-chip proyeccion">🌐 Proyección Internacional</span><span class="vc-chip infraestructura">🏛️ Infraestructura</span> — cada idea de abajo refuerza una de ellas.</p>
+      <div id="posts-organic-ideas"></div>
     </div>
   </section>
 
@@ -746,17 +779,7 @@
 
     <!-- ANÁLISIS -->
     <div class="camp-panel active" id="camp-analisis">
-      <div class="account-filter">
-        <div class="form-group">
-          <label for="a-cuenta">Cuenta</label>
-          <select id="a-cuenta">
-            <option value="colegio-sanrafael">Colegio San Rafael</option>
-            <option value="colegio-losandes">Colegio Los Andes</option>
-            <option value="preescolar-genios">Preescolar Pequeños Genios</option>
-            <option value="preescolar-arcoiris">Preescolar Arcoíris</option>
-          </select>
-        </div>
-      </div>
+      <p class="date-sub" style="margin-top:-8px">Mostrando datos de la cuenta seleccionada arriba ⤴</p>
 
       <div id="analysis-kpis" class="kpi-row"></div>
 
@@ -935,27 +958,177 @@
   var tipoLabels = { tactica: 'Comunicación Táctica', estrategica: 'Comunicación Estratégica' };
   var tipoObjective = { tactica: 'Clientes potenciales / Conversiones (leads)', estrategica: 'Reconocimiento de marca / Interacción' };
 
+  // ---- Variables Críticas de Aspaen: taxonomía usada para etiquetar cada idea/creatividad ----
+  var vcMeta = {
+    ambiente: { label: 'Ambiente educativo', icon: '😊', gradient: 'linear-gradient(135deg, #e5975c, #b9622f)' },
+    proyeccion: { label: 'Proyección Internacional', icon: '🌐', gradient: 'linear-gradient(135deg, #6ea3d0, #2f5980)' },
+    infraestructura: { label: 'Infraestructura', icon: '🏛️', gradient: 'linear-gradient(135deg, #9aa1ac, #5b616b)' }
+  };
+
+  function vcChip(vc) {
+    if (!vc || !vcMeta[vc]) return '<span class="vc-chip ninguna">Sin variable crítica — enfoque en conversión</span>';
+    return '<span class="vc-chip ' + vc + '">' + vcMeta[vc].icon + ' ' + vcMeta[vc].label + '</span>';
+  }
+
+  function pickIcon(text) {
+    text = (text || '').toLowerCase();
+    var map = [
+      [/comedor|almuerzo|alimenta/, '🍽️'],
+      [/cancha|deport|recreo|patio|juego libre/, '⚽'],
+      [/bibliotec/, '📚'],
+      [/laborator/, '🔬'],
+      [/huerta|jard[ií]n|natural|planta/, '🌱'],
+      [/segur|recepci[oó]n/, '🛡️'],
+      [/fachada|entrada|exterior/, '🏫'],
+      [/testimoni|mam[aá]|pap[aá]|familia/, '👨‍👩‍👧'],
+      [/clase|sal[oó]n|profesor|ni[ñn]|estudiant/, '🧒'],
+      [/logo/, '🏷️'],
+      [/biling[uü]|ingl[eé]s|nativ|inmersi[oó]n/, '🌐'],
+      [/egresad/, '🎓']
+    ];
+    for (var i = 0; i < map.length; i++) if (map[i][0].test(text)) return map[i][1];
+    return null;
+  }
+
+  function mockCard(subjectText, caption, sizeClass, vc) {
+    var meta = vcMeta[vc] || vcMeta.ambiente;
+    var icon = pickIcon(subjectText) || meta.icon;
+    return '<div class="ig-mock ' + sizeClass + '" style="background:' + meta.gradient + '">' +
+      '<div class="ig-mock-icon">' + icon + '</div>' +
+      '<div class="ig-mock-caption">' + caption + '</div></div>';
+  }
+
+  function renderCarruselMock(slides, vc) {
+    return '<div class="mock-strip">' + slides.map(function (s, i) {
+      return '<div class="mock-slide-wrap"><div class="mock-slide-num">Slide ' + (i + 1) + '</div>' + mockCard(s.visual, s.texto, 'sq', vc) + '</div>';
+    }).join('') + '</div>';
+  }
+
+  function renderGuionMock(guion, vc) {
+    var parts = guion.map(function (g, i) {
+      var card = '<div class="mock-slide-wrap">' + mockCard(g.escena, g.texto, 'tall', vc) + '<div class="mock-time">' + g.t + '</div></div>';
+      return i < guion.length - 1 ? card + '<div class="mock-arrow">→</div>' : card;
+    });
+    return '<div class="mock-strip">' + parts.join('') + '</div>';
+  }
+
+  function renderImagenMock(p, vc) {
+    return mockCard(p.visual, p.textoPrincipal, 'big', vc);
+  }
+
+  // ---- Datos de Inicio y Posts (contenido orgánico) por cuenta ----
+  var homeData = {
+    'colegio-sanrafael': {
+      lastPost: { stat: '812K vistas', sub: '+142% sobre tu promedio en Instagram' },
+      idea: { vc: 'ambiente', quote: '"¿Cómo es un día normal de clases en San Rafael?"', title: 'Un día en la vida de un estudiante de San Rafael', tag: 'Vlog', tagClass: 'vlog' },
+      agenda: { title: 'Rutina de la mañana en el colegio', sub: 'Carrusel · borrador guardado' },
+      ig: { followers: '18.4K', delta: '+64 esta semana', er: '6,2%' },
+      fb: { followers: '9.1K', delta: '+12 esta semana', er: '3,8%' },
+      bestTime: '06:00–09:00',
+      bestTimeSub: 'Franja de más alcance con papás,<br>basado en 54 posts analizados'
+    },
+    'colegio-losandes': {
+      lastPost: { stat: '340K vistas', sub: '+88% sobre tu promedio en Instagram' },
+      idea: { vc: 'proyeccion', quote: '"¿Los Andes tiene intercambios o solo clases de inglés?"', title: 'Así vive un estudiante de Los Andes su inmersión internacional', tag: 'Reel', tagClass: 'reel' },
+      agenda: { title: 'Testimonio de un exalumno becado', sub: 'Reel · en edición' },
+      ig: { followers: '11.2K', delta: '+31 esta semana', er: '5,4%' },
+      fb: { followers: '7.6K', delta: '+9 esta semana', er: '3,1%' },
+      bestTime: '18:00–20:00',
+      bestTimeSub: 'Franja de más alcance con papás,<br>basado en 40 posts analizados'
+    },
+    'preescolar-genios': {
+      lastPost: { stat: '96K vistas', sub: '+205% sobre tu promedio en Instagram' },
+      idea: { vc: 'ambiente', quote: '"¿Cómo logran que los niños no lloren el primer día?"', title: 'Así vivimos la adaptación en Pequeños Genios', tag: 'Story', tagClass: 'story' },
+      agenda: { title: 'Actividad Montessori de la semana', sub: 'Reel · agendado' },
+      ig: { followers: '7.8K', delta: '+22 esta semana', er: '9,1%' },
+      fb: { followers: '4.3K', delta: '+6 esta semana', er: '4,4%' },
+      bestTime: '07:00–09:00',
+      bestTimeSub: 'Franja de más alcance con mamás,<br>basado en 36 posts analizados'
+    },
+    'preescolar-arcoiris': {
+      lastPost: { stat: '54K vistas', sub: '+61% sobre tu promedio en Instagram' },
+      idea: { vc: 'infraestructura', quote: '"¿Cómo son los salones por dentro?"', title: 'Un recorrido por nuestros salones y zonas de juego', tag: 'Carrusel', tagClass: 'reel' },
+      agenda: { title: 'Fotos de la huerta con los niños', sub: 'Carrusel · borrador guardado' },
+      ig: { followers: '5.1K', delta: '+9 esta semana', er: '5,9%' },
+      fb: { followers: '3.4K', delta: '+4 esta semana', er: '3,0%' },
+      bestTime: '08:00–10:00',
+      bestTimeSub: 'Franja de más alcance con mamás,<br>basado en 28 posts analizados'
+    }
+  };
+
+  var postsData = {
+    'colegio-sanrafael': {
+      hashtags: [['#undíaensanrafael','92','8.4K'],['#papasenrafael','71','5.9K'],['#inmersionsanrafael','52','3.8K'],['#deportessanrafael','34','2.1K'],['#egresadossanrafael','22','1.3K']],
+      series: [['#undíaensanrafael','6 posts · 8.4K eng. prom.','3.0x tu mediana'],['#inmersionsanrafael','3 posts · 3.8K eng. prom.','1.7x tu mediana'],['#deportessanrafael','5 posts · 2.1K eng. prom.','1.1x tu mediana']],
+      pattern: [['Mejor formato','Reel corto (día a día)'],['Duración','15 a 30 seg']],
+      themes: ['Rutina escolar', 'Bilingüismo / inmersiones', 'Deportes'],
+      patternText: 'El contenido con más alcance combina rutina escolar relatable, un momento de inglés/inmersión, y cierre con niños sonriendo.',
+      organic: [
+        { vc: 'ambiente', format: 'Reel', title: 'Un día en la vida de un estudiante de San Rafael', why: 'Refuerza Ambiente educativo — la variable #1 en importancia junto a Infraestructura, y la más explorada primero por el segmento alto-alto.' },
+        { vc: 'proyeccion', format: 'Reel', title: 'Así se ve una clase de inmersión con profesor nativo', why: 'Proyección Internacional es, según la encuesta, la razón #1 (71%) por la que una familia considera un colegio Aspaen — y hoy casi no aparece en tu contenido orgánico.' },
+        { vc: 'infraestructura', format: 'Carrusel', title: 'Un recorrido por nuestras canchas y laboratorios', why: 'Infraestructura sigue siendo la variable más importante para colegios, incluso en el segmento de mayor poder adquisitivo.' }
+      ]
+    },
+    'colegio-losandes': {
+      hashtags: [['#losandesencali','64','5.1K'],['#becaslosandes','48','3.6K'],['#inglesdesdepequeños','30','2.0K'],['#deporteslosandes','19','1.1K']],
+      series: [['#losandesencali','5 posts · 5.1K eng. prom.','2.2x tu mediana'],['#becaslosandes','4 posts · 3.6K eng. prom.','1.6x tu mediana']],
+      pattern: [['Mejor formato','Testimonio en video'],['Duración','18 a 35 seg']],
+      themes: ['Becas y resultados', 'Bilingüismo', 'Vida estudiantil'],
+      patternText: 'Los testimonios de estudiantes reales (no institucionales) generan más comentarios que los videos de marca.',
+      organic: [
+        { vc: 'proyeccion', format: 'Reel', title: 'Un estudiante de Los Andes cuenta su intercambio', why: 'Proyección Internacional es la razón #1 para elegir un colegio Aspaen (71%) — priorízala en tu contenido orgánico de colegio.' },
+        { vc: 'ambiente', format: 'Story', title: 'Un recreo cualquiera en Los Andes', why: 'Ambiente educativo es de las variables que más se explora al inicio de la búsqueda en el segmento alto.' },
+        { vc: 'infraestructura', format: 'Carrusel', title: 'Laboratorios y biblioteca, por dentro', why: 'Infraestructura es la variable #1 en importancia para colegios en general (56%).' }
+      ]
+    },
+    'preescolar-genios': {
+      hashtags: [['#pequeñosgenios','58','4.4K'],['#montessoricali','41','3.0K'],['#primerdiadeclases','26','1.8K']],
+      series: [['#pequeñosgenios','7 posts · 4.4K eng. prom.','2.6x tu mediana'],['#montessoricali','4 posts · 3.0K eng. prom.','1.8x tu mediana']],
+      pattern: [['Mejor formato','Reel de actividad Montessori'],['Duración','10 a 20 seg']],
+      themes: ['Método Montessori', 'Adaptación', 'Ambiente cálido'],
+      patternText: 'El contenido que muestra al niño feliz en el momento (no posado) tiene el doble de guardados que el resto.',
+      organic: [
+        { vc: 'ambiente', format: 'Reel', title: 'Así se ve un niño feliz aprendiendo en Pequeños Genios', why: 'Ambiente educativo es la variable #1 en preescolares (55%) y sube a 62% en el segmento alto-medio.' },
+        { vc: 'infraestructura', format: 'Carrusel', title: 'Nuestros espacios pensados para niños pequeños', why: 'Infraestructura empata como variable #1 en preescolares (55%) — y es de las principales barreras cuando no se muestra suficiente.' },
+        { vc: 'proyeccion', format: 'Story', title: 'Así aprenden inglés jugando desde los 2 años', why: 'El segmento alto-alto de preescolares premia mucho el Ambiente internacional (69%, el más alto de todas las variables medidas).' }
+      ]
+    },
+    'preescolar-arcoiris': {
+      hashtags: [['#arcoiriscali','37','2.6K'],['#preinscripciones2027','29','1.9K'],['#jueglibre','21','1.3K']],
+      series: [['#arcoiriscali','5 posts · 2.6K eng. prom.','2.0x tu mediana'],['#jueglibre','3 posts · 1.3K eng. prom.','1.2x tu mediana']],
+      pattern: [['Mejor formato','Reel muy visual, sin narración'],['Duración','10 a 15 seg']],
+      themes: ['Juego libre', 'Seguridad', 'Alimentación'],
+      patternText: 'Los reels sin texto ni narración, solo niños jugando, superan en interacción a los que llevan mucho texto.',
+      organic: [
+        { vc: 'ambiente', format: 'Reel', title: 'Un día de juego libre en Arcoíris', why: 'Ninguna de tus creatividades estratégicas está ganando hoy en este ángulo — y Ambiente educativo es de las 3 variables más importantes en preescolares.' },
+        { vc: 'infraestructura', format: 'Carrusel', title: 'Nuestros salones y zonas de juego, por dentro', why: 'Instalaciones es una de las principales barreras para NO elegir un preescolar Aspaen — mostrarlas más ayuda a cerrar esa brecha.' },
+        { vc: 'proyeccion', format: 'Imagen', title: 'Un vistazo a nuestro programa bilingüe', why: 'El Ambiente internacional es la variable que más crece en importancia en el segmento alto-alto de preescolares (69%).' }
+      ]
+    }
+  };
+
   // ---- Mock data: cada cuenta trae su campaña táctica y estratégica, con creatividades y propuestas ----
   var campData = {
     'colegio-sanrafael': {
       competencia: [
-        'Colegios competidores del sector están usando Reels de resultados académicos (pruebas Saber/ICFES) como gancho de comunicación estratégica.',
-        'Varios ofrecen "crédito educativo" o planes de pago flexibles como parte del mensaje de matrículas.',
-        'Se ve más inversión en contenido de bienestar emocional y salud mental infantil que en años anteriores.'
+        'Frente a la competencia (score promedio 3,58), tu Formación Académica ya gana claramente (4,13) — es una fortaleza real, no percibida.',
+        'La competencia sigue por delante en NPS general (6,62 vs 5,46 de tu red) — no es un problema de captación, es de experiencia y percepción.',
+        'La awareness de "Red Aspaen" (35,9%) es mucho más alta que la de San Rafael como sede individual (9,1%) — la gente conoce la marca paraguas más que tu colegio puntual.'
       ],
       hacer: [
-        'Muestra resultados académicos reales (ICFES, admisiones a universidad) — la competencia ya lo hace y tú aún no lo explotas.',
-        'Aprovecha testimonios reales de papás actuales, tu formato con mejor rendimiento en ambas campañas.',
-        'Prueba contenido de bienestar emocional: tendencia creciente y de bajo costo de producción.'
+        'Lidera con Proyección Internacional: es la razón #1 (71%) por la que una familia considera un colegio Aspaen, y hoy casi no aparece en tu contenido.',
+        'Muestra Infraestructura sin miedo: es la variable #1 en importancia para colegios (56%) y tu colegio ya la gana frente a la competencia en instalaciones.',
+        'Menciona la Red Aspaen en tu contenido, no solo "San Rafael" — la marca paraguas tiene 4x más awareness que tu sede individual.'
       ],
       noHacer: [
         'No sigas invirtiendo en el ángulo de precio/cupos sin evidencia — tu creatividad de precio tiene el CTR más bajo de la cuenta.',
-        'No repitas el mismo video institucional por más de 2–3 semanas — se fatiga rápido (frecuencia 4.2).'
+        'No repitas el mismo video institucional por más de 2–3 semanas — se fatiga rápido (frecuencia 4.2).',
+        'No asumas que el bilingüismo por sí solo convence a las familias más pudientes: en el segmento alto-alto, su importancia cae a solo 16% — ahí pesan más Deportivo, Resultados y Relacionamiento social (63% cada uno).'
       ],
       tendencias: [
-        'Los formatos tipo "recorrido POV" (cámara en primera persona) van a crecer en engagement este semestre.',
-        'El contenido educativo para papás (tips de crianza, no solo del colegio) empieza a generar más alcance orgánico.',
-        'TikTok Ads sigue subutilizado por colegios en Cali — hay espacio para diferenciarte ahí antes que la competencia.'
+        'Para el segmento de mayor poder adquisitivo, lo que más se explora primero es Estilo educativo y Precio — no arranques el contenido con instalaciones para ese público.',
+        'El contenido que muestra Proyección Internacional de forma tangible (no solo "somos bilingües") va a diferenciarte, porque casi nadie lo está haciendo bien todavía.',
+        'La brecha de NPS frente a la competencia sugiere que vale la pena invertir también en contenido de "experiencia real de familia", no solo en captación.'
       ],
       tactica: {
         camp: { goalLabel: 'Leads', goal: 200, current: 178, cpl: 5.90, cplObj: 5.50, spend: 1050, budget: 1300 },
@@ -966,6 +1139,7 @@
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: '"¿Aún hay cupo para tu hijo en 2027?"', why: 'Aprovecha la urgencia que ya funcionó en "Agenda tu visita guiada", con un gancho más específico de escasez.',
+            vc: 'ambiente', vcNote: 'El testimonio de un papá real transmite pertenencia y felicidad — el corazón de Ambiente educativo, variable #1 en importancia para colegios (56%).',
             duracion: '20 seg', guion: [
               { t: '0–3s', escena: 'Mamá revisando el celular con cara de duda', texto: 'Texto en pantalla: "¿Ya tienes cupo para 2027?"' },
               { t: '3–8s', escena: 'Corte a pasillo del colegio, niños entrando', texto: 'Texto: "Quedan pocos cupos disponibles"' },
@@ -975,6 +1149,7 @@
             necesitas: ['Grabación en el colegio (pasillo, entrada)', '1 papá real dispuesto a dar testimonio corto', 'Texto animado tipo contador de cupos', 'Música de tendencia, ritmo suave-urgente'],
             como: 'Ritmo rápido, cámara en mano, estilo auténtico (no muy pulido), subtítulos quemados en pantalla.' },
           { fmt: 'Carrusel', kind: 'carrusel', title: 'Un día típico en San Rafael (antes/después)', why: 'Reemplaza el ángulo de precio, que rinde mal, por beneficio mostrado en vez de contado.',
+            vc: 'infraestructura', vcNote: 'Infraestructura es la variable #1 en importancia para colegios (56%) y se mantiene arriba incluso en el segmento de mayor poder adquisitivo.',
             slides: [
               { visual: 'Foto exterior del colegio en la mañana', texto: 'Así empieza un día en San Rafael' },
               { visual: 'Niños en el salón de clase', texto: 'Clases con máximo 20 estudiantes por salón' },
@@ -994,6 +1169,7 @@
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: '"Voces de papás" — serie de testimonios cortos', why: 'El testimonio en video funciona pero se fatigó rápido; una serie con caras distintas mantiene frescura sin perder el formato ganador.',
+            vc: 'ambiente', vcNote: 'Refuerza sentido de comunidad y felicidad — Ambiente educativo.',
             duracion: '18 seg', guion: [
               { t: '0–2s', escena: 'Papá o mamá mirando a cámara', texto: '"Yo miré otros colegios, y elegí San Rafael porque…"' },
               { t: '2–10s', escena: 'Continúa el testimonio genuino (casa o colegio)', texto: 'Habla libre, sin guion memorizado' },
@@ -1003,6 +1179,7 @@
             necesitas: ['3–4 familias voluntarias para grabar testimonios distintos (rotar cada semana)', 'Preguntas guía para que hablen natural', 'Basta con cámara de celular'],
             como: 'Estilo cercano y espontáneo, luz natural, sin producción pesada.' },
           { fmt: 'Reel', kind: 'video', title: 'Detrás de cámaras de una clase real', why: 'Contenido auténtico y de bajo costo de producción, buen candidato para bajar el CPM actual.',
+            vc: 'ambiente', vcNote: 'Muestra al niño feliz aprendiendo — el núcleo de Ambiente educativo.',
             duracion: '18 seg', guion: [
               { t: '0–3s', escena: 'La profesora empezando la clase', texto: 'Sin texto' },
               { t: '3–12s', escena: 'Niños participando, levantando la mano, riendo', texto: 'Sin texto' },
@@ -1010,27 +1187,40 @@
               { t: '16–18s', escena: 'Logo', texto: '"Así aprendemos en San Rafael"' }
             ],
             necesitas: ['Permiso de grabación en salón (colegio + papás)', '1 clase dinámica para grabar (arte, ciencias o educación física funcionan mejor)', 'Sin guion rígido'],
-            como: 'Estilo documental, cámara observando sin interrumpir la clase.' }
+            como: 'Estilo documental, cámara observando sin interrumpir la clase.' },
+          { fmt: 'Reel', kind: 'video', title: 'Inmersión con profesores nativos', why: 'Ninguna de tus piezas actuales muestra bilingüismo/inmersiones — y Proyección Internacional es la razón #1 (71%) por la que una familia considera un colegio Aspaen.',
+            vc: 'proyeccion', vcNote: 'Cubre un vacío real: hoy tu contenido no toca Proyección Internacional, tu variable con mayor poder de conversión según la encuesta.',
+            duracion: '18 seg', guion: [
+              { t: '0–3s', escena: 'Profesor nativo saludando a la clase en inglés', texto: 'Sin texto' },
+              { t: '3–12s', escena: 'Niños participando en una actividad de inmersión (juego, canción o rol)', texto: 'Texto: "Inmersión real, todos los días"' },
+              { t: '12–16s', escena: 'Un niño respondiendo en inglés con naturalidad', texto: 'Sin texto' },
+              { t: '16–18s', escena: 'Logo', texto: '"Proyección internacional desde San Rafael"' }
+            ],
+            necesitas: ['Autorización para grabar la clase de inglés', 'Profesor nativo cómodo frente a cámara', 'Un momento espontáneo de un niño hablando inglés'],
+            como: 'Natural, sin actuación, con subtítulos en español para que se entienda el valor sin necesidad de hablar inglés.' }
         ]
       }
     },
     'colegio-losandes': {
       competencia: [
-        'Colegios cercanos están usando embajadores (exalumnos destacados) como parte de su estrategia de marca.',
-        'Aumento de anuncios con formato "reto" o "challenge" entre estudiantes.',
-        'Uso de landing pages con simulador de costos en vez de solo formulario de contacto.'
+        'Tu Ubicación (score 4,19) y Resultados de egresados (3,95) ya ganan a la competencia (3,45 y 3,65) — son argumentos de venta poco usados hoy.',
+        'La Red Aspaen tiene 35,9% de awareness ayudado, pero Los Andes como sede individual apenas llega a 7,3% — la marca paraguas te puede ayudar más de lo que la estás usando.',
+        'El NPS de la competencia (6,62) sigue por encima del de tu red (5,46) — la experiencia post-matrícula importa tanto como la captación.'
       ],
       hacer: [
         'Escala "Abrimos inscripciones", tu creatividad con mejor CPL — sube presupuesto antes de crear piezas nuevas.',
-        'Prueba un simulador simple de costos/beca en la landing, como está haciendo la competencia.'
+        'Muestra Proyección Internacional: es la razón #1 (71%) por la que las familias consideran un colegio Aspaen y hoy no la tienes en tu contenido activo.',
+        'Refuerza el nombre "Red Aspaen" junto al de Los Andes — te apoyas en una marca con 5x más reconocimiento que tu sede sola.'
       ],
       noHacer: [
         'No repitas "Beca por buen rendimiento" como imagen estática — ya está fatigada (frecuencia 3.9) y con CTR bajo.',
-        'No prometas cifras de beca sin confirmarlas con administración — genera leads de mala calidad si luego no aplican.'
+        'No prometas cifras de beca sin confirmarlas con administración — genera leads de mala calidad si luego no aplican.',
+        'No lideres tu comunicación con bilingüismo para el segmento más alto: en ese grupo su importancia cae a 16%, muy por debajo de Deportivo o Resultados de egresados (63%).'
       ],
       tendencias: [
         'El contenido con estudiantes reales como protagonistas (no actores) está ganando tracción frente al contenido institucional.',
-        'Los recorridos en formato "vlog" corto están superando en retención a los videos institucionales clásicos.'
+        'Los recorridos en formato "vlog" corto están superando en retención a los videos institucionales clásicos.',
+        'Para el segmento alto-alto, lo que más pesa ahora es Deportivo, Experiencia internacional, Personal y Relacionamiento social — contenido que muestre esto tiene más espacio de crecimiento que el institucional clásico.'
       ],
       tactica: {
         camp: { goalLabel: 'Leads', goal: 150, current: 96, cpl: 7.40, cplObj: 6.00, spend: 710, budget: 900 },
@@ -1040,6 +1230,7 @@
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: '"Últimos cupos con beca"', why: 'Combina el gancho de inscripción (ganador) con el incentivo de beca, que solo no funcionó como imagen estática.',
+            vc: null, vcNote: 'Pieza de conversión pura (precio/beca) — no refuerza ninguna variable crítica directamente. Está bien que exista, pero balancéala con piezas de marca.',
             duracion: '20 seg', guion: [
               { t: '0–3s', escena: 'Texto en pantalla', texto: '"¿Sabías que Los Andes tiene becas por rendimiento?"' },
               { t: '3–10s', escena: 'Estudiante mostrando un reconocimiento o notas', texto: 'Sin diálogo, solo texto de apoyo' },
@@ -1049,6 +1240,7 @@
             necesitas: ['Dato real de cuántas becas quedan disponibles (para no prometer de más)', 'Grabación en el colegio', 'Texto animado'],
             como: 'Tono aspiracional, ritmo medio, sin urgencia agresiva.' },
           { fmt: 'Imagen', kind: 'imagen', title: 'Comparativo: beca vs. sin beca', why: 'Formato estático de bajo costo para reforzar el mensaje de beca con un dato concreto en vez de solo una foto institucional.',
+            vc: null, vcNote: 'También es una pieza de conversión pura, sin variable crítica asociada.',
             visual: 'Gráfico tipo infografía con dos columnas simples ("Sin beca" / "Con beca Los Andes"), sin necesidad de fotos de niños.',
             textoPrincipal: 'Con beca por rendimiento, tu hijo estudia en Los Andes por menos de lo que piensas',
             textoSecundario: 'Cupos limitados — escríbenos',
@@ -1063,6 +1255,7 @@
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: 'Un recorrido por Los Andes guiado por un estudiante', why: 'La bienvenida en video funciona; un recorrido mantiene el mismo estilo con contenido nuevo.',
+            vc: 'infraestructura', vcNote: 'Infraestructura es la variable #1 en importancia para colegios (56%).',
             duracion: '18 seg', guion: [
               { t: '0–3s', escena: 'Estudiante saluda a cámara', texto: '"Bienvenidos a un día en Los Andes"' },
               { t: '3–14s', escena: 'Recorrido por pasillos, biblioteca, laboratorio', texto: 'Comentarios breves del estudiante sobre cada espacio' },
@@ -1071,6 +1264,7 @@
             necesitas: ['1 estudiante cómodo hablando a cámara (con autorización de los papás)', 'Recorrido planeado por las zonas más atractivas del colegio'],
             como: 'Estilo vlog, cámara en mano siguiendo al estudiante, sin guion memorizado.' },
           { fmt: 'Carrusel', kind: 'carrusel', title: 'Un vistazo a nuestros laboratorios y espacios', why: 'Refuerza el mensaje de infraestructura de forma más económica que un video, con datos concretos que la competencia no está mostrando.',
+            vc: 'infraestructura', vcNote: 'Infraestructura sigue siendo la #1 razón por la que un colegio es considerado, incluso en el segmento más alto (47–57%).',
             slides: [
               { visual: 'Fachada del colegio', texto: 'Conoce los espacios de Los Andes' },
               { visual: 'Laboratorio de ciencias', texto: 'Laboratorio equipado para ciencias naturales' },
@@ -1078,7 +1272,16 @@
               { visual: 'Zona deportiva', texto: 'Canchas y zona deportiva propia' },
               { visual: 'Logo + CTA', texto: 'Agenda un recorrido presencial' }
             ],
-            necesitas: ['Fotos reales y actualizadas de cada espacio', 'Confirmar cifras exactas (número de libros, m² de zona deportiva) antes de publicarlas'] }
+            necesitas: ['Fotos reales y actualizadas de cada espacio', 'Confirmar cifras exactas (número de libros, m² de zona deportiva) antes de publicarlas'] },
+          { fmt: 'Carrusel', kind: 'carrusel', title: 'Así se vive una inmersión internacional', why: 'Proyección Internacional es la razón #1 (71%) por la que las familias consideran un colegio Aspaen, y hoy no tienes ninguna pieza que la muestre.',
+            vc: 'proyeccion', vcNote: 'Cierra el vacío más grande de tu comunicación: hoy ninguna creatividad activa toca Proyección Internacional.',
+            slides: [
+              { visual: 'Estudiantes en clase de inglés con profesor nativo', texto: 'Inglés real, todos los días' },
+              { visual: 'Estudiante en actividad de intercambio o videollamada internacional', texto: 'Experiencias de intercambio' },
+              { visual: 'Certificado o logo de doble titulación', texto: 'Doble titulación al graduarte' },
+              { visual: 'Logo + CTA', texto: 'Conoce nuestro programa de proyección internacional' }
+            ],
+            necesitas: ['Grabación de una clase de inglés real', 'Confirmar con admisiones los datos exactos de doble titulación/intercambios antes de publicarlos'] }
         ]
       }
     },
@@ -1090,15 +1293,18 @@
       ],
       hacer: [
         'Duplica la apuesta en "Agenda tu cupo" + "Método Montessori" — son tus dos creatividades ganadoras, combínalas en una nueva pieza.',
-        'Crea una historia destacada permanente de testimonios, como está funcionando en la competencia.'
+        'Muestra Ambiente internacional: en el segmento alto-alto de preescolares es la variable con más peso de toda la encuesta (69%) y hoy no la tienes.',
+        'Refuerza Ambiente educativo e Infraestructura por igual — ambas empatan como variable #1 en preescolares (55%).'
       ],
       noHacer: [
         'No bajes el presupuesto de las creatividades ganadoras — ambas están rindiendo por debajo de tu objetivo de CPL, en el buen sentido.',
-        'No inviertas en "Testimonios de mamás" en video sin antes revisar por qué su CPM es más alto que el resto.'
+        'No inviertas en "Testimonios de mamás" en video sin antes revisar por qué su CPM es más alto que el resto.',
+        'No dejes de mostrar instalaciones: "Instalaciones" y "falta de información" están entre las principales barreras que hacen que una familia NO elija un preescolar Aspaen.'
       ],
       tendencias: [
         'El contenido de "aprendizaje sensorial" (naturaleza, texturas, juego libre) está creciendo en interacción en preescolares.',
-        'Las familias buscan cada vez más evidencia del método pedagógico, no solo fotos bonitas de instalaciones.'
+        'Las familias buscan cada vez más evidencia del método pedagógico, no solo fotos bonitas de instalaciones.',
+        'Para el segmento más alto, el bilingüismo y los resultados de egresados pesan menos (38%) de lo que se asume — el diferencial real ahí es Ambiente internacional e Infraestructura.'
       ],
       tactica: {
         camp: { goalLabel: 'Leads', goal: 120, current: 133, cpl: 4.60, cplObj: 5.00, spend: 610, budget: 700 },
@@ -1108,6 +1314,7 @@
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: '"Últimos cupos + Montessori"', why: 'Combina el mensaje de urgencia con el diferencial pedagógico, tus dos creatividades con mejor CPL.',
+            vc: 'ambiente', vcNote: 'El método pedagógico y cómo se siente el niño en su ambiente diario son el corazón de Ambiente educativo, la variable #1 en preescolares (55%).',
             duracion: '20 seg', guion: [
               { t: '0–3s', escena: 'Texto en pantalla', texto: '"¿Ya tienes cupo para el próximo año?"' },
               { t: '3–10s', escena: 'Niños en actividad Montessori manipulando materiales', texto: 'Texto de apoyo explicando brevemente el método' },
@@ -1117,6 +1324,7 @@
             necesitas: ['Grabación de una actividad Montessori real', 'Permiso de grabación de menores', 'Explicación del método revisada por la coordinación pedagógica'],
             como: 'Cálido, colores suaves, cámara a la altura de los niños.' },
           { fmt: 'Carrusel', kind: 'carrusel', title: 'Por qué elegir el método Montessori', why: 'Profundiza el ángulo pedagógico que ya está ganando, con más detalle del que cabe en un Reel.',
+            vc: 'ambiente', vcNote: 'Explica cómo el método construye el ambiente diario del niño — Ambiente educativo.',
             slides: [
               { visual: 'Niño manipulando material Montessori', texto: '¿Por qué Montessori?' },
               { visual: 'Niño concentrado en una actividad', texto: 'Aprende a su propio ritmo' },
@@ -1134,6 +1342,7 @@
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: '"Así aprendemos" — serie semanal', why: 'Aprovecha el formato ganador de "un día en..." con contenido recurrente de bajo costo.',
+            vc: 'ambiente', vcNote: 'Ambiente educativo es la variable #1 en preescolares (55%) y sube a 62% en el segmento alto-medio.',
             duracion: '15 seg', guion: [
               { t: '0–3s', escena: 'Actividad distinta cada semana (pintura, música, exterior)', texto: 'Sin texto' },
               { t: '3–12s', escena: 'Niños interactuando, risas genuinas', texto: 'Sin texto' },
@@ -1142,30 +1351,42 @@
             necesitas: ['Rotar 1 actividad distinta cada semana', 'Autorización de grabación de menores', 'Misma intro/outro para mantener consistencia'],
             como: 'Luminoso, ritmo alegre, música infantil de fondo.' },
           { fmt: 'Imagen', kind: 'imagen', title: 'Un vistazo a nuestra huerta / jardín', why: 'Refuerza el ángulo de aprendizaje sensorial que está creciendo, con una pieza económica de producir.',
+            vc: 'infraestructura', vcNote: 'Infraestructura empata como variable #1 en preescolares (55%) junto con Ambiente educativo.',
             visual: 'Foto real de niños interactuando con plantas en la huerta/jardín del preescolar, buena luz natural.',
             textoPrincipal: 'Aprendemos de la naturaleza todos los días',
             textoSecundario: 'Pequeños Genios',
-            necesitas: ['Foto real en buena luz natural', 'Autorización de imagen de los niños que aparezcan'] }
+            necesitas: ['Foto real en buena luz natural', 'Autorización de imagen de los niños que aparezcan'] },
+          { fmt: 'Reel', kind: 'video', title: 'Bilingüismo desde los 2 años', why: 'El Ambiente internacional es la variable que más pesa en el segmento alto-alto de preescolares (69%, la más alta de toda la encuesta) y hoy no la muestras.',
+            vc: 'proyeccion', vcNote: 'Cubre la variable con mayor peso en el segmento más exigente de preescolares.',
+            duracion: '15 seg', guion: [
+              { t: '0–3s', escena: 'Niños cantando una canción en inglés en rutina diaria', texto: 'Sin texto' },
+              { t: '3–10s', escena: 'Niño señalando objetos y diciendo su nombre en inglés', texto: 'Texto: "Bilingüismo desde los 2 años"' },
+              { t: '10–15s', escena: 'Logo', texto: '"Pequeños Genios"' }
+            ],
+            necesitas: ['Grabación de una rutina bilingüe real (canción, objetos, saludo)', 'Autorización de grabación de menores'],
+            como: 'Alegre y cotidiano, sin actuación, mostrando que el inglés ya es parte del día a día.' }
         ]
       }
     },
     'preescolar-arcoiris': {
       competencia: [
         'La competencia resalta horarios extendidos y alimentación como principal gancho táctico.',
-        'Más presencia en TikTok con contenido casual, no solo Instagram.',
-        'Publicidad enfocada en tranquilidad/seguridad de los papás (cámaras, protocolos) como ángulo emocional.'
+        'Publicidad enfocada en tranquilidad/seguridad de los papás (cámaras, protocolos) como ángulo emocional.',
+        '"Instalaciones" y "falta de información" son, según la encuesta, de las principales razones por las que un preescolar Aspaen NO es elegido — vale la pena revisar si Arcoíris está mostrando suficiente de esto.'
       ],
       hacer: [
         'Cambia "Preinscripciones abiertas" de imagen a Reel — el mensaje capta leads pero el formato ya se fatigó.',
+        'Muestra más instalaciones y más información clara (precios, proceso de admisión) — son las barreras #1 para preescolares Aspaen según la encuesta.',
         'Prueba el ángulo de seguridad/tranquilidad que está funcionando en la competencia y que aún no exploras.'
       ],
       noHacer: [
         'No sigas invirtiendo en "Conoce Arcoíris" sin cambiar el mensaje — su CTR (0.6%) es el más bajo de todas tus cuentas.',
-        'No ignores TikTok: es donde más está creciendo la competencia y donde menos presencia tienes hoy.'
+        'No asumas que basta con mostrar la oferta: si "falta de información" es una barrera real, tu contenido también debe explicar precios/proceso de admisión con claridad.'
       ],
       tendencias: [
         'El contenido de "un día de juego libre" (sin narración, muy visual) está superando al contenido con mucho texto.',
-        'Los papás están respondiendo más a mensajes de tranquilidad/seguridad que a mensajes puramente de precio.'
+        'Los papás están respondiendo más a mensajes de tranquilidad/seguridad que a mensajes puramente de precio.',
+        'El Ambiente internacional es la variable que más crece en el segmento alto-alto de preescolares (69%) — un espacio casi vacío en tu contenido actual.'
       ],
       tactica: {
         camp: { goalLabel: 'Leads', goal: 100, current: 61, cpl: 8.90, cplObj: 6.50, spend: 540, budget: 650 },
@@ -1175,6 +1396,7 @@
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: 'Refresca "Preinscripciones abiertas" en video', why: 'La oferta funciona; cámbiala de imagen estática a Reel para reducir la fatiga sin perder el mensaje.',
+            vc: null, vcNote: 'Pieza de conversión (oferta/precio) — no refuerza una variable crítica específica.',
             duracion: '20 seg', guion: [
               { t: '0–3s', escena: 'Texto en pantalla', texto: '"Preinscripciones 2027 ya están abiertas"' },
               { t: '3–10s', escena: 'Fachada del preescolar + niños llegando', texto: 'Sin diálogo' },
@@ -1184,6 +1406,7 @@
             necesitas: ['Grabación de la entrada en horario de llegada', 'Definir 1 beneficio clave a resaltar'],
             como: 'Simple, luz natural de la mañana, sin producción compleja.' },
           { fmt: 'Carrusel', kind: 'carrusel', title: 'Todo lo que incluye tu pensión', why: 'Aclara el valor real de la oferta con más detalle del que cabe en un solo mensaje, apoyando el ángulo de alimentación/horario que está funcionando en la competencia.',
+            vc: null, vcNote: 'También ataca directamente "Falta de información", una de las principales barreras para NO elegir un preescolar Aspaen — sin ser una variable crítica en sí.',
             slides: [
               { visual: 'Fachada', texto: '¿Qué incluye tu pensión en Arcoíris?' },
               { visual: 'Comedor / alimentación', texto: 'Alimentación balanceada incluida' },
@@ -1202,6 +1425,7 @@
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: '"Un día de juego libre" — ángulo 100% visual y emocional', why: 'Ninguna creatividad estratégica está ganando aquí; prueba un ángulo visual antes de seguir invirtiendo en carruseles de texto.',
+            vc: 'ambiente', vcNote: 'Ambiente educativo es de las 3 variables más importantes en preescolares (55%).',
             duracion: '15 seg', guion: [
               { t: '0–3s', escena: 'Niños corriendo en el patio', texto: 'Sin texto' },
               { t: '3–12s', escena: 'Momentos de juego libre, risas, sin narración', texto: 'Sin texto' },
@@ -1210,10 +1434,17 @@
             necesitas: ['Grabación en el patio en horario de recreo', 'Buena luz natural', 'No necesita guion hablado'],
             como: 'Muy visual, casi sin texto, música emotiva de fondo.' },
           { fmt: 'Imagen', kind: 'imagen', title: 'Seguridad y tranquilidad para los papás', why: 'Explota el ángulo de seguridad/tranquilidad que está funcionando en la competencia y que hoy no tienes en tu comunicación estratégica.',
+            vc: 'ambiente', vcNote: 'La tranquilidad de los papás es parte del ambiente de confianza que rodea al niño — cercano a Ambiente educativo, aunque no es una de las 3 variables núcleo.',
             visual: 'Foto real de la entrada del preescolar con personal de recepción/seguridad visible.',
             textoPrincipal: 'Tu hijo, siempre seguro y acompañado',
             textoSecundario: 'Arcoíris',
-            necesitas: ['Foto real de la entrada/recepción', 'Confirmar protocolos de seguridad vigentes antes de mencionarlos'] }
+            necesitas: ['Foto real de la entrada/recepción', 'Confirmar protocolos de seguridad vigentes antes de mencionarlos'] },
+          { fmt: 'Imagen', kind: 'imagen', title: 'Un vistazo a nuestro programa bilingüe', why: 'El Ambiente internacional es la variable que más pesa en el segmento alto-alto de preescolares (69%, la más alta de toda la encuesta) y hoy no la tocas.',
+            vc: 'proyeccion', vcNote: 'Cierra el vacío de Proyección Internacional en tu comunicación estratégica.',
+            visual: 'Foto real de niños con material didáctico en inglés (tarjetas, libros ilustrados) durante una actividad bilingüe.',
+            textoPrincipal: 'Aprenden inglés jugando, desde pequeños',
+            textoSecundario: 'Arcoíris',
+            necesitas: ['Foto real de una actividad bilingüe', 'Autorización de imagen de los niños que aparezcan'] }
         ]
       }
     }
@@ -1261,8 +1492,10 @@
   }
 
   function renderProposal(p) {
+    var visual = '';
     var body = '';
     if (p.kind === 'video') {
+      visual = renderGuionMock(p.guion, p.vc);
       body += '<div class="brief-block"><div class="brief-label">Guion (' + p.duracion + ')</div>' +
         p.guion.map(function (g) {
           return '<div class="guion-row"><div class="guion-time">' + g.t + '</div><div class="guion-text"><b>' + g.escena + '</b><br>' + g.texto + '</div></div>';
@@ -1270,19 +1503,22 @@
       body += '<div class="brief-label">Qué necesitas</div>' + needsList(p.necesitas);
       body += '<div class="brief-note"><b>Cómo se vería:</b> ' + p.como + '</div>';
     } else if (p.kind === 'carrusel') {
+      visual = renderCarruselMock(p.slides, p.vc);
       body += '<div class="brief-label">Estructura de slides</div>' +
         p.slides.map(function (s, i) {
           return '<div class="slide-item"><div class="slide-num">' + (i + 1) + '</div><div><div class="slide-visual">' + s.visual + '</div><div class="slide-text">"' + s.texto + '"</div></div></div>';
         }).join('');
       body += '<div class="brief-label">Información que necesitas</div>' + needsList(p.necesitas);
     } else if (p.kind === 'imagen') {
+      visual = renderImagenMock(p, p.vc);
       body += '<div class="brief-label">Imagen</div><div class="slide-visual">' + p.visual + '</div>';
       body += '<div class="brief-label">Textos</div><div class="slide-text">Principal: "' + p.textoPrincipal + '"<br>Secundario: "' + p.textoSecundario + '"</div>';
       body += '<div class="brief-label">Información que necesitas</div>' + needsList(p.necesitas);
     }
+    var vcBlock = vcChip(p.vc) + (p.vcNote ? '<div class="vc-note">' + p.vcNote + '</div>' : '');
     return '<div class="proposal-card"><span class="proposal-fmt">' + p.fmt + '</span>' +
       '<div class="proposal-title">' + p.title + '</div>' +
-      '<div class="proposal-why">' + p.why + '</div>' + body + '</div>';
+      '<div class="proposal-why">' + p.why + '</div>' + vcBlock + visual + body + '</div>';
   }
 
   function bulletItem(icon, text) {
@@ -1350,7 +1586,62 @@
     }).join('');
   }
 
-  document.getElementById('a-cuenta').addEventListener('change', function () { renderAnalysis(this.value); });
+  function renderHome(account) {
+    var h = homeData[account];
+    document.getElementById('home-greeting').textContent = 'Buenos días 👋 — ' + accountLabels[account];
+    document.getElementById('home-lastpost-stat').textContent = h.lastPost.stat;
+    document.getElementById('home-lastpost-sub').textContent = h.lastPost.sub;
+    document.getElementById('home-idea-vc').innerHTML = vcChip(h.idea.vc);
+    document.getElementById('home-idea-quote').textContent = h.idea.quote;
+    document.getElementById('home-idea-title').textContent = h.idea.title;
+    var tagEl = document.getElementById('home-idea-tag');
+    tagEl.textContent = h.idea.tag;
+    tagEl.className = 'tag ' + h.idea.tagClass;
+    document.getElementById('home-agenda-title').textContent = h.agenda.title;
+    document.getElementById('home-agenda-sub').textContent = h.agenda.sub;
+    document.getElementById('home-ig-stats').innerHTML =
+      '<div class="net-followers">' + h.ig.followers + '</div><div class="net-label">Seguidores</div>' +
+      '<span class="net-delta">' + h.ig.delta + '</span><div class="net-er">ER: ' + h.ig.er + '</div>';
+    document.getElementById('home-fb-stats').innerHTML =
+      '<div class="net-followers">' + h.fb.followers + '</div><div class="net-label">Seguidores</div>' +
+      '<span class="net-delta">' + h.fb.delta + '</span><div class="net-er">ER: ' + h.fb.er + '</div>';
+    document.getElementById('home-besttime').textContent = h.bestTime;
+    document.getElementById('home-besttime-sub').innerHTML = h.bestTimeSub;
+  }
+
+  function renderPosts(account) {
+    var p = postsData[account];
+    var maxEng = Math.max.apply(null, p.hashtags.map(function (h) { return parseFloat(h[2]); }));
+    document.getElementById('posts-hashtags').innerHTML = p.hashtags.map(function (h) {
+      var pct = Math.round((parseFloat(h[2]) / maxEng) * 100);
+      return '<div class="hashtag-row"><div class="hashtag-name">' + h[0] + '</div><div class="hashtag-bar-track"><div class="hashtag-bar-fill" style="width:' + pct + '%"></div></div><div class="hashtag-value">' + h[2] + '</div></div>';
+    }).join('');
+
+    document.getElementById('posts-series').innerHTML = p.series.map(function (s) {
+      return '<div class="series-card"><div class="series-tag">' + s[0] + '</div><div class="series-meta">' + s[1] + '</div><span class="series-mult">🔥 ' + s[2] + '</span></div>';
+    }).join('');
+
+    document.getElementById('posts-pattern-row').innerHTML = p.pattern.map(function (kv) {
+      return '<div class="pattern-item"><div class="k">' + kv[0] + '</div><div class="v">' + kv[1] + '</div></div>';
+    }).join('');
+    document.getElementById('posts-theme-tags').innerHTML = p.themes.map(function (t) { return '<span class="theme-tag">' + t + '</span>'; }).join('');
+    document.getElementById('posts-pattern-text').textContent = p.patternText;
+
+    document.getElementById('posts-organic-ideas').innerHTML = p.organic.map(function (o) {
+      return '<div class="proposal-card">' + vcChip(o.vc) + '<span class="proposal-fmt">' + o.format + '</span>' +
+        mockCard(o.title, o.title, 'big', o.vc) +
+        '<div class="proposal-title">' + o.title + '</div>' +
+        '<div class="proposal-why">' + o.why + '</div></div>';
+    }).join('');
+  }
+
+  document.getElementById('global-cuenta').addEventListener('change', function () {
+    renderHome(this.value);
+    renderPosts(this.value);
+    renderAnalysis(this.value);
+  });
+  renderHome('colegio-sanrafael');
+  renderPosts('colegio-sanrafael');
   renderAnalysis('colegio-sanrafael');
 
   // Campañas: "también correré el otro tipo" — mantiene la etiqueta sincronizada con el select de tipo
