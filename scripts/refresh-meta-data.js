@@ -1,0 +1,109 @@
+// Jala datos reales de Meta Ads (campañas Táctica/Estratégica de las 4 sedes) y actualiza data/live-metrics.json.
+// Se ejecuta automáticamente desde GitHub Actions (.github/workflows/refresh-meta-data.yml).
+// Necesita el secreto de repo META_ACCESS_TOKEN (token de acceso de Meta con permisos ads_read sobre la cuenta).
+
+const fs = require('fs');
+const path = require('path');
+
+const TOKEN = process.env.META_ACCESS_TOKEN;
+const AD_ACCOUNT_ID = '1009181843347130';
+const GRAPH_VERSION = 'v21.0';
+const DATA_FILE = path.join(__dirname, '..', 'data', 'live-metrics.json');
+
+if (!TOKEN) {
+  console.error('Falta el secreto META_ACCESS_TOKEN — no se puede actualizar. Revisa Settings > Secrets and variables > Actions.');
+  process.exit(1);
+}
+
+// IDs reales descubiertos manualmente (campaña dedicada + conjunto dentro de la campaña "Formulario unificado" por sede).
+const SEDES = {
+  tacuri: {
+    tactica: { campaignIds: ['120246580112850278'], adsetIds: ['120244696278310278'] },
+    estrategica: { campaignIds: ['120242359902880278'], adsetIds: [] }
+  },
+  juanambu: {
+    tactica: { campaignIds: ['120246579965740278'], adsetIds: ['120244696278340278'] },
+    estrategica: { campaignIds: ['120242358705960278'], adsetIds: [] }
+  },
+  entrevalles: {
+    tactica: { campaignIds: [], adsetIds: ['120244696278330278'] },
+    estrategica: { campaignIds: ['120242361892640278'], adsetIds: [] }
+  },
+  tayana: {
+    tactica: { campaignIds: [], adsetIds: ['120244696278320278'] },
+    estrategica: { campaignIds: ['120242361172460278'], adsetIds: [] }
+  }
+};
+
+async function fetchInsights(objectId) {
+  const fields = 'spend,reach,frequency,impressions,actions';
+  const url = `https://graph.facebook.com/${GRAPH_VERSION}/${objectId}/insights?fields=${fields}&date_preset=last_30d&access_token=${TOKEN}`;
+  const res = await fetch(url);
+  const json = await res.json();
+  if (json.error) {
+    console.error(`Error consultando ${objectId}:`, json.error.message);
+    return null;
+  }
+  return (json.data && json.data[0]) || null;
+}
+
+function sumLeads(actions) {
+  if (!actions) return 0;
+  return actions
+    .filter(function (a) { return /lead/i.test(a.action_type); })
+    .reduce(function (sum, a) { return sum + parseFloat(a.value || 0); }, 0);
+}
+
+async function aggregate(ids) {
+  var totalSpend = 0, totalLeads = 0, totalReach = 0, totalImpressions = 0, weightedFreq = 0, count = 0;
+  for (const id of ids) {
+    const row = await fetchInsights(id);
+    if (!row) continue;
+    const spend = parseFloat(row.spend || 0);
+    totalSpend += spend;
+    totalLeads += sumLeads(row.actions);
+    totalReach += parseFloat(row.reach || 0);
+    totalImpressions += parseFloat(row.impressions || 0);
+    weightedFreq += parseFloat(row.frequency || 0) * spend;
+    count++;
+  }
+  return { spend: totalSpend, leads: totalLeads, reach: totalReach, impressions: totalImpressions, freq: count && totalSpend ? weightedFreq / totalSpend : 0 };
+}
+
+async function main() {
+  const out = { generatedAt: new Date().toISOString(), source: 'github-actions', accounts: {} };
+
+  for (const sede of Object.keys(SEDES)) {
+    const cfg = SEDES[sede];
+    const tacticaIds = cfg.tactica.campaignIds.concat(cfg.tactica.adsetIds);
+    const estrategicaIds = cfg.estrategica.campaignIds.concat(cfg.estrategica.adsetIds);
+
+    const t = await aggregate(tacticaIds);
+    const e = await aggregate(estrategicaIds);
+
+    out.accounts[sede] = {
+      tactica: {
+        current: Math.round(t.leads),
+        cpl: t.leads ? Math.round(t.spend / t.leads) : null,
+        spend: Math.round(t.spend),
+        period: 'Últimos 30 días'
+      },
+      estrategica: {
+        current: Math.round(e.reach),
+        freq: Math.round(e.freq * 100) / 100,
+        cpm: e.impressions ? Math.round((e.spend / e.impressions) * 1000) : null,
+        spend: Math.round(e.spend),
+        period: 'Últimos 30 días'
+      }
+    };
+    console.log(sede, 'OK ->', JSON.stringify(out.accounts[sede]));
+  }
+
+  fs.writeFileSync(DATA_FILE, JSON.stringify(out, null, 2) + '\n');
+  console.log('Escrito', DATA_FILE);
+}
+
+main().catch(function (err) {
+  console.error('Falló la actualización:', err);
+  process.exit(1);
+});

@@ -1,0 +1,32 @@
+name: Actualizar datos de Meta Ads
+
+on:
+  schedule:
+    - cron: '0 11 * * *'  # 6:00 a.m. hora Colombia, todos los días
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Jalar datos reales de Meta Ads
+        env:
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+        run: node scripts/refresh-meta-data.js
+
+      - name: Publicar cambios
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/live-metrics.json
+          git diff --staged --quiet || git commit -m "Actualiza datos reales de Meta Ads [automático]"
+          git push

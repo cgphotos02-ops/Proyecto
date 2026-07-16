@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-07-16T00:00:00Z",
+  "source": "seed-manual",
+  "accounts": {
+    "tacuri": {
+      "tactica": { "current": 16, "cpl": 42393, "spend": 678289, "period": "16 jun – 15 jul 2026" },
+      "estrategica": { "current": 101919, "freq": 1.48, "cpm": 754, "spend": 113793, "period": "16 jun – 15 jul 2026" }
+    },
+    "juanambu": {
+      "tactica": { "current": 25, "cpl": 29972, "spend": 749295, "period": "16 jun – 15 jul 2026" },
+      "estrategica": { "current": 41282, "freq": 1.82, "cpm": 1549, "spend": 116612, "period": "16 jun – 15 jul 2026" }
+    },
+    "entrevalles": {
+      "tactica": { "current": 21, "cpl": 9819, "spend": 206191, "period": "16 jun – 15 jul 2026" },
+      "estrategica": { "current": 33693, "freq": 2.48, "cpm": 1365, "spend": 113912, "period": "16 jun – 15 jul 2026" }
+    },
+    "tayana": {
+      "tactica": { "current": 24, "cpl": 11942, "spend": 286614, "period": "16 jun – 15 jul 2026" },
+      "estrategica": { "current": 103126, "freq": 1.44, "cpm": 766, "spend": 114013, "period": "16 jun – 15 jul 2026" }
+    }
+  }
+}

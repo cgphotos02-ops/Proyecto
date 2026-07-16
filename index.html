@@ -840,6 +840,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
         📡 Conectado a tu cuenta real de Meta Ads (Aspaen Cali Publicidad) — leads, CPL, alcance y creatividades de Táctica/Estratégica son datos reales del período 16 jun–15 jul 2026. Las metas mensuales aún no están definidas: dime tus objetivos y los agrego.
       </div>
+      <p class="vc-note" id="live-data-note"></p>
       <p class="vc-note">Nota: los datos orgánicos de Instagram/Facebook (Inicio, Posts, Calendario) todavía son de ejemplo. Ya guardé tus 4 usuarios (@aspaentacuri, @aspaenjuanambu, @aspaenentrevalles, @aspaentayana) — en cuanto Meta habilite la conexión de cuentas de Instagram para tu ad account, quedan listas para jalar datos reales.</p>
 
       <div id="analysis-kpis" class="kpi-row"></div>
@@ -1915,6 +1916,32 @@
   renderPosts('tacuri');
   renderAnalysis('tacuri');
   renderCalendario('tacuri');
+
+  // Carga datos reales de Meta Ads generados por el robot de GitHub Actions (data/live-metrics.json).
+  // Si el archivo no existe todavía o falla la carga (ej. abriendo el HTML localmente), se quedan los datos
+  // de referencia ya guardados en este archivo — el panel nunca se rompe por esto.
+  fetch('data/live-metrics.json', { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (live) {
+      if (!live || !live.accounts) return;
+      Object.keys(live.accounts).forEach(function (sede) {
+        if (!campData[sede]) return;
+        var acc = live.accounts[sede];
+        if (acc.tactica && acc.tactica.current != null) {
+          Object.assign(campData[sede].tactica.camp, acc.tactica, { real: true });
+        }
+        if (acc.estrategica && acc.estrategica.current != null) {
+          Object.assign(campData[sede].estrategica.camp, acc.estrategica, { real: true });
+        }
+      });
+      var liveNote = document.getElementById('live-data-note');
+      if (liveNote) {
+        var when = new Date(live.generatedAt).toLocaleString('es-CO', { dateStyle: 'medium', timeStyle: 'short' });
+        liveNote.textContent = '🔄 Última actualización automática: ' + when;
+      }
+      renderAnalysis(document.getElementById('global-cuenta').value);
+    })
+    .catch(function () { /* sin conexión al archivo de datos: se quedan los valores de referencia */ });
 
   // Campañas: "también correré el otro tipo" — mantiene la etiqueta sincronizada con el select de tipo
   function syncOtroTipoLabel() {
