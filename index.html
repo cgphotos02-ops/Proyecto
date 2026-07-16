@@ -10,91 +10,53 @@
     src: local("Georgia"), local("Iowan Old Style"), local("Times New Roman");
   }
 
-  :root {
-    --bg: #f7f5f2;
-    --surface: #ffffff;
-    --surface-2: #fbf9f6;
-    --border: #e7e2da;
-    --ink: #241f2e;
-    --ink-muted: #6b6478;
-    --ink-faint: #9a93a6;
-    --accent: #b23a6b;
-    --accent-strong: #96305a;
-    --accent-soft: #f4dce7;
-    --accent-soft-ink: #7a2a4d;
-    --good: #2f9e64;
-    --good-soft: #dcf1e4;
-    --good-ink: #1f7248;
-    --warn: #c98a2c;
-    --warn-soft: #f7ecd4;
-    --warn-ink: #8a5f18;
-    --crit: #c94b4b;
-    --crit-soft: #f8dede;
-    --crit-ink: #93302f;
-    --vc-ambiente: #d97a3f;
-    --vc-ambiente-soft: #f6e2d0;
-    --vc-ambiente-ink: #8a4a1f;
-    --vc-proyeccion: #3d6d9e;
-    --vc-proyeccion-soft: #dbe7f0;
-    --vc-proyeccion-ink: #234a6e;
-    --vc-infra: #6b7280;
-    --vc-infra-soft: #e4e5e8;
-    --vc-infra-ink: #43474f;
-    --shadow: 0 1px 2px rgba(36,31,46,0.04), 0 6px 20px -8px rgba(36,31,46,0.12);
-    --radius: 14px;
+  /*
+    Paleta de marca (única — el panel usa fondo negro siempre, por decisión de marca):
+    Cyan/Teal   C70 M0 Y15 K0  -> #29ABC7  (acento principal)
+    Azul pálido C40 M0 Y5 K0   -> #AEDEEA  (Infraestructura)
+    Azul medio  C76 M32 Y0 K0  -> #1F7FC4  (Proyección Internacional)
+    Naranja     C0 M50 Y90 K0  -> #F1812C  (Ambiente educativo / warn secundario)
+    Amarillo    C0 M25 Y94 K0  -> #F8BE22  (warn / score)
+    Rojo-teja   C0 M68 Y80 K0  -> #F15A38  (crítico)
+    Verde-lima  C40 M0 Y100 K0 -> #9BC93C  (éxito / bueno)
+  */
+  :root, :root[data-theme="dark"], :root[data-theme="light"] {
+    --bg: #0a0a0a;
+    --surface: #161616;
+    --surface-2: #1e1e1e;
+    --border: #2c2c2c;
+    --ink: #f4f4f4;
+    --ink-muted: #a8a8a8;
+    --ink-faint: #757575;
+    --accent: #29abc7;
+    --accent-strong: #3fc4e0;
+    --accent-soft: rgba(41,171,199,0.16);
+    --accent-soft-ink: #6ed4ec;
+    --good: #9bc93c;
+    --good-soft: rgba(155,201,60,0.16);
+    --good-ink: #b7de5e;
+    --warn: #f8be22;
+    --warn-soft: rgba(248,190,34,0.16);
+    --warn-ink: #f8be22;
+    --crit: #f15a38;
+    --crit-soft: rgba(241,90,56,0.16);
+    --crit-ink: #f68162;
+    --vc-ambiente: #f1812c;
+    --vc-ambiente-soft: rgba(241,129,44,0.16);
+    --vc-ambiente-ink: #f6a05e;
+    --vc-proyeccion: #1f7fc4;
+    --vc-proyeccion-soft: rgba(31,127,196,0.18);
+    --vc-proyeccion-ink: #5fa8dc;
+    --vc-infra: #aedeea;
+    --vc-infra-soft: rgba(174,222,234,0.16);
+    --vc-infra-ink: #aedeea;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 10px 24px -10px rgba(0,0,0,0.7);
   }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #16131c;
-      --surface: #1e1926;
-      --surface-2: #241e2f;
-      --border: #342c40;
-      --ink: #f1edf5;
-      --ink-muted: #b6adc7;
-      --ink-faint: #857c96;
-      --accent: #e08bb2;
-      --accent-strong: #eaa3c3;
-      --accent-soft: rgba(224,139,178,0.16);
-      --accent-soft-ink: #f0b6d1;
-      --good: #4cc389;
-      --good-soft: rgba(76,195,137,0.14);
-      --good-ink: #7fdcac;
-      --warn: #e3b25c;
-      --warn-soft: rgba(227,178,92,0.14);
-      --warn-ink: #f0c885;
-      --crit: #e07a7a;
-      --crit-soft: rgba(224,122,122,0.14);
-      --crit-ink: #f0a3a3;
-      --vc-ambiente: #e5975c; --vc-ambiente-soft: rgba(229,151,92,0.16); --vc-ambiente-ink: #f0b483;
-      --vc-proyeccion: #6ea3d0; --vc-proyeccion-soft: rgba(110,163,208,0.16); --vc-proyeccion-ink: #9cc4e6;
-      --vc-infra: #9aa1ac; --vc-infra-soft: rgba(154,161,172,0.16); --vc-infra-ink: #c2c7cf;
-      --shadow: 0 1px 2px rgba(0,0,0,0.2), 0 10px 24px -10px rgba(0,0,0,0.5);
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme]) {
+      --bg: #0a0a0a; --surface: #161616; --surface-2: #1e1e1e; --border: #2c2c2c;
+      --ink: #f4f4f4; --ink-muted: #a8a8a8; --ink-faint: #757575;
     }
-  }
-  :root[data-theme="dark"] {
-    --bg: #16131c; --surface: #1e1926; --surface-2: #241e2f; --border: #342c40;
-    --ink: #f1edf5; --ink-muted: #b6adc7; --ink-faint: #857c96;
-    --accent: #e08bb2; --accent-strong: #eaa3c3; --accent-soft: rgba(224,139,178,0.16); --accent-soft-ink: #f0b6d1;
-    --good: #4cc389; --good-soft: rgba(76,195,137,0.14); --good-ink: #7fdcac;
-    --warn: #e3b25c; --warn-soft: rgba(227,178,92,0.14); --warn-ink: #f0c885;
-    --crit: #e07a7a; --crit-soft: rgba(224,122,122,0.14); --crit-ink: #f0a3a3;
-    --vc-ambiente: #e5975c; --vc-ambiente-soft: rgba(229,151,92,0.16); --vc-ambiente-ink: #f0b483;
-    --vc-proyeccion: #6ea3d0; --vc-proyeccion-soft: rgba(110,163,208,0.16); --vc-proyeccion-ink: #9cc4e6;
-    --vc-infra: #9aa1ac; --vc-infra-soft: rgba(154,161,172,0.16); --vc-infra-ink: #c2c7cf;
-    --shadow: 0 1px 2px rgba(0,0,0,0.2), 0 10px 24px -10px rgba(0,0,0,0.5);
-  }
-  :root[data-theme="light"] {
-    --bg: #f7f5f2; --surface: #ffffff; --surface-2: #fbf9f6; --border: #e7e2da;
-    --ink: #241f2e; --ink-muted: #6b6478; --ink-faint: #9a93a6;
-    --accent: #b23a6b; --accent-strong: #96305a; --accent-soft: #f4dce7; --accent-soft-ink: #7a2a4d;
-    --good: #2f9e64; --good-soft: #dcf1e4; --good-ink: #1f7248;
-    --warn: #c98a2c; --warn-soft: #f7ecd4; --warn-ink: #8a5f18;
-    --crit: #c94b4b; --crit-soft: #f8dede; --crit-ink: #93302f;
-    --vc-ambiente: #d97a3f; --vc-ambiente-soft: #f6e2d0; --vc-ambiente-ink: #8a4a1f;
-    --vc-proyeccion: #3d6d9e; --vc-proyeccion-soft: #dbe7f0; --vc-proyeccion-ink: #234a6e;
-    --vc-infra: #6b7280; --vc-infra-soft: #e4e5e8; --vc-infra-ink: #43474f;
-    --shadow: 0 1px 2px rgba(36,31,46,0.04), 0 6px 20px -8px rgba(36,31,46,0.12);
   }
 
   * { box-sizing: border-box; }
@@ -209,8 +171,8 @@
     width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
     color: #fff; font-size: 15px; font-weight: 800; flex: 0 0 38px;
   }
-  .net-icon.ig { background: linear-gradient(135deg,#e0558a,#b23a6b); }
-  .net-icon.tt { background: linear-gradient(135deg,#241f2e,#4a3f5c); }
+  .net-icon.ig { background: linear-gradient(135deg,#29abc7,#1c7d94); }
+  .net-icon.tt { background: linear-gradient(135deg,#1f7fc4,#14568a); }
   .net-followers { font-size: 20px; font-weight: 800; }
   .net-label { font-size: 11.5px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: .04em; }
   .net-delta { font-size: 11px; font-weight: 700; color: var(--good-ink); background: var(--good-soft); border-radius: 6px; padding: 1px 6px; display: inline-block; margin-top: 3px; }
@@ -473,6 +435,31 @@
     font-size: 9px; line-height: 1.25; padding: 14px 6px 6px; text-align: center; font-weight: 700;
   }
   .ig-mock.big .ig-mock-caption { font-size: 12px; padding: 20px 12px 10px; }
+
+  /* Calendario: posts semanales + parrilla de historias */
+  .weekly-posts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .weekly-post-card { border: 1px solid var(--border); border-radius: 12px; padding: 14px; background: var(--surface-2); }
+  .weekly-post-day { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-faint); margin-bottom: 8px; }
+  .weekly-post-title { font-weight: 700; font-size: 13.5px; margin: 8px 0 4px; }
+  .alumni-chip { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; margin-top: 6px; }
+  .alumni-chip.yes { background: var(--vc-proyeccion-soft); color: var(--vc-proyeccion-ink); }
+  .alumni-chip.no { background: var(--surface); color: var(--ink-faint); border: 1px solid var(--border); }
+
+  .stories-week { margin-bottom: 18px; }
+  .stories-week:last-child { margin-bottom: 0; }
+  .stories-week h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--accent-soft-ink); margin: 0 0 8px; font-weight: 800; }
+  .story-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .story-row:last-child { border-bottom: none; }
+  .story-day { flex: 0 0 90px; font-size: 12.5px; font-weight: 700; }
+  .story-tema { flex: 1; font-size: 13px; color: var(--ink); }
+  .story-status { flex: 0 0 auto; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+  .story-status.lista { background: var(--good-soft); color: var(--good-ink); }
+  .story-status.evento { background: var(--warn-soft); color: var(--warn-ink); }
+
+  @media (max-width: 760px) {
+    .weekly-posts-grid { grid-template-columns: 1fr; }
+    .story-row { flex-wrap: wrap; }
+  }
 
   /* Placeholder view */
   .placeholder { text-align: center; padding: 60px 20px; }
@@ -755,7 +742,20 @@
     <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5l3 2"/></svg></div><h3>Próximos</h3><p>Los posts que tienes en borrador o agendados, con su fecha propuesta.</p></div>
   </section>
   <section class="view" id="view-calendario">
-    <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><h3>Calendario</h3><p>Vista mensual de todo lo publicado y lo planificado, cruzado con tu mejor horario para publicar.</p></div>
+    <h1 class="greeting">Calendario</h1>
+    <div class="date-sub">Lo que entregas cada semana: 3 posts listos para programar + parrilla de historias con 3 semanas de anticipación</div>
+
+    <div class="card">
+      <h2>📋 Posts de esta semana — listos para programar</h2>
+      <p class="vc-note" id="calendario-alumni-note" style="margin-top:-4px"></p>
+      <div class="weekly-posts-grid" id="calendario-posts"></div>
+    </div>
+
+    <div class="card">
+      <h2>🗂️ Parrilla de historias <span style="text-transform:none;font-weight:400;color:var(--ink-faint)">— 3 días por semana, mínimo 1 historia al día, entregada con 3 semanas de anticipación</span></h2>
+      <p class="vc-note" style="margin-top:-4px">La mayoría queda marcada como "se graba el día del evento" porque depende de actividades institucionales que no se pueden producir por adelantado — la parrilla planea el <b>tema y el día</b>, no siempre la pieza final.</p>
+      <div id="calendario-stories"></div>
+    </div>
   </section>
   <section class="view" id="view-tendencias">
     <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div><h3>Tendencias</h3><p>Audios, formatos y temas que están creciendo ahora mismo en tu nicho.</p></div>
@@ -960,9 +960,9 @@
 
   // ---- Variables Críticas de Aspaen: taxonomía usada para etiquetar cada idea/creatividad ----
   var vcMeta = {
-    ambiente: { label: 'Ambiente educativo', icon: '😊', gradient: 'linear-gradient(135deg, #e5975c, #b9622f)' },
-    proyeccion: { label: 'Proyección Internacional', icon: '🌐', gradient: 'linear-gradient(135deg, #6ea3d0, #2f5980)' },
-    infraestructura: { label: 'Infraestructura', icon: '🏛️', gradient: 'linear-gradient(135deg, #9aa1ac, #5b616b)' }
+    ambiente: { label: 'Ambiente educativo', icon: '😊', gradient: 'linear-gradient(135deg, #f1812c, #b9601f)' },
+    proyeccion: { label: 'Proyección Internacional', icon: '🌐', gradient: 'linear-gradient(135deg, #1f7fc4, #14568a)' },
+    infraestructura: { label: 'Infraestructura', icon: '🏛️', gradient: 'linear-gradient(135deg, #aedeea, #5fa9bc)' }
   };
 
   function vcChip(vc) {
@@ -1106,6 +1106,81 @@
       ]
     }
   };
+
+  // ---- Calendario: 3 posts semanales (con réplica a Alumni solo en colegios) + parrilla de historias ----
+  var isColegio = { 'colegio-sanrafael': true, 'colegio-losandes': true, 'preescolar-genios': false, 'preescolar-arcoiris': false };
+
+  var weeklyPosts = {
+    'colegio-sanrafael': [
+      { day: 'Lunes', format: 'Reel', title: 'Un día en la vida de un estudiante de San Rafael', alumni: false },
+      { day: 'Miércoles', format: 'Carrusel', title: 'Un día típico en San Rafael (antes/después)', alumni: false },
+      { day: 'Viernes', format: 'Reel', title: 'Inmersión con profesores nativos', alumni: true }
+    ],
+    'colegio-losandes': [
+      { day: 'Lunes', format: 'Reel', title: '"Abrimos inscripciones"', alumni: false },
+      { day: 'Miércoles', format: 'Reel', title: 'Un recorrido por Los Andes guiado por un estudiante', alumni: true },
+      { day: 'Viernes', format: 'Carrusel', title: 'Un vistazo a nuestros laboratorios y espacios', alumni: false }
+    ],
+    'preescolar-genios': [
+      { day: 'Lunes', format: 'Reel', title: '"Últimos cupos + Montessori"' },
+      { day: 'Miércoles', format: 'Reel', title: '"Así aprendemos" — serie semanal' },
+      { day: 'Viernes', format: 'Imagen', title: 'Un vistazo a nuestra huerta / jardín' }
+    ],
+    'preescolar-arcoiris': [
+      { day: 'Lunes', format: 'Reel', title: 'Refresca "Preinscripciones abiertas" en video' },
+      { day: 'Miércoles', format: 'Reel', title: '"Un día de juego libre"' },
+      { day: 'Viernes', format: 'Carrusel', title: 'Todo lo que incluye tu pensión' }
+    ]
+  };
+
+  var storiesPlan = {
+    'colegio-sanrafael': [
+      [['Lunes','Bienvenida de inicio de semana','lista'],['Miércoles','Actividad deportiva interclases','evento'],['Viernes','Cierre de semana y logros','lista']],
+      [['Lunes','Recordatorio: preinscripciones abiertas','lista'],['Miércoles','Izada de bandera / acto cívico','evento'],['Viernes','Salida pedagógica de 5°','evento']],
+      [['Lunes','Tip para papás nuevos','lista'],['Miércoles','Día del idioma','evento'],['Viernes','Resumen de la semana','lista']]
+    ],
+    'colegio-losandes': [
+      [['Lunes','Bienvenida de semana','lista'],['Miércoles','Entrenamiento del equipo de fútbol','evento'],['Viernes','Cierre semanal','lista']],
+      [['Lunes','Recordatorio de becas disponibles','lista'],['Miércoles','Izada de bandera','evento'],['Viernes','Feria de ciencias','evento']],
+      [['Lunes','Tip de proceso de admisión','lista'],['Miércoles','Semana cultural','evento'],['Viernes','Resumen semanal','lista']]
+    ],
+    'preescolar-genios': [
+      [['Lunes','Bienvenida de la semana','lista'],['Miércoles','Actividad Montessori del día','evento'],['Viernes','Cierre de semana con fotos','evento']],
+      [['Lunes','Recordatorio de cupos','lista'],['Miércoles','Celebración de cumpleaños del mes','evento'],['Viernes','Actividad sensorial','evento']],
+      [['Lunes','Tip para la adaptación','lista'],['Miércoles','Día de la familia','evento'],['Viernes','Resumen semanal','lista']]
+    ],
+    'preescolar-arcoiris': [
+      [['Lunes','Bienvenida de la semana','lista'],['Miércoles','Juego libre en el patio','evento'],['Viernes','Cierre de semana','evento']],
+      [['Lunes','Recordatorio de preinscripciones','lista'],['Miércoles','Celebración de cumpleaños del mes','evento'],['Viernes','Actividad de arte','evento']],
+      [['Lunes','Tip de alimentación saludable','lista'],['Miércoles','Día del amigo','evento'],['Viernes','Resumen semanal','lista']]
+    ]
+  };
+
+  function renderCalendario(account) {
+    var colegio = isColegio[account];
+    document.getElementById('calendario-alumni-note').innerHTML = colegio
+      ? 'Esta cuenta es un colegio: uno de los 3 posts se marca para replicarse también en la cuenta Alumni.'
+      : 'Los preescolares no tienen cuenta Alumni — la réplica no aplica aquí.';
+
+    document.getElementById('calendario-posts').innerHTML = weeklyPosts[account].map(function (p) {
+      var alumniHtml = colegio
+        ? (p.alumni ? '<div class="alumni-chip yes">🔁 Replicar en Alumni</div>' : '<div class="alumni-chip no">— No se replica</div>')
+        : '';
+      return '<div class="weekly-post-card"><div class="weekly-post-day">' + p.day + '</div>' +
+        mockCard(p.title, p.title, 'sq', null) +
+        '<div class="weekly-post-title">' + p.title + '</div>' +
+        '<span class="proposal-fmt">' + p.format + '</span>' + alumniHtml + '</div>';
+    }).join('');
+
+    document.getElementById('calendario-stories').innerHTML = storiesPlan[account].map(function (week, i) {
+      var rows = week.map(function (s) {
+        var statusLabel = s[2] === 'lista' ? '✅ Lista para programar' : '🎥 Se graba el día del evento';
+        return '<div class="story-row"><div class="story-day">' + s[0] + '</div><div class="story-tema">' + s[1] + '</div>' +
+          '<div class="story-status ' + s[2] + '">' + statusLabel + '</div></div>';
+      }).join('');
+      return '<div class="stories-week"><h3>Semana ' + (i + 1) + '</h3>' + rows + '</div>';
+    }).join('');
+  }
 
   // ---- Mock data: cada cuenta trae su campaña táctica y estratégica, con creatividades y propuestas ----
   var campData = {
@@ -1639,10 +1714,12 @@
     renderHome(this.value);
     renderPosts(this.value);
     renderAnalysis(this.value);
+    renderCalendario(this.value);
   });
   renderHome('colegio-sanrafael');
   renderPosts('colegio-sanrafael');
   renderAnalysis('colegio-sanrafael');
+  renderCalendario('colegio-sanrafael');
 
   // Campañas: "también correré el otro tipo" — mantiene la etiqueta sincronizada con el select de tipo
   function syncOtroTipoLabel() {
