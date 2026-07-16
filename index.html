@@ -840,7 +840,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
         📡 Conectado a tu cuenta real de Meta Ads (Aspaen Cali Publicidad) — leads, CPL, alcance y creatividades de Táctica/Estratégica son datos reales del período 16 jun–15 jul 2026. Las metas mensuales aún no están definidas: dime tus objetivos y los agrego.
       </div>
-      <p class="vc-note">Nota: los datos orgánicos de Instagram/Facebook (Inicio, Posts, Calendario) todavía son de ejemplo — esa conexión falta por hacer.</p>
+      <p class="vc-note">Nota: los datos orgánicos de Instagram/Facebook (Inicio, Posts, Calendario) todavía son de ejemplo. Ya guardé tus 4 usuarios (@aspaentacuri, @aspaenjuanambu, @aspaenentrevalles, @aspaentayana) — en cuanto Meta habilite la conexión de cuentas de Instagram para tu ad account, quedan listas para jalar datos reales.</p>
 
       <div id="analysis-kpis" class="kpi-row"></div>
 
@@ -1847,6 +1847,13 @@
     }).join('');
   }
 
+  var instagramHandles = {
+    tacuri: '@aspaentacuri',
+    juanambu: '@aspaenjuanambu',
+    entrevalles: '@aspaenentrevalles',
+    tayana: '@aspaentayana'
+  };
+
   function renderHome(account) {
     var h = homeData[account];
     document.getElementById('home-greeting').textContent = 'Buenos días 👋 — ' + accountLabels[account];
@@ -1861,7 +1868,7 @@
     document.getElementById('home-agenda-title').textContent = h.agenda.title;
     document.getElementById('home-agenda-sub').textContent = h.agenda.sub;
     document.getElementById('home-ig-stats').innerHTML =
-      '<div class="net-followers">' + h.ig.followers + '</div><div class="net-label">Seguidores</div>' +
+      '<div class="net-followers">' + h.ig.followers + '</div><div class="net-label">Seguidores · ' + instagramHandles[account] + '</div>' +
       '<span class="net-delta">' + h.ig.delta + '</span><div class="net-er">ER: ' + h.ig.er + '</div>';
     document.getElementById('home-fb-stats').innerHTML =
       '<div class="net-followers">' + h.fb.followers + '</div><div class="net-label">Seguidores</div>' +
