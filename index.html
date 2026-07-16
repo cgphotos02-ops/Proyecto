@@ -461,6 +461,38 @@
     .story-row { flex-wrap: wrap; }
   }
 
+  /* Eventos del mes -> parrilla */
+  .events-form { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .events-form textarea {
+    font: inherit; font-size: 13px; padding: 10px 12px; border-radius: 9px; min-height: 90px;
+    border: 1px solid var(--border); background: var(--surface); color: var(--ink); resize: vertical;
+  }
+  .events-form textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .events-overflow-note { font-size: 12px; color: var(--warn-ink); margin-top: 6px; }
+
+  /* Reparto con practicante */
+  .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 6px; }
+  .split-col h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; margin: 0 0 10px; font-weight: 800; color: var(--accent-soft-ink); }
+  .split-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .split-item:last-child { border-bottom: none; }
+  .split-empty { font-size: 12.5px; color: var(--ink-faint); font-style: italic; }
+  @media (max-width: 760px) { .split-grid { grid-template-columns: 1fr; } }
+
+  /* Seguimiento de leads */
+  .leads-textarea {
+    width: 100%; font: inherit; font-size: 12.5px; font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    padding: 12px; border-radius: 9px; min-height: 130px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--ink); resize: vertical; white-space: pre;
+  }
+  .leads-textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .sede-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .sede-row:last-child { border-bottom: none; }
+  .sede-name { width: 120px; flex: 0 0 120px; font-weight: 700; }
+  .sede-bar-track { flex: 1; height: 8px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+  .sede-bar-fill { height: 100%; border-radius: 4px; background: var(--crit); }
+  .sede-counts { width: 130px; flex: 0 0 130px; text-align: right; font-size: 12px; color: var(--ink-muted); }
+  .leads-empty-state { text-align: center; padding: 30px 10px; color: var(--ink-faint); font-size: 13px; }
+
   /* Placeholder view */
   .placeholder { text-align: center; padding: 60px 20px; }
   .placeholder .icon-wrap {
@@ -754,7 +786,30 @@
     <div class="card">
       <h2>🗂️ Parrilla de historias <span style="text-transform:none;font-weight:400;color:var(--ink-faint)">— 3 días por semana, mínimo 1 historia al día, entregada con 3 semanas de anticipación</span></h2>
       <p class="vc-note" style="margin-top:-4px">La mayoría queda marcada como "se graba el día del evento" porque depende de actividades institucionales que no se pueden producir por adelantado — la parrilla planea el <b>tema y el día</b>, no siempre la pieza final.</p>
+
+      <div class="events-form">
+        <label class="brief-label" style="margin:0">Eventos del mes (uno por línea — ej: "Izada de bandera", tú no siempre estás en campo grabando, así que dime qué viene y yo organizo el plan)</label>
+        <textarea id="events-input" placeholder="Izada de bandera&#10;Feria de ciencias&#10;Día del idioma&#10;Salida pedagógica 5°"></textarea>
+        <div>
+          <button class="btn primary" id="generate-stories-btn">🗓️ Generar parrilla con estos eventos</button>
+          <span class="events-overflow-note" id="events-overflow-note"></span>
+        </div>
+      </div>
+
       <div id="calendario-stories"></div>
+    </div>
+
+    <div class="card">
+      <h2>🎨 Reparto de contenidos con tu practicante de diseño</h2>
+      <p class="vc-note" style="margin-top:-4px">Ella también apoya a otras áreas, así que el reparto respeta un tope semanal para no ahogarla — lo que no le cabe, lo produces tú directo.</p>
+      <div class="form-grid" style="margin-bottom:10px">
+        <div class="form-group">
+          <label for="intern-cap">Máximo de piezas para ella esta semana</label>
+          <input type="number" id="intern-cap" min="0" max="10" value="2" />
+        </div>
+      </div>
+      <button class="btn primary" id="split-intern-btn">⚖️ Repartir esta semana</button>
+      <div class="split-grid" id="split-output" style="margin-top:14px"></div>
     </div>
   </section>
   <section class="view" id="view-tendencias">
@@ -775,6 +830,7 @@
     <div class="camp-subtabs">
       <div class="tab active" data-camp="analisis">Análisis y recomendaciones</div>
       <div class="tab" data-camp="plan">Planear campaña nueva</div>
+      <div class="tab" data-camp="leads">Seguimiento de leads</div>
     </div>
 
     <!-- ANÁLISIS -->
@@ -906,6 +962,23 @@
             <div class="timeline-step"><div class="w">Semana 3–4</div><div class="t">Escalar presupuesto en el conjunto ganador y pausar el de peor CPL.</div></div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- SEGUIMIENTO DE LEADS -->
+    <div class="camp-panel" id="camp-leads">
+      <div class="card">
+        <h2>📋 Pega aquí el archivo semanal de leads</h2>
+        <p class="vc-note" style="margin-top:-4px">Copia las columnas directo de tu Excel (Sede, Fecha, Táctica, Origen, Nivel al que aspira, Nombre, Correo, Teléfono, Estado, Sede de cambio, Leads de calidad, Razones de la pérdida, Observaciones) y pégalas aquí cada semana.</p>
+        <textarea class="leads-textarea" id="leads-input" placeholder="Pega aquí las filas copiadas de Excel (incluyendo el encabezado)…"></textarea>
+        <div class="action-row" style="margin-top:10px">
+          <button class="btn primary" id="analyze-leads-btn">📊 Analizar leads</button>
+          <button class="btn" id="load-sample-leads-btn">Usar datos de ejemplo</button>
+        </div>
+      </div>
+
+      <div id="leads-output">
+        <div class="card"><div class="leads-empty-state">Pega tu archivo y dale a "Analizar leads" para ver el reporte aquí.</div></div>
       </div>
     </div>
   </section>
@@ -1180,7 +1253,84 @@
       }).join('');
       return '<div class="stories-week"><h3>Semana ' + (i + 1) + '</h3>' + rows + '</div>';
     }).join('');
+    document.getElementById('events-overflow-note').textContent = '';
+    renderSplit(account);
   }
+
+  // ---- Eventos del mes -> parrilla de historias ----
+  var recurringStoryThemes = ['Bienvenida de la semana', 'Recordatorio institucional', 'Tip para las familias', 'Resumen de la semana', 'Detrás de cámaras del día a día', 'Pregunta a la comunidad'];
+
+  function buildStoriesPlanFromEvents(events) {
+    var days = ['Lunes', 'Miércoles', 'Viernes'];
+    var weeks = [[], [], []];
+    var queue = events.slice();
+    var recurringIdx = 0;
+    for (var w = 0; w < 3; w++) {
+      for (var d = 0; d < 3; d++) {
+        if (queue.length) {
+          weeks[w].push([days[d], queue.shift(), 'evento']);
+        } else {
+          weeks[w].push([days[d], recurringStoryThemes[recurringIdx % recurringStoryThemes.length], 'lista']);
+          recurringIdx++;
+        }
+      }
+    }
+    return { weeks: weeks, leftover: queue.length };
+  }
+
+  document.getElementById('generate-stories-btn').addEventListener('click', function () {
+    var account = document.getElementById('global-cuenta').value;
+    var events = document.getElementById('events-input').value.split(/\r?\n/).map(function (l) { return l.trim(); }).filter(Boolean);
+    if (!events.length) {
+      document.getElementById('events-overflow-note').textContent = 'Escribe al menos un evento, o deja el campo vacío y usa el plan recurrente de siempre.';
+      return;
+    }
+    var built = buildStoriesPlanFromEvents(events);
+    storiesPlan[account] = built.weeks;
+    document.getElementById('calendario-stories').innerHTML = storiesPlan[account].map(function (week, i) {
+      var rows = week.map(function (s) {
+        var statusLabel = s[2] === 'lista' ? '✅ Lista para programar' : '🎥 Se graba el día del evento';
+        return '<div class="story-row"><div class="story-day">' + s[0] + '</div><div class="story-tema">' + s[1] + '</div>' +
+          '<div class="story-status ' + s[2] + '">' + statusLabel + '</div></div>';
+      }).join('');
+      return '<div class="stories-week"><h3>Semana ' + (i + 1) + '</h3>' + rows + '</div>';
+    }).join('');
+    document.getElementById('events-overflow-note').textContent = built.leftover > 0
+      ? 'Tienes ' + built.leftover + ' evento(s) sin espacio en estas 3 semanas — pásalos a la siguiente tanda.'
+      : '';
+    renderSplit(account);
+  });
+
+  // ---- Reparto de contenidos con la practicante de diseño ----
+  function splitWithIntern(account, maxCap) {
+    var posts = weeklyPosts[account].map(function (p) { return { title: p.title, format: p.format }; });
+    var week1Stories = (storiesPlan[account][0] || []).filter(function (s) { return s[2] === 'lista'; }).map(function (s) { return { title: s[1], format: 'Historia' }; });
+    var pool = posts.concat(week1Stories);
+    var practicanteCandidates = pool.filter(function (i) { return i.format === 'Carrusel' || i.format === 'Imagen'; });
+    var tuCandidates = pool.filter(function (i) { return i.format === 'Reel' || i.format === 'Video' || i.format === 'Historia'; });
+    var practicante = practicanteCandidates.slice(0, maxCap);
+    var overflow = practicanteCandidates.slice(maxCap);
+    return { practicante: practicante, tu: tuCandidates.concat(overflow), overflow: overflow.length };
+  }
+
+  function renderSplit(account) {
+    var cap = Math.max(0, parseInt(document.getElementById('intern-cap').value, 10) || 0);
+    var split = splitWithIntern(account, cap);
+    function itemRow(it) { return '<div class="split-item"><span class="proposal-fmt">' + it.format + '</span><span>' + it.title + '</span></div>'; }
+    document.getElementById('split-output').innerHTML =
+      '<div class="split-col"><h3>🎨 Para la practicante (' + split.practicante.length + '/' + cap + ')</h3>' +
+      (split.practicante.length ? split.practicante.map(itemRow).join('') : '<div class="split-empty">Nada asignado — sube el tope o esta semana no hay Carruseles/Imágenes.</div>') + '</div>' +
+      '<div class="split-col"><h3>🎥 Lo haces tú directo</h3>' +
+      (split.tu.length ? split.tu.map(itemRow).join('') : '<div class="split-empty">Nada por ahora.</div>') +
+      (split.overflow > 0 ? '<div class="events-overflow-note" style="margin-top:8px">' + split.overflow + ' pieza(s) de diseño no cupieron en el tope de tu practicante y quedaron en tu lista.</div>' : '') + '</div>';
+  }
+
+  document.getElementById('split-intern-btn').addEventListener('click', function () {
+    renderSplit(document.getElementById('global-cuenta').value);
+  });
+  document.getElementById('intern-cap').addEventListener('change', function () {
+    renderSplit(document.getElementById('global-cuenta').value);
+  });
 
   // ---- Mock data: cada cuenta trae su campaña táctica y estratégica, con creatividades y propuestas ----
   var campData = {
@@ -1814,6 +1964,168 @@
 
     document.getElementById('plan-output').style.display = 'block';
     document.getElementById('plan-output').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // ---- Seguimiento de leads: pegar archivo semanal y analizar ----
+  var SAMPLE_LEADS =
+    "SEDE\tFECHA\tTACTICA\tORIGEN\tNIVEL AL QUE ASPIRA\tNOMBRE\tCORREO\tTELEFONO\tESTADO\tSEDE DE CAMBIO\tLEADS DE CALIDAD\tRAZONES DE LA PERDIDA\tOBSERVACIONES GENERALES\n" +
+    "Tayana\t2026-07-08\tMatrículas Abiertas\tFacebook\tPreescolar\tLaura Gómez (demo)\tlaura.demo@example.com\t3001234567\tEn proceso\t\t\t\t\n" +
+    "Entrevalles\t2026-07-09\tMatrículas Abiertas\tInstagram\tPreescolar\tCamila Ruiz (demo)\tcamila.demo@example.com\t3009876543\tPor contactar\t\t\t\t\n" +
+    "Juanambú\t2026-07-13\tMatrículas Abiertas\tInstagram\tPrimaria\tDiego Torres (demo)\tdiego.demo@example.com\t3011112222\tLead Repetido\t\t\t\tYa está en el CRM de Tacurí\n" +
+    "Juanambú\t2026-07-12\tMatrículas Abiertas\tInstagram\tBachillerato\tAndrés Ríos (demo)\tandres.demo@example.com\t3013334444\tEn proceso\t\t\t\t\n" +
+    "Juanambú\t2026-07-10\tMatrículas Abiertas\tFacebook\tBachillerato\tValentina Cruz (demo)\tvalentina.demo@example.com\t3015556666\tCambio de Sede\tTacurí\tNo\tLead no calificado\tLa niña dijo que no habla con sus papás por ahora\n" +
+    "Tayana\t2026-07-13\tMatrículas Abiertas\tFacebook\tPreescolar\tIván Mora (demo)\tivan.demo@example.com\t3017778888\tEn proceso\t\t\t\t\n" +
+    "Entrevalles\t2026-07-09\tMatrículas Abiertas\tInstagram\tPreescolar\tYadira Peña (demo)\tyadira.demo@example.com\t3019990000\tPor contactar\t\tSi\t\tContestó, se dejó información\n" +
+    "Tacurí\t2026-07-13\tMatrículas Abiertas\tInstagram\tPrimaria\tAndrea Bermúdez (demo)\tandrea.demo@example.com\t3021231234\tCambio de Sede\tJuanambú\t\t\t\n" +
+    "Tacurí\t2026-07-12\tMatrículas Abiertas\tFacebook\tPrimaria\tHeidy Cortés (demo)\theidy.demo@example.com\t3024564567\tPor contactar\t\t\t\tNo contestó, se dejó mensaje de WhatsApp\n" +
+    "Tacurí\t2026-07-14\tMatrículas Abiertas\tFacebook\tBachillerato\tStephania Roa (demo)\tstephania.demo@example.com\t3027897890\tCambio de Sede\tJuanambú\tNo\tCambio de sede\tViene de colegio calendario A, vive cerca de Juanambú\n" +
+    "Juanambú\t2026-07-15\tMatrículas Abiertas\tFacebook\tPrimaria\tJairo Muñoz (demo)\tjairo.demo@example.com\t3176798143\tEn proceso\t\t\t\t\n" +
+    "Entrevalles\t2026-07-15\tMatrículas Abiertas\tInstagram\tPreescolar\tSebastián González (demo)\tsebastian.demo@example.com\t3006040680\tPor contactar\t\t\t\tNo contestó, se dejó mensaje de WhatsApp";
+
+  document.getElementById('load-sample-leads-btn').addEventListener('click', function () {
+    document.getElementById('leads-input').value = SAMPLE_LEADS;
+  });
+
+  function findCol(headers, keyword) {
+    for (var i = 0; i < headers.length; i++) if (headers[i].indexOf(keyword) !== -1) return i;
+    return -1;
+  }
+
+  function parseLeadsText(text) {
+    var lines = text.split(/\r?\n/).filter(function (l) { return l.trim() !== ''; });
+    if (lines.length < 2) return null;
+    var delim = lines[0].indexOf('\t') >= 0 ? '\t' : ',';
+    var headers = lines[0].split(delim).map(function (h) { return h.trim().toLowerCase(); });
+
+    var iSede = headers.indexOf('sede');
+    var iEstado = -1, iCambio = -1;
+    for (var i = 0; i < headers.length; i++) {
+      if (headers[i].indexOf('cambio') !== -1) iCambio = i;
+      else if (headers[i].indexOf('estado') !== -1) iEstado = i;
+    }
+    var iCalidad = findCol(headers, 'calidad');
+    var iRazones = -1;
+    for (var j = 0; j < headers.length; j++) { if (headers[j].indexOf('razon') !== -1) { iRazones = j; break; } }
+    var iOrigen = findCol(headers, 'origen');
+
+    var rows = [];
+    for (var r = 1; r < lines.length; r++) {
+      var cells = lines[r].split(delim);
+      rows.push({
+        sede: (iSede >= 0 ? cells[iSede] : '').trim() || 'Sin sede',
+        estado: (iEstado >= 0 ? cells[iEstado] : '').trim(),
+        sedeCambio: (iCambio >= 0 ? cells[iCambio] : '').trim(),
+        calidad: (iCalidad >= 0 ? cells[iCalidad] : '').trim(),
+        razones: (iRazones >= 0 ? cells[iRazones] : '').trim(),
+        origen: (iOrigen >= 0 ? cells[iOrigen] : '').trim()
+      });
+    }
+    return rows;
+  }
+
+  function classifyLead(row) {
+    if (row.calidad && row.calidad.toLowerCase() === 'no') return 'Marcado como no calificado';
+    if (/repetido/i.test(row.estado)) return 'Lead repetido / ya en CRM';
+    if (/cambio de sede/i.test(row.estado)) return 'Quiere otra sede' + (row.sedeCambio ? ' (' + row.sedeCambio + ')' : '');
+    if (row.razones) return 'Otras razones de pérdida';
+    return null; // on target
+  }
+
+  function analyzeLeads(rows) {
+    var total = rows.length;
+    var offTarget = [];
+    var onTarget = [];
+    var reasonCounts = {};
+    var sedeCounts = {};
+
+    rows.forEach(function (row) {
+      var reason = classifyLead(row);
+      sedeCounts[row.sede] = sedeCounts[row.sede] || { total: 0, off: 0 };
+      sedeCounts[row.sede].total++;
+      if (reason) {
+        offTarget.push(row);
+        reasonCounts[reason] = (reasonCounts[reason] || 0) + 1;
+        sedeCounts[row.sede].off++;
+      } else {
+        onTarget.push(row);
+      }
+    });
+
+    var reasonList = Object.keys(reasonCounts).map(function (k) { return { reason: k, count: reasonCounts[k] }; }).sort(function (a, b) { return b.count - a.count; });
+    var sedeList = Object.keys(sedeCounts).map(function (k) { return { sede: k, total: sedeCounts[k].total, off: sedeCounts[k].off }; }).sort(function (a, b) { return b.off - a.off; });
+
+    return { total: total, onTarget: onTarget.length, offTarget: offTarget.length, reasonList: reasonList, sedeList: sedeList };
+  }
+
+  function buildLeadsInterpretation(a) {
+    if (!a.total) return '';
+    var pctOff = Math.round((a.offTarget / a.total) * 100);
+    var topReason = a.reasonList[0];
+    var topSede = a.sedeList[0];
+    var text = 'De los ' + a.total + ' leads de esta semana, <b>' + a.offTarget + ' (' + pctOff + '%) no son on target</b>.';
+    if (topReason) {
+      var pctReason = Math.round((topReason.count / a.total) * 100);
+      text += ' La razón más frecuente es "' + topReason.reason + '" (' + topReason.count + ' leads, ' + pctReason + '% del total)';
+      if (topSede && topSede.off > 0) text += ', concentrada sobre todo en <b>' + topSede.sede + '</b> (' + topSede.off + ' de ' + topSede.total + ' leads de esa sede).';
+      else text += '.';
+    }
+    return text;
+  }
+
+  function buildLeadsRecommendation(a) {
+    if (!a.reasonList.length) return 'Todos los leads de esta semana están on target — buen momento para escalar presupuesto en la campaña que los generó.';
+    var top = a.reasonList[0].reason;
+    if (/otra sede/i.test(top)) {
+      return 'Revisa la segmentación geográfica de la campaña de la sede más afectada en Meta Ads (radio y ubicaciones excluidas) — probablemente está mostrando el anuncio a familias más cerca de otra sede.';
+    }
+    if (/repetido/i.test(top)) {
+      return 'Pide al equipo de contacto que marque el lead como repetido apenas lo detecte en el CRM, y revisa si hay públicos superpuestos entre campañas que estén duplicando el mismo contacto.';
+    }
+    if (/no calificado/i.test(top)) {
+      return 'Ajusta las preguntas del formulario de leads en Meta Ads (agrega una pregunta de calificación) para filtrar antes estos contactos y no gastar presupuesto en ellos.';
+    }
+    return 'Revisa con el equipo de contacto el detalle de "Razones de la pérdida" de esta semana — son casos particulares que conviene mirar uno por uno antes de tocar la pauta.';
+  }
+
+  function renderLeadsReport(a) {
+    var maxOff = Math.max.apply(null, a.sedeList.map(function (s) { return s.off; }).concat([1]));
+    var html = '';
+    html += '<div class="kpi-row">' +
+      '<div class="kpi-tile"><div class="kpi-label">Leads cargados</div><div class="kpi-value">' + a.total + '</div></div>' +
+      '<div class="kpi-tile"><div class="kpi-label">On target</div><div class="kpi-value" style="color:var(--good-ink)">' + a.onTarget + '</div><div class="kpi-sub">' + Math.round((a.onTarget / a.total) * 100) + '%</div></div>' +
+      '<div class="kpi-tile"><div class="kpi-label">No on target</div><div class="kpi-value" style="color:var(--crit-ink)">' + a.offTarget + '</div><div class="kpi-sub">' + Math.round((a.offTarget / a.total) * 100) + '%</div></div>' +
+      '<div class="kpi-tile"><div class="kpi-label">Sede más afectada</div><div class="kpi-value" style="font-size:16px">' + (a.sedeList[0] ? a.sedeList[0].sede : '—') + '</div></div>' +
+      '</div>';
+
+    html += '<div class="card"><h2>🚩 Por qué no son on target</h2>' +
+      (a.reasonList.length ? a.reasonList.map(function (r) {
+        var pct = Math.round((r.count / a.total) * 100);
+        return '<div class="sede-row"><div class="sede-name">' + r.reason + '</div>' +
+          '<div class="sede-bar-track"><div class="sede-bar-fill" style="width:' + pct + '%"></div></div>' +
+          '<div class="sede-counts">' + r.count + ' leads · ' + pct + '%</div></div>';
+      }).join('') : '<div class="leads-empty-state">No hay leads fuera de target en esta carga.</div>') + '</div>';
+
+    html += '<div class="card"><h2>📍 Por sede</h2>' +
+      a.sedeList.map(function (s) {
+        var pct = Math.round((s.off / maxOff) * 100);
+        return '<div class="sede-row"><div class="sede-name">' + s.sede + '</div>' +
+          '<div class="sede-bar-track"><div class="sede-bar-fill" style="width:' + pct + '%"></div></div>' +
+          '<div class="sede-counts">' + s.off + ' fuera / ' + s.total + ' total</div></div>';
+      }).join('') + '</div>';
+
+    html += '<div class="card"><h2>🔎 Qué interpreto</h2><p class="audience-desc">' + buildLeadsInterpretation(a) + '</p></div>';
+    html += '<div class="card"><h2>✅ Recomendación realizable</h2><p class="audience-desc">' + buildLeadsRecommendation(a) + '</p></div>';
+
+    document.getElementById('leads-output').innerHTML = html;
+  }
+
+  document.getElementById('analyze-leads-btn').addEventListener('click', function () {
+    var rows = parseLeadsText(document.getElementById('leads-input').value);
+    if (!rows || !rows.length) {
+      document.getElementById('leads-output').innerHTML = '<div class="card"><div class="leads-empty-state">No pude leer filas válidas — revisa que hayas pegado el encabezado + al menos una fila, separados por tabulaciones (copiados directo de Excel).</div></div>';
+      return;
+    }
+    renderLeadsReport(analyzeLeads(rows));
   });
 </script>
 </body>
