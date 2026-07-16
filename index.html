@@ -346,6 +346,43 @@
     .kpi-row, .campaign-stats { grid-template-columns: 1fr; }
   }
 
+  /* Account/type filter + creative-level analysis */
+  .account-filter { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 18px; }
+  .account-filter .form-group { min-width: 220px; }
+  .type-section { margin-bottom: 16px; }
+  .type-heading { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 800; margin: 22px 0 10px; }
+  .type-heading:first-child { margin-top: 0; }
+  .type-heading .type-dot { width: 9px; height: 9px; border-radius: 50%; }
+  .type-dot.tactica { background: var(--accent); }
+  .type-dot.estrategica { background: var(--good); }
+
+  .creative-row { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .creative-row:last-child { border-bottom: none; }
+  .creative-fmt {
+    flex: 0 0 42px; width: 42px; height: 42px; border-radius: 10px; background: var(--surface-2);
+    border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+    font-size: 10.5px; font-weight: 800; color: var(--ink-faint); text-transform: uppercase;
+  }
+  .creative-main { flex: 1; min-width: 0; }
+  .creative-name { font-size: 13.5px; font-weight: 700; }
+  .creative-meta { font-size: 12px; color: var(--ink-muted); margin-top: 2px; }
+  .creative-note { font-size: 12px; color: var(--ink-muted); margin-top: 4px; line-height: 1.5; }
+  .creative-metrics { flex: 0 0 auto; display: flex; gap: 16px; text-align: right; }
+  .creative-metrics .m .k { font-size: 10.5px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: .03em; }
+  .creative-metrics .m .v { font-size: 13.5px; font-weight: 700; margin-top: 1px; }
+  .verdict-col { flex: 0 0 84px; text-align: center; }
+
+  .proposal-card { border: 1px solid var(--border); border-radius: 12px; padding: 14px; background: var(--surface-2); margin-bottom: 10px; }
+  .proposal-card:last-child { margin-bottom: 0; }
+  .proposal-fmt { font-size: 11px; font-weight: 700; color: var(--accent-soft-ink); background: var(--accent-soft); border-radius: 6px; padding: 2px 8px; display: inline-block; margin-bottom: 6px; }
+  .proposal-title { font-weight: 700; font-size: 13.5px; margin-bottom: 4px; }
+  .proposal-why { font-size: 12.5px; color: var(--ink-muted); line-height: 1.5; }
+
+  .structure-headline { font-size: 16px; font-weight: 800; color: var(--accent); margin-bottom: 10px; line-height: 1.4; }
+  .structure-list { display: flex; flex-direction: column; gap: 10px; }
+  .structure-list li { font-size: 13px; line-height: 1.55; color: var(--ink); list-style: none; padding-left: 18px; position: relative; }
+  .structure-list li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
   /* Placeholder view */
   .placeholder { text-align: center; padding: 60px 20px; }
   .placeholder .icon-wrap {
@@ -677,98 +714,38 @@
 
     <!-- ANÁLISIS -->
     <div class="camp-panel active" id="camp-analisis">
-      <div class="kpi-row">
-        <div class="kpi-tile">
-          <div class="kpi-label">Leads este mes</div>
-          <div class="kpi-value">341</div>
-          <div class="kpi-sub">Meta: 400</div>
-        </div>
-        <div class="kpi-tile">
-          <div class="kpi-label">CPL promedio</div>
-          <div class="kpi-value">$4.80</div>
-          <div class="kpi-sub">Objetivo: $4.50</div>
-        </div>
-        <div class="kpi-tile">
-          <div class="kpi-label">Gasto del mes</div>
-          <div class="kpi-value">$1,636</div>
-          <div class="kpi-sub">Presupuesto: $2,000</div>
-        </div>
-        <div class="kpi-tile">
-          <div class="kpi-label">Campañas activas</div>
-          <div class="kpi-value">3</div>
-          <div class="kpi-sub">1 en pausa</div>
+      <div class="account-filter">
+        <div class="form-group">
+          <label for="a-cuenta">Cuenta</label>
+          <select id="a-cuenta">
+            <option value="colegio-sanrafael">Colegio San Rafael</option>
+            <option value="colegio-losandes">Colegio Los Andes</option>
+            <option value="preescolar-genios">Preescolar Pequeños Genios</option>
+            <option value="preescolar-arcoiris">Preescolar Arcoíris</option>
+          </select>
         </div>
       </div>
 
+      <div id="analysis-kpis" class="kpi-row"></div>
+
       <div class="card">
-        <h2>📣 Campañas activas</h2>
+        <h2>📣 Campañas de esta cuenta</h2>
+        <div id="analysis-campaigns"></div>
+      </div>
 
-        <div class="campaign-card">
-          <div class="campaign-top">
-            <div class="campaign-name">Lanzamiento línea de recetas — Reels</div>
-            <span class="status-pill good">Activa</span>
-          </div>
-          <div class="campaign-stats">
-            <div><div class="k">Leads</div><div class="v">198 / 200</div></div>
-            <div><div class="k">CPL</div><div class="v">$3.90</div></div>
-            <div><div class="k">Gasto</div><div class="v">$772 / $900</div></div>
-          </div>
-          <div class="progress-track"><div class="progress-fill good" style="width:99%"></div></div>
-          <div class="progress-caption">99% de la meta de leads, con el CPL más bajo de tus 3 campañas.</div>
-        </div>
+      <div class="card">
+        <h2>🔍 Análisis por creatividad</h2>
+        <div id="analysis-creatives"></div>
+      </div>
 
-        <div class="campaign-card">
-          <div class="campaign-top">
-            <div class="campaign-name">Rutina familiar — Carrusel + retarget</div>
-            <span class="status-pill warn">Activa</span>
-          </div>
-          <div class="campaign-stats">
-            <div><div class="k">Leads</div><div class="v">89 / 150</div></div>
-            <div><div class="k">CPL</div><div class="v">$6.10</div></div>
-            <div><div class="k">Gasto</div><div class="v">$543 / $700</div></div>
-          </div>
-          <div class="progress-track"><div class="progress-fill warn" style="width:59%"></div></div>
-          <div class="progress-caption">59% de la meta y CPL 27% arriba de tu objetivo — revisa la segmentación.</div>
-        </div>
-
-        <div class="campaign-card">
-          <div class="campaign-top">
-            <div class="campaign-name">Colaboración marca de juguetes</div>
-            <span class="status-pill good">Activa</span>
-          </div>
-          <div class="campaign-stats">
-            <div><div class="k">Leads</div><div class="v">54 / 50</div></div>
-            <div><div class="k">CPL</div><div class="v">$4.60</div></div>
-            <div><div class="k">Gasto</div><div class="v">$321 / $400</div></div>
-          </div>
-          <div class="progress-track"><div class="progress-fill good" style="width:100%"></div></div>
-          <div class="progress-caption">Ya superó su meta de leads con presupuesto de sobra — candidata a escalar.</div>
-        </div>
+      <div class="card">
+        <h2>💡 Propuesta de creatividades para potenciar</h2>
+        <div id="analysis-proposals"></div>
       </div>
 
       <div class="card">
         <h2>🎯 Recomendaciones puntuales</h2>
-        <div class="reco-item">
-          <div class="reco-icon crit">⚠️</div>
-          <div>
-            <div class="reco-title">Pausa o ajusta el anuncio de "Rutina familiar" con peor rendimiento</div>
-            <div class="reco-text">Su CPL ($6.10) es 27% más alto que tu objetivo y que el resto de campañas activas. Prueba una audiencia más parecida a la de "Lanzamiento línea de recetas", que tiene tu mejor CPL.</div>
-          </div>
-        </div>
-        <div class="reco-item">
-          <div class="reco-icon good">📈</div>
-          <div>
-            <div class="reco-title">Sube presupuesto a "Colaboración marca de juguetes"</div>
-            <div class="reco-text">Ya cumplió su meta de leads y le queda 20% de presupuesto sin usar. Es tu mejor oportunidad de generar leads adicionales al mismo costo.</div>
-          </div>
-        </div>
-        <div class="reco-item">
-          <div class="reco-icon warn">🕒</div>
-          <div>
-            <div class="reco-title">Vas 82% del gasto total con 8 días restantes del mes</div>
-            <div class="reco-text">Al ritmo actual te vas a quedar corta en $180 de presupuesto sin gastar. Redistribúyelo hacia la campaña con mejor CPL antes de que cierre el mes.</div>
-          </div>
-        </div>
+        <div id="analysis-recos"></div>
       </div>
     </div>
 
@@ -777,23 +754,47 @@
       <div class="card">
         <h2>🗒️ Cuéntame la idea de tu próxima campaña</h2>
         <div class="form-grid">
+          <div class="form-group">
+            <label for="p-cuenta">Cuenta</label>
+            <select id="p-cuenta">
+              <option value="colegio-sanrafael">Colegio San Rafael</option>
+              <option value="colegio-losandes">Colegio Los Andes</option>
+              <option value="preescolar-genios">Preescolar Pequeños Genios</option>
+              <option value="preescolar-arcoiris">Preescolar Arcoíris</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="p-tipo">Tipo de comunicación</label>
+            <select id="p-tipo">
+              <option value="tactica">Táctica (leads / matrículas)</option>
+              <option value="estrategica">Estratégica (conocimiento de marca)</option>
+            </select>
+          </div>
           <div class="form-group full">
             <label for="p-idea">¿Cuál es la idea de la campaña?</label>
-            <textarea id="p-idea" rows="2" placeholder="Ej: Lanzar mi nueva guía de loncheras saludables, quiero conseguir mamás interesadas en comprarla">Lanzar mi nueva guía de loncheras saludables para mamás con niños en edad escolar</textarea>
+            <textarea id="p-idea" rows="2" placeholder="Ej: Abrir preinscripciones para el próximo año escolar, buscando papás con niños en edad de ingresar">Abrir preinscripciones 2027 para papás con niños listos para ingresar</textarea>
           </div>
           <div class="form-group">
             <label for="p-leads">Meta de leads on target</label>
-            <input type="number" id="p-leads" min="1" value="250" />
+            <input type="number" id="p-leads" min="1" value="150" />
           </div>
           <div class="form-group">
             <label for="p-budget">Presupuesto disponible (USD)</label>
-            <input type="number" id="p-budget" min="1" value="1200" />
+            <input type="number" id="p-budget" min="1" value="900" />
+          </div>
+          <div class="form-group">
+            <label for="p-publicos">Públicos o ángulos distintos a probar</label>
+            <input type="number" id="p-publicos" min="1" max="6" value="3" />
+          </div>
+          <div class="form-group">
+            <label>&nbsp;</label>
+            <div class="chip-check" id="p-otro-tipo-toggle" data-selected="false">También correré <span id="p-otro-tipo-label">Estratégica</span> en paralelo para esta cuenta</div>
           </div>
           <div class="form-group full">
             <label>Dónde la vas a correr</label>
             <div class="platform-toggle">
               <div class="chip-check selected" data-platform="ig">Instagram</div>
-              <div class="chip-check selected" data-platform="tt">TikTok</div>
+              <div class="chip-check selected" data-platform="fb">Facebook</div>
             </div>
           </div>
         </div>
@@ -804,6 +805,12 @@
         <div class="card">
           <h2>📋 Resumen del plan</h2>
           <p class="output-summary" id="output-summary"></p>
+        </div>
+
+        <div class="card">
+          <h2>🧩 Estructura de campaña recomendada</h2>
+          <div class="structure-headline" id="output-structure-headline"></div>
+          <ul class="structure-list" id="output-structure-list"></ul>
         </div>
 
         <div class="card">
@@ -825,8 +832,8 @@
           <h2>📆 Cronograma sugerido</h2>
           <div class="timeline-row">
             <div class="timeline-step"><div class="w">Semana 1</div><div class="t">Producción de piezas y configuración de tracking (pixel + UTMs) con tu equipo.</div></div>
-            <div class="timeline-step"><div class="w">Semana 2</div><div class="t">Lanzamiento con presupuesto reducido (20%) para probar qué pieza funciona mejor.</div></div>
-            <div class="timeline-step"><div class="w">Semana 3–4</div><div class="t">Escalar presupuesto en la pieza ganadora y pausar las de peor CPL.</div></div>
+            <div class="timeline-step"><div class="w">Semana 2</div><div class="t">Lanzamiento con presupuesto reducido (20%) para probar qué conjunto de anuncios funciona mejor.</div></div>
+            <div class="timeline-step"><div class="w">Semana 3–4</div><div class="t">Escalar presupuesto en el conjunto ganador y pausar el de peor CPL.</div></div>
           </div>
         </div>
       </div>
@@ -857,61 +864,311 @@
     });
   });
 
-  // Campañas: platform chips
+  // Campañas: platform / toggle chips
   document.querySelectorAll('.chip-check').forEach(function (chip) {
     chip.addEventListener('click', function () { chip.classList.toggle('selected'); });
   });
 
-  // Campañas: generar plan
   var checkIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>';
 
   function fmtMoney(n) {
     return '$' + n.toLocaleString('en-US', { maximumFractionDigits: 0 });
   }
+  function fmtNum(n) {
+    return n.toLocaleString('en-US', { maximumFractionDigits: 0 });
+  }
+  var VERDICT_CLASS = { 'Ganadora': 'good', 'Débil': 'warn', 'Fatigada': 'crit' };
 
+  var accountLabels = {
+    'colegio-sanrafael': 'Colegio San Rafael',
+    'colegio-losandes': 'Colegio Los Andes',
+    'preescolar-genios': 'Preescolar Pequeños Genios',
+    'preescolar-arcoiris': 'Preescolar Arcoíris'
+  };
+  var tipoLabels = { tactica: 'Comunicación Táctica', estrategica: 'Comunicación Estratégica' };
+  var tipoObjective = { tactica: 'Clientes potenciales / Conversiones (leads)', estrategica: 'Reconocimiento de marca / Interacción' };
+
+  // ---- Mock data: cada cuenta trae su campaña táctica y estratégica, con creatividades y propuestas ----
+  var campData = {
+    'colegio-sanrafael': {
+      tactica: {
+        camp: { goalLabel: 'Leads', goal: 200, current: 178, cpl: 5.90, cplObj: 5.50, spend: 1050, budget: 1300 },
+        creatives: [
+          { name: '"Agenda tu visita guiada"', format: 'Reel', days: 12, m: [['Leads','64'],['CPL','$5.20'],['CTR','1.8%']], verdict: 'Ganadora', note: 'Tu mejor CPL del mes — sigue esta línea de gancho con testimonio real.' },
+          { name: '"Cupos limitados 2027"', format: 'Carrusel', days: 18, m: [['Leads','22'],['CPL','$9.10'],['CTR','0.9%']], verdict: 'Débil', note: 'CTR bajo: el gancho de precio no funciona, prueba con beneficio en vez de costo.' },
+          { name: '"Conoce nuestras instalaciones"', format: 'Video', days: 25, m: [['Leads','9'],['CPL','$14.30'],['Frec.','4.2']], verdict: 'Fatigada', note: 'Frecuencia 4.2 — la misma audiencia ya la vio varias veces, refréscala o pausa.' }
+        ],
+        proposals: [
+          { fmt: 'Reel · countdown', title: '"¿Aún hay cupo para tu hijo en 2027?"', why: 'Aprovecha la urgencia que ya funcionó en "Agenda tu visita guiada", con un gancho más específico de escasez.' },
+          { fmt: 'Carrusel', title: 'Un día típico en San Rafael (antes/después)', why: 'Reemplaza el ángulo de precio, que rinde mal, por beneficio mostrado en vez de contado.' }
+        ]
+      },
+      estrategica: {
+        camp: { goalLabel: 'Alcance', goal: 60000, current: 52300, freq: 2.1, cpm: 8.40, spend: 620, budget: 800 },
+        creatives: [
+          { name: '"Un día en San Rafael"', format: 'Reel', m: [['Alcance','38.4K'],['Frec.','1.6'],['CPM','$6.20']], verdict: 'Ganadora', note: 'Buen alcance con frecuencia sana — sigue produciendo este formato de "día a día".' },
+          { name: '"Testimonio de egresados"', format: 'Video', m: [['Alcance','14.2K'],['Frec.','3.4'],['CPM','$11.80']], verdict: 'Fatigada', note: 'Frecuencia alta con poco alcance nuevo — cambia audiencia o pausa.' },
+          { name: '"Valores del colegio"', format: 'Carrusel', m: [['Alcance','9.8K'],['Frec.','1.2'],['CPM','$15.40']], verdict: 'Débil', note: 'CPM alto sin generar interacción, el mensaje es muy genérico frente al resto.' }
+        ],
+        proposals: [
+          { fmt: 'Reel · serie', title: '"Voces de papás" — testimonios cortos', why: 'El testimonio en video funciona pero se fatigó rápido; una serie con caras distintas mantiene frescura sin perder el formato ganador.' },
+          { fmt: 'Reel', title: 'Detrás de cámaras de una clase real', why: 'Contenido auténtico y de bajo costo de producción, buen candidato para bajar el CPM actual.' }
+        ]
+      }
+    },
+    'colegio-losandes': {
+      tactica: {
+        camp: { goalLabel: 'Leads', goal: 150, current: 96, cpl: 7.40, cplObj: 6.00, spend: 710, budget: 900 },
+        creatives: [
+          { name: '"Abrimos inscripciones"', format: 'Reel', days: 10, m: [['Leads','51'],['CPL','$6.10'],['CTR','1.4%']], verdict: 'Ganadora', note: 'Tu gancho de inscripción abierta está rindiendo mejor que el resto.' },
+          { name: '"Beca por buen rendimiento"', format: 'Imagen', days: 20, m: [['Leads','12'],['CPL','$15.80'],['Frec.','3.9']], verdict: 'Fatigada', note: 'Frecuencia alta y CTR bajo — el formato estático ya se agotó con esta audiencia.' }
+        ],
+        proposals: [
+          { fmt: 'Reel', title: '"Últimos cupos con beca"', why: 'Combina el gancho de inscripción (ganador) con el incentivo de beca, que solo no funcionó como imagen estática.' }
+        ]
+      },
+      estrategica: {
+        camp: { goalLabel: 'Alcance', goal: 45000, current: 41000, freq: 2.8, cpm: 9.90, spend: 500, budget: 650 },
+        creatives: [
+          { name: '"Bienvenida a Los Andes"', format: 'Video', m: [['Alcance','28K'],['Frec.','1.9'],['CPM','$8.10']], verdict: 'Ganadora', note: 'Tu creatividad con mejor CPM y frecuencia sana.' },
+          { name: '"Nuestra huerta escolar"', format: 'Carrusel', m: [['Alcance','13K'],['Frec.','3.6'],['CPM','$13.20']], verdict: 'Fatigada', note: 'Frecuencia de 3.6 — ya casi no está llegando a gente nueva.' }
+        ],
+        proposals: [
+          { fmt: 'Reel', title: 'Un recorrido por Los Andes guiado por un estudiante', why: 'La bienvenida en video funciona; un recorrido mantiene el mismo estilo con contenido nuevo.' }
+        ]
+      }
+    },
+    'preescolar-genios': {
+      tactica: {
+        camp: { goalLabel: 'Leads', goal: 120, current: 133, cpl: 4.60, cplObj: 5.00, spend: 610, budget: 700 },
+        creatives: [
+          { name: '"Agenda tu cupo para el próximo año"', format: 'Reel', days: 14, m: [['Leads','78'],['CPL','$3.90'],['CTR','2.1%']], verdict: 'Ganadora', note: 'Tu mejor CPL de todas las cuentas — el gancho de urgencia funciona muy bien aquí.' },
+          { name: '"Conoce nuestro método Montessori"', format: 'Carrusel', days: 16, m: [['Leads','55'],['CPL','$5.60'],['CTR','1.1%']], verdict: 'Ganadora', note: 'También cumple objetivo — el diferencial pedagógico convence.' }
+        ],
+        proposals: [
+          { fmt: 'Reel', title: '"Últimos cupos + Montessori"', why: 'Combina el mensaje de urgencia con el diferencial pedagógico, tus dos creatividades con mejor CPL.' }
+        ]
+      },
+      estrategica: {
+        camp: { goalLabel: 'Alcance', goal: 30000, current: 33500, freq: 1.8, cpm: 7.20, spend: 340, budget: 400 },
+        creatives: [
+          { name: '"Un día en Pequeños Genios"', format: 'Reel', m: [['Alcance','22K'],['Frec.','1.5'],['CPM','$6.10']], verdict: 'Ganadora', note: 'Alcance por encima de la meta con el CPM más bajo de la cuenta.' },
+          { name: '"Testimonios de mamás"', format: 'Video', m: [['Alcance','11.5K'],['Frec.','2.6'],['CPM','$9.80']], verdict: 'Débil', note: 'CPM más alto que el resto sin ganar alcance adicional.' }
+        ],
+        proposals: [
+          { fmt: 'Reel · serie', title: '"Así aprendemos" — serie semanal', why: 'Aprovecha el formato ganador de "un día en..." con contenido recurrente de bajo costo.' }
+        ]
+      }
+    },
+    'preescolar-arcoiris': {
+      tactica: {
+        camp: { goalLabel: 'Leads', goal: 100, current: 61, cpl: 8.90, cplObj: 6.50, spend: 540, budget: 650 },
+        creatives: [
+          { name: '"Preinscripciones abiertas"', format: 'Imagen', days: 22, m: [['Leads','40'],['CPL','$7.20'],['Frec.','3.8']], verdict: 'Fatigada', note: 'El mensaje capta leads pero el formato estático ya se agotó con esta audiencia.' },
+          { name: '"Conoce Arcoíris"', format: 'Video', days: 9, m: [['Leads','21'],['CPL','$11.50'],['CTR','0.6%']], verdict: 'Débil', note: 'CTR bajo — el mensaje institucional no está generando suficiente interés.' }
+        ],
+        proposals: [
+          { fmt: 'Reel', title: 'Refresca "Preinscripciones abiertas" en video', why: 'La oferta funciona; cámbiala de imagen estática a Reel para reducir la fatiga sin perder el mensaje.' }
+        ]
+      },
+      estrategica: {
+        camp: { goalLabel: 'Alcance', goal: 25000, current: 19800, freq: 3.1, cpm: 12.40, spend: 300, budget: 380 },
+        creatives: [
+          { name: '"Nuestros valores"', format: 'Carrusel', m: [['Alcance','11.2K'],['Frec.','3.5'],['CPM','$14.90']], verdict: 'Fatigada', note: 'Frecuencia alta y CPM alto — ya casi no llega a audiencia nueva.' },
+          { name: '"Actividades al aire libre"', format: 'Reel', m: [['Alcance','8.6K'],['Frec.','2.4'],['CPM','$9.60']], verdict: 'Débil', note: 'Mejor que el carrusel, pero ninguna creatividad estratégica está ganando en esta cuenta.' }
+        ],
+        proposals: [
+          { fmt: 'Reel', title: '"Un día de juego libre" — ángulo 100% visual y emocional', why: 'Ninguna creatividad estratégica está ganando aquí; prueba un ángulo visual antes de seguir invirtiendo en carruseles de texto.' }
+        ]
+      }
+    }
+  };
+
+  function renderCampaignCard(tipo, data) {
+    var c = data.camp;
+    var isTactica = tipo === 'tactica';
+    var pct = Math.min(100, Math.round((c.current / c.goal) * 100));
+    var cls = isTactica ? (c.cpl <= c.cplObj ? 'good' : (pct >= 80 ? 'warn' : 'crit')) : (pct >= 100 ? 'good' : (pct >= 70 ? 'warn' : 'crit'));
+    var statsHtml = isTactica
+      ? '<div><div class="k">' + c.goalLabel + '</div><div class="v">' + fmtNum(c.current) + ' / ' + fmtNum(c.goal) + '</div></div>' +
+        '<div><div class="k">CPL</div><div class="v">$' + c.cpl.toFixed(2) + '</div></div>' +
+        '<div><div class="k">Gasto</div><div class="v">' + fmtMoney(c.spend) + ' / ' + fmtMoney(c.budget) + '</div></div>'
+      : '<div><div class="k">' + c.goalLabel + '</div><div class="v">' + fmtNum(c.current) + ' / ' + fmtNum(c.goal) + '</div></div>' +
+        '<div><div class="k">Frecuencia</div><div class="v">' + c.freq + '</div></div>' +
+        '<div><div class="k">CPM</div><div class="v">$' + c.cpm.toFixed(2) + '</div></div>';
+    var caption = isTactica
+      ? (pct + '% de la meta de leads · CPL ' + (c.cpl <= c.cplObj ? 'dentro' : 'por encima') + ' del objetivo ($' + c.cplObj.toFixed(2) + ').')
+      : (pct + '% de la meta de alcance · frecuencia ' + (c.freq <= 2.5 ? 'sana' : 'alta, revisa fatiga') + '.');
+    return '<div class="campaign-card"><div class="campaign-top">' +
+      '<div class="campaign-name">' + tipoLabels[tipo] + '</div>' +
+      '<span class="status-pill ' + cls + '">' + (cls === 'good' ? 'En meta' : (cls === 'warn' ? 'Atención' : 'Fuera de meta')) + '</span></div>' +
+      '<div class="campaign-stats">' + statsHtml + '</div>' +
+      '<div class="progress-track"><div class="progress-fill ' + cls + '" style="width:' + pct + '%"></div></div>' +
+      '<div class="progress-caption">' + caption + '</div></div>';
+  }
+
+  function renderCreativeRow(cr) {
+    var metricsHtml = cr.m.map(function (pair) {
+      return '<div class="m"><div class="k">' + pair[0] + '</div><div class="v">' + pair[1] + '</div></div>';
+    }).join('');
+    return '<div class="creative-row">' +
+      '<div class="creative-fmt">' + cr.format + '</div>' +
+      '<div class="creative-main"><div class="creative-name">' + cr.name + '</div>' +
+      '<div class="creative-meta">' + (cr.days ? cr.days + ' días activa' : 'Activa') + '</div>' +
+      '<div class="creative-note">' + cr.note + '</div></div>' +
+      '<div class="creative-metrics">' + metricsHtml + '</div>' +
+      '<div class="verdict-col"><span class="status-pill ' + VERDICT_CLASS[cr.verdict] + '">' + cr.verdict + '</span></div>' +
+      '</div>';
+  }
+
+  function renderProposal(p) {
+    return '<div class="proposal-card"><span class="proposal-fmt">' + p.fmt + '</span>' +
+      '<div class="proposal-title">' + p.title + '</div>' +
+      '<div class="proposal-why">' + p.why + '</div></div>';
+  }
+
+  function buildRecos(account) {
+    var t = campData[account].tactica, e = campData[account].estrategica;
+    var fatigada = t.creatives.concat(e.creatives).find(function (c) { return c.verdict === 'Fatigada'; });
+    var ganadora = t.creatives.concat(e.creatives).find(function (c) { return c.verdict === 'Ganadora'; });
+    var reco = [];
+    if (fatigada) {
+      reco.push({ icon: 'crit', symbol: '⚠️', title: 'Pausa o renueva ' + fatigada.name, text: fatigada.note });
+    }
+    if (ganadora) {
+      reco.push({ icon: 'good', symbol: '📈', title: 'Escala ' + ganadora.name, text: 'Es de tus mejores creatividades. Si le subes presupuesto, es tu forma más directa de mejorar el resultado de toda la cuenta.' });
+    }
+    var pctT = Math.round((t.camp.current / t.camp.goal) * 100);
+    if (pctT < 80) {
+      reco.push({ icon: 'warn', symbol: '🕒', title: 'Táctica va al ' + pctT + '% de su meta de leads', text: 'Redistribuye presupuesto hacia la creatividad con mejor CPL antes de que cierre el mes.' });
+    } else {
+      reco.push({ icon: 'good', symbol: '✅', title: 'Táctica va bien encaminada (' + pctT + '% de la meta)', text: 'Mantén el ritmo actual de gasto y sigue vigilando el CPL de cada creatividad.' });
+    }
+    return reco;
+  }
+
+  function renderAnalysis(account) {
+    var data = campData[account];
+    var t = data.tactica.camp, e = data.estrategica.camp;
+
+    document.getElementById('analysis-kpis').innerHTML =
+      '<div class="kpi-tile"><div class="kpi-label">Leads (táctica)</div><div class="kpi-value">' + fmtNum(t.current) + '</div><div class="kpi-sub">Meta: ' + fmtNum(t.goal) + '</div></div>' +
+      '<div class="kpi-tile"><div class="kpi-label">CPL promedio</div><div class="kpi-value">$' + t.cpl.toFixed(2) + '</div><div class="kpi-sub">Objetivo: $' + t.cplObj.toFixed(2) + '</div></div>' +
+      '<div class="kpi-tile"><div class="kpi-label">Alcance (estratégica)</div><div class="kpi-value">' + fmtNum(e.current) + '</div><div class="kpi-sub">Meta: ' + fmtNum(e.goal) + '</div></div>' +
+      '<div class="kpi-tile"><div class="kpi-label">Gasto total</div><div class="kpi-value">' + fmtMoney(t.spend + e.spend) + '</div><div class="kpi-sub">Presupuesto: ' + fmtMoney(t.budget + e.budget) + '</div></div>';
+
+    document.getElementById('analysis-campaigns').innerHTML =
+      renderCampaignCard('tactica', data.tactica) + renderCampaignCard('estrategica', data.estrategica);
+
+    document.getElementById('analysis-creatives').innerHTML =
+      '<div class="type-heading"><span class="type-dot tactica"></span>Táctica</div>' +
+      data.tactica.creatives.map(renderCreativeRow).join('') +
+      '<div class="type-heading"><span class="type-dot estrategica"></span>Estratégica</div>' +
+      data.estrategica.creatives.map(renderCreativeRow).join('');
+
+    document.getElementById('analysis-proposals').innerHTML =
+      '<div class="type-heading"><span class="type-dot tactica"></span>Táctica</div>' +
+      data.tactica.proposals.map(renderProposal).join('') +
+      '<div class="type-heading"><span class="type-dot estrategica"></span>Estratégica</div>' +
+      data.estrategica.proposals.map(renderProposal).join('');
+
+    document.getElementById('analysis-recos').innerHTML = buildRecos(account).map(function (r) {
+      return '<div class="reco-item"><div class="reco-icon ' + r.icon + '">' + r.symbol + '</div>' +
+        '<div><div class="reco-title">' + r.title + '</div><div class="reco-text">' + r.text + '</div></div></div>';
+    }).join('');
+  }
+
+  document.getElementById('a-cuenta').addEventListener('change', function () { renderAnalysis(this.value); });
+  renderAnalysis('colegio-sanrafael');
+
+  // Campañas: "también correré el otro tipo" — mantiene la etiqueta sincronizada con el select de tipo
+  function syncOtroTipoLabel() {
+    var tipo = document.getElementById('p-tipo').value;
+    var otro = tipo === 'tactica' ? 'Estratégica' : 'Táctica';
+    document.getElementById('p-otro-tipo-label').textContent = otro;
+  }
+  document.getElementById('p-tipo').addEventListener('change', syncOtroTipoLabel);
+  syncOtroTipoLabel();
+
+  // Campañas: generar plan
   document.getElementById('generate-plan-btn').addEventListener('click', function () {
+    var cuenta = document.getElementById('p-cuenta').value;
+    var tipo = document.getElementById('p-tipo').value;
     var idea = document.getElementById('p-idea').value.trim() || 'tu próxima campaña';
     var leadsGoal = Math.max(1, parseInt(document.getElementById('p-leads').value, 10) || 250);
     var budget = Math.max(1, parseInt(document.getElementById('p-budget').value, 10) || 1200);
-    var platforms = Array.from(document.querySelectorAll('.chip-check.selected')).map(function (c) { return c.dataset.platform; });
-    var platformNames = platforms.map(function (p) { return p === 'ig' ? 'Instagram' : 'TikTok'; }).join(' y ') || 'tus redes';
+    var numPublicos = Math.max(1, parseInt(document.getElementById('p-publicos').value, 10) || 3);
+    var correOtroTipo = document.getElementById('p-otro-tipo-toggle').classList.contains('selected');
+    var platforms = Array.from(document.querySelectorAll('#camp-plan .platform-toggle .chip-check.selected')).map(function (c) { return c.dataset.platform; });
+    var platformNames = platforms.map(function (p) { return p === 'ig' ? 'Instagram' : 'Facebook'; }).join(' y ') || 'tus redes';
     var cpl = budget / leadsGoal;
+    var cuentaLabel = accountLabels[cuenta];
+    var otroTipo = tipo === 'tactica' ? 'estrategica' : 'tactica';
 
     document.getElementById('output-summary').innerHTML =
-      'Para "<b>' + idea + '</b>", con una meta de <b>' + leadsGoal + ' leads</b> y un presupuesto de <b>' + fmtMoney(budget) + '</b> en ' + platformNames + ', ' +
-      'tu costo por lead objetivo es de <b>$' + cpl.toFixed(2) + '</b>. Tu CPL histórico ronda los $4.80–$6.10, así que este objetivo es ' +
-      (cpl >= 4.5 ? 'realista si mantienes el rendimiento actual.' : 'ambicioso — vigila el CPL desde el día 2 y ajusta la segmentación si se dispara.');
+      'Para "<b>' + idea + '</b>" en <b>' + cuentaLabel + '</b> (' + tipoLabels[tipo] + '), con una meta de <b>' + leadsGoal + ' leads</b> y un presupuesto de <b>' + fmtMoney(budget) + '</b> en ' + platformNames + ', ' +
+      'tu costo por lead objetivo es de <b>$' + cpl.toFixed(2) + '</b>. El CPL histórico de esta cuenta en ' + tipoLabels[tipo].toLowerCase() + ' ronda los $' + campData[cuenta][tipo === 'tactica' ? 'tactica' : 'tactica'].camp.cpl.toFixed(2) + ', así que este objetivo es ' +
+      (cpl >= campData[cuenta].tactica.camp.cpl * 0.9 ? 'realista si mantienes el rendimiento actual.' : 'ambicioso — vigila el CPL desde el día 2 y ajusta la segmentación si se dispara.');
 
-    var dist = [
-      { label: 'Reels / video ads', pct: 0.45 },
-      { label: 'Carrusel + estáticos', pct: 0.30 },
-      { label: 'Retargeting (quien ya interactuó)', pct: 0.25 }
+    var structureLines = [
+      'Usa <b>1 sola campaña</b> con objetivo de <b>' + tipoObjective[tipo] + '</b>, y mete cada público o ángulo como un <b>conjunto de anuncios distinto</b> (' + numPublicos + ' en total) — así Meta reparte presupuesto (CBO) hacia el que mejor esté funcionando, en vez de competir entre campañas separadas.',
+      'Necesitas que cada conjunto acumule ~50 conversiones para salir de la fase de aprendizaje. Con ' + numPublicos + ' conjuntos y ' + fmtMoney(budget) + ' de presupuesto, vigila que ninguno quede con muy poco gasto para aprender.',
+      'No mezcles <b>' + tipoLabels[otroTipo] + '</b> en esta misma campaña: tiene un objetivo distinto en Meta (' + tipoObjective[otroTipo] + ') y mezclarlo confunde la optimización.'
     ];
+    if (correOtroTipo) {
+      structureLines.push('Como también vas a correr ' + tipoLabels[otroTipo] + ' para ' + cuentaLabel + ' al mismo tiempo, crea una <b>campaña aparte</b> para eso — misma cuenta, campaña distinta.');
+    }
+    structureLines.push(cuentaLabel + ' tiene su propia página en Meta, así que esta estructura aplica solo para ella — tus otras 3 cuentas siempre necesitan sus propias campañas, nunca compartidas entre colegios/preescolares.');
+
+    document.getElementById('output-structure-headline').textContent =
+      '1 campaña de ' + tipoLabels[tipo] + ' · ' + numPublicos + ' conjuntos de anuncios';
+    document.getElementById('output-structure-list').innerHTML = structureLines.map(function (l) { return '<li>' + l + '</li>'; }).join('');
+
+    var dist = tipo === 'tactica'
+      ? [
+          { label: 'Reels / video ads', pct: 0.45 },
+          { label: 'Carrusel + estáticos', pct: 0.30 },
+          { label: 'Retargeting (quien ya interactuó)', pct: 0.25 }
+        ]
+      : [
+          { label: 'Reels de alcance', pct: 0.50 },
+          { label: 'Video testimonios / marca', pct: 0.30 },
+          { label: 'Carrusel de valores/diferenciales', pct: 0.20 }
+        ];
     document.getElementById('output-distribution').innerHTML = dist.map(function (d) {
       return '<div class="dist-row"><div class="dist-label">' + d.label + '</div>' +
         '<div class="dist-track"><div class="dist-fill" style="width:' + Math.round(d.pct * 100) + '%"></div></div>' +
         '<div class="dist-value">' + fmtMoney(budget * d.pct) + '</div></div>';
     }).join('');
 
-    var pieces = [
-      '3 Reels cortos (15–30 seg) con el gancho: "' + idea + '"',
-      '2 Carruseles explicando el beneficio principal, con CTA claro a dejar sus datos',
-      '1 Story destacada tipo testimonio o detrás de cámaras',
-      'Copy corto para el formulario de leads (3 variantes para probar)'
-    ];
+    var pieces = tipo === 'tactica'
+      ? [
+          numPublicos + ' Reels cortos (15–30 seg), uno por público, con el gancho: "' + idea + '"',
+          '2 Carruseles explicando el beneficio principal, con CTA claro a dejar sus datos',
+          '1 Story destacada tipo testimonio o detrás de cámaras',
+          'Copy corto para el formulario de leads (3 variantes para probar)'
+        ]
+      : [
+          numPublicos + ' Reels de alcance mostrando el día a día, uno por público objetivo',
+          '1 Video testimonio de familias o egresados',
+          '1 Carrusel de valores/diferenciales del colegio',
+          'Copy corto orientado a marca (sin CTA de venta directa)'
+        ];
     document.getElementById('output-pieces').innerHTML = pieces.map(function (p) {
       return '<div class="checklist-item">' + checkIcon + '<span>' + p + '</span></div>';
     }).join('');
 
     var team = {
-      'Diseño': ['Portada del formulario de leads', 'Piezas estáticas para el carrusel'],
-      'Edición / video': ['Cortes de los reels según el guion', 'Subtítulos y música con derechos'],
-      'Copywriting': ['3 ángulos de copy para probar en A/B', 'Textos cortos para cada plataforma seleccionada'],
-      'Data / tracking': ['Pixel de Meta activo en la página de destino', 'UTMs para cada pieza', 'Evento de conversión "Lead" configurado']
+      'Diseño': tipo === 'tactica' ? ['Portada del formulario de leads', 'Piezas estáticas para el carrusel'] : ['Piezas estáticas para el carrusel de valores'],
+      'Edición / video': ['Cortes de los reels según el guion, uno por conjunto de anuncios', 'Subtítulos y música con derechos'],
+      'Copywriting': ['Un ángulo de copy por conjunto de anuncios para probar', 'Textos cortos para cada plataforma seleccionada'],
+      'Data / tracking': tipo === 'tactica'
+        ? ['Pixel de Meta activo en la página de destino', 'UTMs para cada pieza', 'Evento de conversión "Lead" configurado']
+        : ['Pixel de Meta activo para medir alcance/frecuencia', 'UTMs para cada pieza']
     };
     document.getElementById('output-team').innerHTML = Object.keys(team).map(function (role) {
       return '<div class="checklist-group"><h3>' + role + '</h3>' +
-        team[role].map(function (t) { return '<div class="checklist-item">' + checkIcon + '<span>' + t + '</span></div>'; }).join('') +
+        team[role].map(function (t2) { return '<div class="checklist-item">' + checkIcon + '<span>' + t2 + '</span></div>'; }).join('') +
         '</div>';
     }).join('');
 
