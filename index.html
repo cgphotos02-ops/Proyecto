@@ -253,6 +253,99 @@
   .comment-counts b { color: var(--ink); }
   .explore-link { margin-top: 10px; font-size: 12.5px; color: var(--accent); font-weight: 700; cursor: pointer; }
 
+  /* Campañas view */
+  .disclaimer-note {
+    display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-muted);
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 9px 14px; margin-bottom: 18px;
+  }
+  .disclaimer-note svg { width: 15px; height: 15px; flex: 0 0 15px; color: var(--ink-faint); }
+
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+  .kpi-tile { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; box-shadow: var(--shadow); }
+  .kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-faint); font-weight: 700; }
+  .kpi-value { font-size: 21px; font-weight: 800; margin-top: 4px; }
+  .kpi-sub { font-size: 11.5px; color: var(--ink-muted); margin-top: 2px; }
+
+  .campaign-card { border: 1px solid var(--border); border-radius: 12px; padding: 16px; background: var(--surface-2); margin-bottom: 12px; }
+  .campaign-card:last-child { margin-bottom: 0; }
+  .campaign-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+  .campaign-name { font-weight: 700; font-size: 14px; }
+  .status-pill { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; text-transform: uppercase; letter-spacing: .03em; }
+  .status-pill.good { background: var(--good-soft); color: var(--good-ink); }
+  .status-pill.warn { background: var(--warn-soft); color: var(--warn-ink); }
+  .status-pill.off { background: var(--surface); color: var(--ink-faint); border: 1px solid var(--border); }
+  .campaign-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 10px; }
+  .campaign-stats .k { font-size: 11px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: .04em; }
+  .campaign-stats .v { font-size: 15px; font-weight: 700; margin-top: 2px; }
+  .progress-track { height: 7px; border-radius: 4px; background: var(--surface); overflow: hidden; border: 1px solid var(--border); }
+  .progress-fill { height: 100%; border-radius: 4px; background: var(--accent); }
+  .progress-fill.good { background: var(--good); }
+  .progress-fill.warn { background: var(--warn); }
+  .progress-caption { font-size: 11.5px; color: var(--ink-muted); margin-top: 4px; }
+
+  .reco-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .reco-item:last-child { border-bottom: none; }
+  .reco-icon { flex: 0 0 26px; width: 26px; height: 26px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+  .reco-icon.warn { background: var(--warn-soft); }
+  .reco-icon.good { background: var(--good-soft); }
+  .reco-icon.crit { background: var(--crit-soft); }
+  .reco-title { font-weight: 700; font-size: 13.5px; }
+  .reco-text { font-size: 12.5px; color: var(--ink-muted); margin-top: 2px; line-height: 1.5; }
+
+  .camp-subtabs { display: flex; gap: 6px; margin-bottom: 20px; }
+  .camp-panel { display: none; }
+  .camp-panel.active { display: block; }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label { font-size: 12px; font-weight: 700; color: var(--ink-muted); }
+  .form-group input, .form-group textarea, .form-group select {
+    font: inherit; font-size: 13.5px; padding: 9px 12px; border-radius: 9px;
+    border: 1px solid var(--border); background: var(--surface); color: var(--ink);
+    resize: vertical;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    outline: 2px solid var(--accent); outline-offset: 1px;
+  }
+  .platform-toggle { display: flex; gap: 8px; }
+  .chip-check {
+    display: flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px;
+    border: 1px solid var(--border); font-size: 12.5px; font-weight: 600; cursor: pointer; color: var(--ink-muted);
+    background: var(--surface);
+  }
+  .chip-check.selected { background: var(--accent-soft); color: var(--accent-soft-ink); border-color: var(--accent-soft); }
+
+  #plan-output { display: none; }
+  .output-summary { font-size: 14px; line-height: 1.6; margin-bottom: 4px; }
+  .output-summary b { color: var(--accent); }
+  .dist-row { display: flex; align-items: center; gap: 10px; padding: 6px 0; }
+  .dist-label { width: 190px; flex: 0 0 190px; font-size: 13px; font-weight: 600; }
+  .dist-track { flex: 1; height: 8px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+  .dist-fill { height: 100%; border-radius: 4px; background: var(--accent); }
+  .dist-value { width: 90px; flex: 0 0 90px; text-align: right; font-size: 12.5px; color: var(--ink-muted); }
+
+  .checklist-group { margin-bottom: 14px; }
+  .checklist-group:last-child { margin-bottom: 0; }
+  .checklist-group h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--accent-soft-ink); margin: 0 0 8px; font-weight: 800; }
+  .checklist-item { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; padding: 5px 0; color: var(--ink); }
+  .checklist-item svg { flex: 0 0 15px; width: 15px; height: 15px; margin-top: 2px; color: var(--good); }
+
+  .timeline-row { display: flex; gap: 14px; margin-top: 4px; }
+  .timeline-step { flex: 1; border-left: 2px solid var(--accent-soft); padding-left: 12px; }
+  .timeline-step .w { font-size: 11px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: .04em; }
+  .timeline-step .t { font-size: 12.5px; color: var(--ink-muted); margin-top: 3px; line-height: 1.5; }
+
+  @media (max-width: 760px) {
+    .kpi-row, .campaign-stats, .form-grid { grid-template-columns: 1fr 1fr; }
+    .dist-label { width: 120px; flex-basis: 120px; }
+    .timeline-row { flex-direction: column; }
+  }
+  @media (max-width: 500px) {
+    .kpi-row, .campaign-stats { grid-template-columns: 1fr; }
+  }
+
   /* Placeholder view */
   .placeholder { text-align: center; padding: 60px 20px; }
   .placeholder .icon-wrap {
@@ -569,7 +662,175 @@
     <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20c0-3 2.5-5 6-5s6 2 6 5M14 20c0-2 1.8-3.5 4.5-3.5S23 18 23 20"/></svg></div><h3>Referentes</h3><p>Cuentas parecidas a la tuya que te sirven de inspiración, con lo que les está funcionando.</p></div>
   </section>
   <section class="view" id="view-campanas">
-    <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-7-6 18-3-8-8-3z"/></svg></div><h3>Campañas</h3><p>Seguimiento de tus colaboraciones y campañas pagadas: qué posts, con quién y cómo rindieron.</p></div>
+    <h1 class="greeting">Campañas</h1>
+    <div class="date-sub">Análisis de tus campañas en Meta Ads y planeación de las próximas</div>
+
+    <div class="disclaimer-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5h.01"/></svg>
+      Este panel solo analiza y sugiere — no hace cambios en Meta Ads. Los ajustes los aplicas tú o tu equipo.
+    </div>
+
+    <div class="camp-subtabs">
+      <div class="tab active" data-camp="analisis">Análisis y recomendaciones</div>
+      <div class="tab" data-camp="plan">Planear campaña nueva</div>
+    </div>
+
+    <!-- ANÁLISIS -->
+    <div class="camp-panel active" id="camp-analisis">
+      <div class="kpi-row">
+        <div class="kpi-tile">
+          <div class="kpi-label">Leads este mes</div>
+          <div class="kpi-value">341</div>
+          <div class="kpi-sub">Meta: 400</div>
+        </div>
+        <div class="kpi-tile">
+          <div class="kpi-label">CPL promedio</div>
+          <div class="kpi-value">$4.80</div>
+          <div class="kpi-sub">Objetivo: $4.50</div>
+        </div>
+        <div class="kpi-tile">
+          <div class="kpi-label">Gasto del mes</div>
+          <div class="kpi-value">$1,636</div>
+          <div class="kpi-sub">Presupuesto: $2,000</div>
+        </div>
+        <div class="kpi-tile">
+          <div class="kpi-label">Campañas activas</div>
+          <div class="kpi-value">3</div>
+          <div class="kpi-sub">1 en pausa</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>📣 Campañas activas</h2>
+
+        <div class="campaign-card">
+          <div class="campaign-top">
+            <div class="campaign-name">Lanzamiento línea de recetas — Reels</div>
+            <span class="status-pill good">Activa</span>
+          </div>
+          <div class="campaign-stats">
+            <div><div class="k">Leads</div><div class="v">198 / 200</div></div>
+            <div><div class="k">CPL</div><div class="v">$3.90</div></div>
+            <div><div class="k">Gasto</div><div class="v">$772 / $900</div></div>
+          </div>
+          <div class="progress-track"><div class="progress-fill good" style="width:99%"></div></div>
+          <div class="progress-caption">99% de la meta de leads, con el CPL más bajo de tus 3 campañas.</div>
+        </div>
+
+        <div class="campaign-card">
+          <div class="campaign-top">
+            <div class="campaign-name">Rutina familiar — Carrusel + retarget</div>
+            <span class="status-pill warn">Activa</span>
+          </div>
+          <div class="campaign-stats">
+            <div><div class="k">Leads</div><div class="v">89 / 150</div></div>
+            <div><div class="k">CPL</div><div class="v">$6.10</div></div>
+            <div><div class="k">Gasto</div><div class="v">$543 / $700</div></div>
+          </div>
+          <div class="progress-track"><div class="progress-fill warn" style="width:59%"></div></div>
+          <div class="progress-caption">59% de la meta y CPL 27% arriba de tu objetivo — revisa la segmentación.</div>
+        </div>
+
+        <div class="campaign-card">
+          <div class="campaign-top">
+            <div class="campaign-name">Colaboración marca de juguetes</div>
+            <span class="status-pill good">Activa</span>
+          </div>
+          <div class="campaign-stats">
+            <div><div class="k">Leads</div><div class="v">54 / 50</div></div>
+            <div><div class="k">CPL</div><div class="v">$4.60</div></div>
+            <div><div class="k">Gasto</div><div class="v">$321 / $400</div></div>
+          </div>
+          <div class="progress-track"><div class="progress-fill good" style="width:100%"></div></div>
+          <div class="progress-caption">Ya superó su meta de leads con presupuesto de sobra — candidata a escalar.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🎯 Recomendaciones puntuales</h2>
+        <div class="reco-item">
+          <div class="reco-icon crit">⚠️</div>
+          <div>
+            <div class="reco-title">Pausa o ajusta el anuncio de "Rutina familiar" con peor rendimiento</div>
+            <div class="reco-text">Su CPL ($6.10) es 27% más alto que tu objetivo y que el resto de campañas activas. Prueba una audiencia más parecida a la de "Lanzamiento línea de recetas", que tiene tu mejor CPL.</div>
+          </div>
+        </div>
+        <div class="reco-item">
+          <div class="reco-icon good">📈</div>
+          <div>
+            <div class="reco-title">Sube presupuesto a "Colaboración marca de juguetes"</div>
+            <div class="reco-text">Ya cumplió su meta de leads y le queda 20% de presupuesto sin usar. Es tu mejor oportunidad de generar leads adicionales al mismo costo.</div>
+          </div>
+        </div>
+        <div class="reco-item">
+          <div class="reco-icon warn">🕒</div>
+          <div>
+            <div class="reco-title">Vas 82% del gasto total con 8 días restantes del mes</div>
+            <div class="reco-text">Al ritmo actual te vas a quedar corta en $180 de presupuesto sin gastar. Redistribúyelo hacia la campaña con mejor CPL antes de que cierre el mes.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLANEAR CAMPAÑA -->
+    <div class="camp-panel" id="camp-plan">
+      <div class="card">
+        <h2>🗒️ Cuéntame la idea de tu próxima campaña</h2>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label for="p-idea">¿Cuál es la idea de la campaña?</label>
+            <textarea id="p-idea" rows="2" placeholder="Ej: Lanzar mi nueva guía de loncheras saludables, quiero conseguir mamás interesadas en comprarla">Lanzar mi nueva guía de loncheras saludables para mamás con niños en edad escolar</textarea>
+          </div>
+          <div class="form-group">
+            <label for="p-leads">Meta de leads on target</label>
+            <input type="number" id="p-leads" min="1" value="250" />
+          </div>
+          <div class="form-group">
+            <label for="p-budget">Presupuesto disponible (USD)</label>
+            <input type="number" id="p-budget" min="1" value="1200" />
+          </div>
+          <div class="form-group full">
+            <label>Dónde la vas a correr</label>
+            <div class="platform-toggle">
+              <div class="chip-check selected" data-platform="ig">Instagram</div>
+              <div class="chip-check selected" data-platform="tt">TikTok</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn primary" id="generate-plan-btn">✨ Generar plan de campaña</button>
+      </div>
+
+      <div id="plan-output">
+        <div class="card">
+          <h2>📋 Resumen del plan</h2>
+          <p class="output-summary" id="output-summary"></p>
+        </div>
+
+        <div class="card">
+          <h2>💰 Distribución sugerida del presupuesto</h2>
+          <div id="output-distribution"></div>
+        </div>
+
+        <div class="card">
+          <h2>🎬 Piezas que debes producir</h2>
+          <div class="checklist-group" id="output-pieces"></div>
+        </div>
+
+        <div class="card">
+          <h2>👥 Qué pedirle a tu equipo</h2>
+          <div id="output-team"></div>
+        </div>
+
+        <div class="card">
+          <h2>📆 Cronograma sugerido</h2>
+          <div class="timeline-row">
+            <div class="timeline-step"><div class="w">Semana 1</div><div class="t">Producción de piezas y configuración de tracking (pixel + UTMs) con tu equipo.</div></div>
+            <div class="timeline-step"><div class="w">Semana 2</div><div class="t">Lanzamiento con presupuesto reducido (20%) para probar qué pieza funciona mejor.</div></div>
+            <div class="timeline-step"><div class="w">Semana 3–4</div><div class="t">Escalar presupuesto en la pieza ganadora y pausar las de peor CPL.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
 </main>
@@ -584,6 +845,78 @@
       btn.classList.add('active');
       document.getElementById('view-' + btn.dataset.view).classList.add('active');
     });
+  });
+
+  // Campañas: sub-tabs
+  document.querySelectorAll('.camp-subtabs .tab').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      document.querySelectorAll('.camp-subtabs .tab').forEach(function (t) { t.classList.remove('active'); });
+      document.querySelectorAll('.camp-panel').forEach(function (p) { p.classList.remove('active'); });
+      tab.classList.add('active');
+      document.getElementById('camp-' + tab.dataset.camp).classList.add('active');
+    });
+  });
+
+  // Campañas: platform chips
+  document.querySelectorAll('.chip-check').forEach(function (chip) {
+    chip.addEventListener('click', function () { chip.classList.toggle('selected'); });
+  });
+
+  // Campañas: generar plan
+  var checkIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>';
+
+  function fmtMoney(n) {
+    return '$' + n.toLocaleString('en-US', { maximumFractionDigits: 0 });
+  }
+
+  document.getElementById('generate-plan-btn').addEventListener('click', function () {
+    var idea = document.getElementById('p-idea').value.trim() || 'tu próxima campaña';
+    var leadsGoal = Math.max(1, parseInt(document.getElementById('p-leads').value, 10) || 250);
+    var budget = Math.max(1, parseInt(document.getElementById('p-budget').value, 10) || 1200);
+    var platforms = Array.from(document.querySelectorAll('.chip-check.selected')).map(function (c) { return c.dataset.platform; });
+    var platformNames = platforms.map(function (p) { return p === 'ig' ? 'Instagram' : 'TikTok'; }).join(' y ') || 'tus redes';
+    var cpl = budget / leadsGoal;
+
+    document.getElementById('output-summary').innerHTML =
+      'Para "<b>' + idea + '</b>", con una meta de <b>' + leadsGoal + ' leads</b> y un presupuesto de <b>' + fmtMoney(budget) + '</b> en ' + platformNames + ', ' +
+      'tu costo por lead objetivo es de <b>$' + cpl.toFixed(2) + '</b>. Tu CPL histórico ronda los $4.80–$6.10, así que este objetivo es ' +
+      (cpl >= 4.5 ? 'realista si mantienes el rendimiento actual.' : 'ambicioso — vigila el CPL desde el día 2 y ajusta la segmentación si se dispara.');
+
+    var dist = [
+      { label: 'Reels / video ads', pct: 0.45 },
+      { label: 'Carrusel + estáticos', pct: 0.30 },
+      { label: 'Retargeting (quien ya interactuó)', pct: 0.25 }
+    ];
+    document.getElementById('output-distribution').innerHTML = dist.map(function (d) {
+      return '<div class="dist-row"><div class="dist-label">' + d.label + '</div>' +
+        '<div class="dist-track"><div class="dist-fill" style="width:' + Math.round(d.pct * 100) + '%"></div></div>' +
+        '<div class="dist-value">' + fmtMoney(budget * d.pct) + '</div></div>';
+    }).join('');
+
+    var pieces = [
+      '3 Reels cortos (15–30 seg) con el gancho: "' + idea + '"',
+      '2 Carruseles explicando el beneficio principal, con CTA claro a dejar sus datos',
+      '1 Story destacada tipo testimonio o detrás de cámaras',
+      'Copy corto para el formulario de leads (3 variantes para probar)'
+    ];
+    document.getElementById('output-pieces').innerHTML = pieces.map(function (p) {
+      return '<div class="checklist-item">' + checkIcon + '<span>' + p + '</span></div>';
+    }).join('');
+
+    var team = {
+      'Diseño': ['Portada del formulario de leads', 'Piezas estáticas para el carrusel'],
+      'Edición / video': ['Cortes de los reels según el guion', 'Subtítulos y música con derechos'],
+      'Copywriting': ['3 ángulos de copy para probar en A/B', 'Textos cortos para cada plataforma seleccionada'],
+      'Data / tracking': ['Pixel de Meta activo en la página de destino', 'UTMs para cada pieza', 'Evento de conversión "Lead" configurado']
+    };
+    document.getElementById('output-team').innerHTML = Object.keys(team).map(function (role) {
+      return '<div class="checklist-group"><h3>' + role + '</h3>' +
+        team[role].map(function (t) { return '<div class="checklist-item">' + checkIcon + '<span>' + t + '</span></div>'; }).join('') +
+        '</div>';
+    }).join('');
+
+    document.getElementById('plan-output').style.display = 'block';
+    document.getElementById('plan-output').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 </script>
 </body>
