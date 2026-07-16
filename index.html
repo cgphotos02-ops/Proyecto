@@ -383,6 +383,38 @@
   .structure-list li { font-size: 13px; line-height: 1.55; color: var(--ink); list-style: none; padding-left: 18px; position: relative; }
   .structure-list li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
 
+  /* Detailed creative briefs (video guion / carrusel slides / imagen) */
+  .brief-label { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-faint); font-weight: 800; margin: 12px 0 6px; }
+  .brief-block:first-of-type .brief-label { margin-top: 10px; }
+  .guion-row { display: flex; gap: 12px; padding: 7px 0; border-bottom: 1px dashed var(--border); }
+  .guion-row:last-child { border-bottom: none; }
+  .guion-time { flex: 0 0 56px; font-size: 12px; font-weight: 700; color: var(--accent); }
+  .guion-text { font-size: 12.5px; line-height: 1.5; color: var(--ink); }
+  .guion-text b { font-weight: 700; }
+  .slide-item { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px dashed var(--border); }
+  .slide-item:last-child { border-bottom: none; }
+  .slide-num {
+    flex: 0 0 22px; width: 22px; height: 22px; border-radius: 50%; background: var(--accent-soft); color: var(--accent-soft-ink);
+    display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800;
+  }
+  .slide-visual { font-size: 12.5px; color: var(--ink-muted); }
+  .slide-text { font-size: 12.5px; font-style: italic; color: var(--ink); margin-top: 2px; }
+  .brief-note { font-size: 12.5px; color: var(--ink-muted); margin-top: 8px; line-height: 1.5; }
+  .needs-list .checklist-item { padding: 3px 0; }
+
+  .bullet-list { display: flex; flex-direction: column; gap: 10px; }
+  .bullet-item { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; line-height: 1.55; color: var(--ink); }
+  .bullet-item .bicon { flex: 0 0 18px; }
+
+  .do-dont-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .do-dont-col h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; margin: 0 0 10px; font-weight: 800; }
+  .do-dont-col.do h3 { color: var(--good-ink); }
+  .do-dont-col.dont h3 { color: var(--crit-ink); }
+
+  @media (max-width: 760px) {
+    .do-dont-grid { grid-template-columns: 1fr; }
+  }
+
   /* Placeholder view */
   .placeholder { text-align: center; padding: 60px 20px; }
   .placeholder .icon-wrap {
@@ -744,6 +776,21 @@
       </div>
 
       <div class="card">
+        <h2>🕵️ Qué está haciendo la competencia</h2>
+        <div class="bullet-list" id="analysis-competencia"></div>
+      </div>
+
+      <div class="card">
+        <h2>✅🚫 Qué hacer y qué no hacer</h2>
+        <div class="do-dont-grid" id="analysis-dodont"></div>
+      </div>
+
+      <div class="card">
+        <h2>🔮 Predicciones de tendencias</h2>
+        <div class="bullet-list" id="analysis-tendencias"></div>
+      </div>
+
+      <div class="card">
         <h2>🎯 Recomendaciones puntuales</h2>
         <div id="analysis-recos"></div>
       </div>
@@ -891,6 +938,25 @@
   // ---- Mock data: cada cuenta trae su campaña táctica y estratégica, con creatividades y propuestas ----
   var campData = {
     'colegio-sanrafael': {
+      competencia: [
+        'Colegios competidores del sector están usando Reels de resultados académicos (pruebas Saber/ICFES) como gancho de comunicación estratégica.',
+        'Varios ofrecen "crédito educativo" o planes de pago flexibles como parte del mensaje de matrículas.',
+        'Se ve más inversión en contenido de bienestar emocional y salud mental infantil que en años anteriores.'
+      ],
+      hacer: [
+        'Muestra resultados académicos reales (ICFES, admisiones a universidad) — la competencia ya lo hace y tú aún no lo explotas.',
+        'Aprovecha testimonios reales de papás actuales, tu formato con mejor rendimiento en ambas campañas.',
+        'Prueba contenido de bienestar emocional: tendencia creciente y de bajo costo de producción.'
+      ],
+      noHacer: [
+        'No sigas invirtiendo en el ángulo de precio/cupos sin evidencia — tu creatividad de precio tiene el CTR más bajo de la cuenta.',
+        'No repitas el mismo video institucional por más de 2–3 semanas — se fatiga rápido (frecuencia 4.2).'
+      ],
+      tendencias: [
+        'Los formatos tipo "recorrido POV" (cámara en primera persona) van a crecer en engagement este semestre.',
+        'El contenido educativo para papás (tips de crianza, no solo del colegio) empieza a generar más alcance orgánico.',
+        'TikTok Ads sigue subutilizado por colegios en Cali — hay espacio para diferenciarte ahí antes que la competencia.'
+      ],
       tactica: {
         camp: { goalLabel: 'Leads', goal: 200, current: 178, cpl: 5.90, cplObj: 5.50, spend: 1050, budget: 1300 },
         creatives: [
@@ -899,8 +965,24 @@
           { name: '"Conoce nuestras instalaciones"', format: 'Video', days: 25, m: [['Leads','9'],['CPL','$14.30'],['Frec.','4.2']], verdict: 'Fatigada', note: 'Frecuencia 4.2 — la misma audiencia ya la vio varias veces, refréscala o pausa.' }
         ],
         proposals: [
-          { fmt: 'Reel · countdown', title: '"¿Aún hay cupo para tu hijo en 2027?"', why: 'Aprovecha la urgencia que ya funcionó en "Agenda tu visita guiada", con un gancho más específico de escasez.' },
-          { fmt: 'Carrusel', title: 'Un día típico en San Rafael (antes/después)', why: 'Reemplaza el ángulo de precio, que rinde mal, por beneficio mostrado en vez de contado.' }
+          { fmt: 'Reel', kind: 'video', title: '"¿Aún hay cupo para tu hijo en 2027?"', why: 'Aprovecha la urgencia que ya funcionó en "Agenda tu visita guiada", con un gancho más específico de escasez.',
+            duracion: '20 seg', guion: [
+              { t: '0–3s', escena: 'Mamá revisando el celular con cara de duda', texto: 'Texto en pantalla: "¿Ya tienes cupo para 2027?"' },
+              { t: '3–8s', escena: 'Corte a pasillo del colegio, niños entrando', texto: 'Texto: "Quedan pocos cupos disponibles"' },
+              { t: '8–15s', escena: 'Testimonio corto de un papá real', texto: '"Nosotros lo hicimos apenas se abrió, no queríamos quedarnos sin cupo"' },
+              { t: '15–20s', escena: 'Logo + CTA', texto: '"Agenda tu visita guiada hoy" + botón de WhatsApp/formulario' }
+            ],
+            necesitas: ['Grabación en el colegio (pasillo, entrada)', '1 papá real dispuesto a dar testimonio corto', 'Texto animado tipo contador de cupos', 'Música de tendencia, ritmo suave-urgente'],
+            como: 'Ritmo rápido, cámara en mano, estilo auténtico (no muy pulido), subtítulos quemados en pantalla.' },
+          { fmt: 'Carrusel', kind: 'carrusel', title: 'Un día típico en San Rafael (antes/después)', why: 'Reemplaza el ángulo de precio, que rinde mal, por beneficio mostrado en vez de contado.',
+            slides: [
+              { visual: 'Foto exterior del colegio en la mañana', texto: 'Así empieza un día en San Rafael' },
+              { visual: 'Niños en el salón de clase', texto: 'Clases con máximo 20 estudiantes por salón' },
+              { visual: 'Niños en el descanso / zona deportiva', texto: 'Espacios deportivos y de juego todos los días' },
+              { visual: 'Comedor a la hora del almuerzo', texto: 'Alimentación balanceada incluida' },
+              { visual: 'Foto grupal + logo', texto: 'Agenda tu visita y compruébalo tú mismo' }
+            ],
+            necesitas: ['Fotos reales del colegio en un día normal (no stock)', 'Confirmar horarios típicos con coordinación', 'Verificar si el almuerzo está incluido en la pensión antes de publicarlo'] }
         ]
       },
       estrategica: {
@@ -911,12 +993,45 @@
           { name: '"Valores del colegio"', format: 'Carrusel', m: [['Alcance','9.8K'],['Frec.','1.2'],['CPM','$15.40']], verdict: 'Débil', note: 'CPM alto sin generar interacción, el mensaje es muy genérico frente al resto.' }
         ],
         proposals: [
-          { fmt: 'Reel · serie', title: '"Voces de papás" — testimonios cortos', why: 'El testimonio en video funciona pero se fatigó rápido; una serie con caras distintas mantiene frescura sin perder el formato ganador.' },
-          { fmt: 'Reel', title: 'Detrás de cámaras de una clase real', why: 'Contenido auténtico y de bajo costo de producción, buen candidato para bajar el CPM actual.' }
+          { fmt: 'Reel', kind: 'video', title: '"Voces de papás" — serie de testimonios cortos', why: 'El testimonio en video funciona pero se fatigó rápido; una serie con caras distintas mantiene frescura sin perder el formato ganador.',
+            duracion: '18 seg', guion: [
+              { t: '0–2s', escena: 'Papá o mamá mirando a cámara', texto: '"Yo miré otros colegios, y elegí San Rafael porque…"' },
+              { t: '2–10s', escena: 'Continúa el testimonio genuino (casa o colegio)', texto: 'Habla libre, sin guion memorizado' },
+              { t: '10–15s', escena: 'Corte a un niño sonriendo saliendo del colegio', texto: 'Sin texto, solo música' },
+              { t: '15–18s', escena: 'Logo', texto: '"Conoce más historias como esta"' }
+            ],
+            necesitas: ['3–4 familias voluntarias para grabar testimonios distintos (rotar cada semana)', 'Preguntas guía para que hablen natural', 'Basta con cámara de celular'],
+            como: 'Estilo cercano y espontáneo, luz natural, sin producción pesada.' },
+          { fmt: 'Reel', kind: 'video', title: 'Detrás de cámaras de una clase real', why: 'Contenido auténtico y de bajo costo de producción, buen candidato para bajar el CPM actual.',
+            duracion: '18 seg', guion: [
+              { t: '0–3s', escena: 'La profesora empezando la clase', texto: 'Sin texto' },
+              { t: '3–12s', escena: 'Niños participando, levantando la mano, riendo', texto: 'Sin texto' },
+              { t: '12–16s', escena: 'Toma de un trabajo o manualidad terminada', texto: 'Sin texto' },
+              { t: '16–18s', escena: 'Logo', texto: '"Así aprendemos en San Rafael"' }
+            ],
+            necesitas: ['Permiso de grabación en salón (colegio + papás)', '1 clase dinámica para grabar (arte, ciencias o educación física funcionan mejor)', 'Sin guion rígido'],
+            como: 'Estilo documental, cámara observando sin interrumpir la clase.' }
         ]
       }
     },
     'colegio-losandes': {
+      competencia: [
+        'Colegios cercanos están usando embajadores (exalumnos destacados) como parte de su estrategia de marca.',
+        'Aumento de anuncios con formato "reto" o "challenge" entre estudiantes.',
+        'Uso de landing pages con simulador de costos en vez de solo formulario de contacto.'
+      ],
+      hacer: [
+        'Escala "Abrimos inscripciones", tu creatividad con mejor CPL — sube presupuesto antes de crear piezas nuevas.',
+        'Prueba un simulador simple de costos/beca en la landing, como está haciendo la competencia.'
+      ],
+      noHacer: [
+        'No repitas "Beca por buen rendimiento" como imagen estática — ya está fatigada (frecuencia 3.9) y con CTR bajo.',
+        'No prometas cifras de beca sin confirmarlas con administración — genera leads de mala calidad si luego no aplican.'
+      ],
+      tendencias: [
+        'El contenido con estudiantes reales como protagonistas (no actores) está ganando tracción frente al contenido institucional.',
+        'Los recorridos en formato "vlog" corto están superando en retención a los videos institucionales clásicos.'
+      ],
       tactica: {
         camp: { goalLabel: 'Leads', goal: 150, current: 96, cpl: 7.40, cplObj: 6.00, spend: 710, budget: 900 },
         creatives: [
@@ -924,7 +1039,20 @@
           { name: '"Beca por buen rendimiento"', format: 'Imagen', days: 20, m: [['Leads','12'],['CPL','$15.80'],['Frec.','3.9']], verdict: 'Fatigada', note: 'Frecuencia alta y CTR bajo — el formato estático ya se agotó con esta audiencia.' }
         ],
         proposals: [
-          { fmt: 'Reel', title: '"Últimos cupos con beca"', why: 'Combina el gancho de inscripción (ganador) con el incentivo de beca, que solo no funcionó como imagen estática.' }
+          { fmt: 'Reel', kind: 'video', title: '"Últimos cupos con beca"', why: 'Combina el gancho de inscripción (ganador) con el incentivo de beca, que solo no funcionó como imagen estática.',
+            duracion: '20 seg', guion: [
+              { t: '0–3s', escena: 'Texto en pantalla', texto: '"¿Sabías que Los Andes tiene becas por rendimiento?"' },
+              { t: '3–10s', escena: 'Estudiante mostrando un reconocimiento o notas', texto: 'Sin diálogo, solo texto de apoyo' },
+              { t: '10–16s', escena: 'Voz en off', texto: '"Aplica antes de que se acaben los cupos con beca"' },
+              { t: '16–20s', escena: 'CTA + logo', texto: '"Escríbenos y te contamos cómo aplicar"' }
+            ],
+            necesitas: ['Dato real de cuántas becas quedan disponibles (para no prometer de más)', 'Grabación en el colegio', 'Texto animado'],
+            como: 'Tono aspiracional, ritmo medio, sin urgencia agresiva.' },
+          { fmt: 'Imagen', kind: 'imagen', title: 'Comparativo: beca vs. sin beca', why: 'Formato estático de bajo costo para reforzar el mensaje de beca con un dato concreto en vez de solo una foto institucional.',
+            visual: 'Gráfico tipo infografía con dos columnas simples ("Sin beca" / "Con beca Los Andes"), sin necesidad de fotos de niños.',
+            textoPrincipal: 'Con beca por rendimiento, tu hijo estudia en Los Andes por menos de lo que piensas',
+            textoSecundario: 'Cupos limitados — escríbenos',
+            necesitas: ['Cifra real del valor/porcentaje de la beca', 'Diseño simple tipo infografía', 'Autorización de mercadeo para publicar cifras'] }
         ]
       },
       estrategica: {
@@ -934,11 +1062,44 @@
           { name: '"Nuestra huerta escolar"', format: 'Carrusel', m: [['Alcance','13K'],['Frec.','3.6'],['CPM','$13.20']], verdict: 'Fatigada', note: 'Frecuencia de 3.6 — ya casi no está llegando a gente nueva.' }
         ],
         proposals: [
-          { fmt: 'Reel', title: 'Un recorrido por Los Andes guiado por un estudiante', why: 'La bienvenida en video funciona; un recorrido mantiene el mismo estilo con contenido nuevo.' }
+          { fmt: 'Reel', kind: 'video', title: 'Un recorrido por Los Andes guiado por un estudiante', why: 'La bienvenida en video funciona; un recorrido mantiene el mismo estilo con contenido nuevo.',
+            duracion: '18 seg', guion: [
+              { t: '0–3s', escena: 'Estudiante saluda a cámara', texto: '"Bienvenidos a un día en Los Andes"' },
+              { t: '3–14s', escena: 'Recorrido por pasillos, biblioteca, laboratorio', texto: 'Comentarios breves del estudiante sobre cada espacio' },
+              { t: '14–18s', escena: 'Cierre en la puerta principal', texto: '"Este es mi colegio" + logo' }
+            ],
+            necesitas: ['1 estudiante cómodo hablando a cámara (con autorización de los papás)', 'Recorrido planeado por las zonas más atractivas del colegio'],
+            como: 'Estilo vlog, cámara en mano siguiendo al estudiante, sin guion memorizado.' },
+          { fmt: 'Carrusel', kind: 'carrusel', title: 'Un vistazo a nuestros laboratorios y espacios', why: 'Refuerza el mensaje de infraestructura de forma más económica que un video, con datos concretos que la competencia no está mostrando.',
+            slides: [
+              { visual: 'Fachada del colegio', texto: 'Conoce los espacios de Los Andes' },
+              { visual: 'Laboratorio de ciencias', texto: 'Laboratorio equipado para ciencias naturales' },
+              { visual: 'Biblioteca', texto: 'Biblioteca con más de 2.000 títulos' },
+              { visual: 'Zona deportiva', texto: 'Canchas y zona deportiva propia' },
+              { visual: 'Logo + CTA', texto: 'Agenda un recorrido presencial' }
+            ],
+            necesitas: ['Fotos reales y actualizadas de cada espacio', 'Confirmar cifras exactas (número de libros, m² de zona deportiva) antes de publicarlas'] }
         ]
       }
     },
     'preescolar-genios': {
+      competencia: [
+        'Preescolares de la zona muestran más contenido del método pedagógico (Montessori, Waldorf, Reggio) como diferenciador.',
+        'Aumento de Reels tipo "un día típico" desde la llegada hasta la salida.',
+        'Uso de testimonios de mamás en formato historia/story destacada permanente.'
+      ],
+      hacer: [
+        'Duplica la apuesta en "Agenda tu cupo" + "Método Montessori" — son tus dos creatividades ganadoras, combínalas en una nueva pieza.',
+        'Crea una historia destacada permanente de testimonios, como está funcionando en la competencia.'
+      ],
+      noHacer: [
+        'No bajes el presupuesto de las creatividades ganadoras — ambas están rindiendo por debajo de tu objetivo de CPL, en el buen sentido.',
+        'No inviertas en "Testimonios de mamás" en video sin antes revisar por qué su CPM es más alto que el resto.'
+      ],
+      tendencias: [
+        'El contenido de "aprendizaje sensorial" (naturaleza, texturas, juego libre) está creciendo en interacción en preescolares.',
+        'Las familias buscan cada vez más evidencia del método pedagógico, no solo fotos bonitas de instalaciones.'
+      ],
       tactica: {
         camp: { goalLabel: 'Leads', goal: 120, current: 133, cpl: 4.60, cplObj: 5.00, spend: 610, budget: 700 },
         creatives: [
@@ -946,7 +1107,23 @@
           { name: '"Conoce nuestro método Montessori"', format: 'Carrusel', days: 16, m: [['Leads','55'],['CPL','$5.60'],['CTR','1.1%']], verdict: 'Ganadora', note: 'También cumple objetivo — el diferencial pedagógico convence.' }
         ],
         proposals: [
-          { fmt: 'Reel', title: '"Últimos cupos + Montessori"', why: 'Combina el mensaje de urgencia con el diferencial pedagógico, tus dos creatividades con mejor CPL.' }
+          { fmt: 'Reel', kind: 'video', title: '"Últimos cupos + Montessori"', why: 'Combina el mensaje de urgencia con el diferencial pedagógico, tus dos creatividades con mejor CPL.',
+            duracion: '20 seg', guion: [
+              { t: '0–3s', escena: 'Texto en pantalla', texto: '"¿Ya tienes cupo para el próximo año?"' },
+              { t: '3–10s', escena: 'Niños en actividad Montessori manipulando materiales', texto: 'Texto de apoyo explicando brevemente el método' },
+              { t: '10–16s', escena: 'Voz en off', texto: 'Breve explicación del método (o texto en pantalla)' },
+              { t: '16–20s', escena: 'CTA + logo', texto: '"Agenda tu cupo hoy"' }
+            ],
+            necesitas: ['Grabación de una actividad Montessori real', 'Permiso de grabación de menores', 'Explicación del método revisada por la coordinación pedagógica'],
+            como: 'Cálido, colores suaves, cámara a la altura de los niños.' },
+          { fmt: 'Carrusel', kind: 'carrusel', title: 'Por qué elegir el método Montessori', why: 'Profundiza el ángulo pedagógico que ya está ganando, con más detalle del que cabe en un Reel.',
+            slides: [
+              { visual: 'Niño manipulando material Montessori', texto: '¿Por qué Montessori?' },
+              { visual: 'Niño concentrado en una actividad', texto: 'Aprende a su propio ritmo' },
+              { visual: 'Ambiente preparado del salón', texto: 'Ambientes diseñados para su autonomía' },
+              { visual: 'Logo + CTA', texto: 'Agenda tu cupo para el próximo año' }
+            ],
+            necesitas: ['Fotos reales del salón Montessori', 'Explicación del método aprobada por la coordinación pedagógica'] }
         ]
       },
       estrategica: {
@@ -956,11 +1133,40 @@
           { name: '"Testimonios de mamás"', format: 'Video', m: [['Alcance','11.5K'],['Frec.','2.6'],['CPM','$9.80']], verdict: 'Débil', note: 'CPM más alto que el resto sin ganar alcance adicional.' }
         ],
         proposals: [
-          { fmt: 'Reel · serie', title: '"Así aprendemos" — serie semanal', why: 'Aprovecha el formato ganador de "un día en..." con contenido recurrente de bajo costo.' }
+          { fmt: 'Reel', kind: 'video', title: '"Así aprendemos" — serie semanal', why: 'Aprovecha el formato ganador de "un día en..." con contenido recurrente de bajo costo.',
+            duracion: '15 seg', guion: [
+              { t: '0–3s', escena: 'Actividad distinta cada semana (pintura, música, exterior)', texto: 'Sin texto' },
+              { t: '3–12s', escena: 'Niños interactuando, risas genuinas', texto: 'Sin texto' },
+              { t: '12–15s', escena: 'Logo', texto: '"Así aprendemos en Pequeños Genios"' }
+            ],
+            necesitas: ['Rotar 1 actividad distinta cada semana', 'Autorización de grabación de menores', 'Misma intro/outro para mantener consistencia'],
+            como: 'Luminoso, ritmo alegre, música infantil de fondo.' },
+          { fmt: 'Imagen', kind: 'imagen', title: 'Un vistazo a nuestra huerta / jardín', why: 'Refuerza el ángulo de aprendizaje sensorial que está creciendo, con una pieza económica de producir.',
+            visual: 'Foto real de niños interactuando con plantas en la huerta/jardín del preescolar, buena luz natural.',
+            textoPrincipal: 'Aprendemos de la naturaleza todos los días',
+            textoSecundario: 'Pequeños Genios',
+            necesitas: ['Foto real en buena luz natural', 'Autorización de imagen de los niños que aparezcan'] }
         ]
       }
     },
     'preescolar-arcoiris': {
+      competencia: [
+        'La competencia resalta horarios extendidos y alimentación como principal gancho táctico.',
+        'Más presencia en TikTok con contenido casual, no solo Instagram.',
+        'Publicidad enfocada en tranquilidad/seguridad de los papás (cámaras, protocolos) como ángulo emocional.'
+      ],
+      hacer: [
+        'Cambia "Preinscripciones abiertas" de imagen a Reel — el mensaje capta leads pero el formato ya se fatigó.',
+        'Prueba el ángulo de seguridad/tranquilidad que está funcionando en la competencia y que aún no exploras.'
+      ],
+      noHacer: [
+        'No sigas invirtiendo en "Conoce Arcoíris" sin cambiar el mensaje — su CTR (0.6%) es el más bajo de todas tus cuentas.',
+        'No ignores TikTok: es donde más está creciendo la competencia y donde menos presencia tienes hoy.'
+      ],
+      tendencias: [
+        'El contenido de "un día de juego libre" (sin narración, muy visual) está superando al contenido con mucho texto.',
+        'Los papás están respondiendo más a mensajes de tranquilidad/seguridad que a mensajes puramente de precio.'
+      ],
       tactica: {
         camp: { goalLabel: 'Leads', goal: 100, current: 61, cpl: 8.90, cplObj: 6.50, spend: 540, budget: 650 },
         creatives: [
@@ -968,7 +1174,24 @@
           { name: '"Conoce Arcoíris"', format: 'Video', days: 9, m: [['Leads','21'],['CPL','$11.50'],['CTR','0.6%']], verdict: 'Débil', note: 'CTR bajo — el mensaje institucional no está generando suficiente interés.' }
         ],
         proposals: [
-          { fmt: 'Reel', title: 'Refresca "Preinscripciones abiertas" en video', why: 'La oferta funciona; cámbiala de imagen estática a Reel para reducir la fatiga sin perder el mensaje.' }
+          { fmt: 'Reel', kind: 'video', title: 'Refresca "Preinscripciones abiertas" en video', why: 'La oferta funciona; cámbiala de imagen estática a Reel para reducir la fatiga sin perder el mensaje.',
+            duracion: '20 seg', guion: [
+              { t: '0–3s', escena: 'Texto en pantalla', texto: '"Preinscripciones 2027 ya están abiertas"' },
+              { t: '3–10s', escena: 'Fachada del preescolar + niños llegando', texto: 'Sin diálogo' },
+              { t: '10–16s', escena: 'Texto de apoyo', texto: 'Un beneficio clave (ej. horario extendido o alimentación incluida)' },
+              { t: '16–20s', escena: 'CTA + logo', texto: '"Preinscribe a tu hijo hoy"' }
+            ],
+            necesitas: ['Grabación de la entrada en horario de llegada', 'Definir 1 beneficio clave a resaltar'],
+            como: 'Simple, luz natural de la mañana, sin producción compleja.' },
+          { fmt: 'Carrusel', kind: 'carrusel', title: 'Todo lo que incluye tu pensión', why: 'Aclara el valor real de la oferta con más detalle del que cabe en un solo mensaje, apoyando el ángulo de alimentación/horario que está funcionando en la competencia.',
+            slides: [
+              { visual: 'Fachada', texto: '¿Qué incluye tu pensión en Arcoíris?' },
+              { visual: 'Comedor / alimentación', texto: 'Alimentación balanceada incluida' },
+              { visual: 'Actividad extracurricular', texto: 'Talleres de arte y música incluidos' },
+              { visual: 'Horario', texto: 'Horario extendido disponible' },
+              { visual: 'Logo + CTA', texto: 'Preinscribe a tu hijo hoy' }
+            ],
+            necesitas: ['Confirmar qué está realmente incluido en la pensión (para no prometer de más)', 'Fotos reales de cada servicio'] }
         ]
       },
       estrategica: {
@@ -978,7 +1201,19 @@
           { name: '"Actividades al aire libre"', format: 'Reel', m: [['Alcance','8.6K'],['Frec.','2.4'],['CPM','$9.60']], verdict: 'Débil', note: 'Mejor que el carrusel, pero ninguna creatividad estratégica está ganando en esta cuenta.' }
         ],
         proposals: [
-          { fmt: 'Reel', title: '"Un día de juego libre" — ángulo 100% visual y emocional', why: 'Ninguna creatividad estratégica está ganando aquí; prueba un ángulo visual antes de seguir invirtiendo en carruseles de texto.' }
+          { fmt: 'Reel', kind: 'video', title: '"Un día de juego libre" — ángulo 100% visual y emocional', why: 'Ninguna creatividad estratégica está ganando aquí; prueba un ángulo visual antes de seguir invirtiendo en carruseles de texto.',
+            duracion: '15 seg', guion: [
+              { t: '0–3s', escena: 'Niños corriendo en el patio', texto: 'Sin texto' },
+              { t: '3–12s', escena: 'Momentos de juego libre, risas, sin narración', texto: 'Sin texto' },
+              { t: '12–15s', escena: 'Logo', texto: '"Aprender jugando en Arcoíris"' }
+            ],
+            necesitas: ['Grabación en el patio en horario de recreo', 'Buena luz natural', 'No necesita guion hablado'],
+            como: 'Muy visual, casi sin texto, música emotiva de fondo.' },
+          { fmt: 'Imagen', kind: 'imagen', title: 'Seguridad y tranquilidad para los papás', why: 'Explota el ángulo de seguridad/tranquilidad que está funcionando en la competencia y que hoy no tienes en tu comunicación estratégica.',
+            visual: 'Foto real de la entrada del preescolar con personal de recepción/seguridad visible.',
+            textoPrincipal: 'Tu hijo, siempre seguro y acompañado',
+            textoSecundario: 'Arcoíris',
+            necesitas: ['Foto real de la entrada/recepción', 'Confirmar protocolos de seguridad vigentes antes de mencionarlos'] }
         ]
       }
     }
@@ -1021,10 +1256,37 @@
       '</div>';
   }
 
+  function needsList(items) {
+    return '<div class="needs-list">' + items.map(function (n) { return '<div class="checklist-item">' + checkIcon + '<span>' + n + '</span></div>'; }).join('') + '</div>';
+  }
+
   function renderProposal(p) {
+    var body = '';
+    if (p.kind === 'video') {
+      body += '<div class="brief-block"><div class="brief-label">Guion (' + p.duracion + ')</div>' +
+        p.guion.map(function (g) {
+          return '<div class="guion-row"><div class="guion-time">' + g.t + '</div><div class="guion-text"><b>' + g.escena + '</b><br>' + g.texto + '</div></div>';
+        }).join('') + '</div>';
+      body += '<div class="brief-label">Qué necesitas</div>' + needsList(p.necesitas);
+      body += '<div class="brief-note"><b>Cómo se vería:</b> ' + p.como + '</div>';
+    } else if (p.kind === 'carrusel') {
+      body += '<div class="brief-label">Estructura de slides</div>' +
+        p.slides.map(function (s, i) {
+          return '<div class="slide-item"><div class="slide-num">' + (i + 1) + '</div><div><div class="slide-visual">' + s.visual + '</div><div class="slide-text">"' + s.texto + '"</div></div></div>';
+        }).join('');
+      body += '<div class="brief-label">Información que necesitas</div>' + needsList(p.necesitas);
+    } else if (p.kind === 'imagen') {
+      body += '<div class="brief-label">Imagen</div><div class="slide-visual">' + p.visual + '</div>';
+      body += '<div class="brief-label">Textos</div><div class="slide-text">Principal: "' + p.textoPrincipal + '"<br>Secundario: "' + p.textoSecundario + '"</div>';
+      body += '<div class="brief-label">Información que necesitas</div>' + needsList(p.necesitas);
+    }
     return '<div class="proposal-card"><span class="proposal-fmt">' + p.fmt + '</span>' +
       '<div class="proposal-title">' + p.title + '</div>' +
-      '<div class="proposal-why">' + p.why + '</div></div>';
+      '<div class="proposal-why">' + p.why + '</div>' + body + '</div>';
+  }
+
+  function bulletItem(icon, text) {
+    return '<div class="bullet-item"><span class="bicon">' + icon + '</span><span>' + text + '</span></div>';
   }
 
   function buildRecos(account) {
@@ -1071,6 +1333,16 @@
       data.tactica.proposals.map(renderProposal).join('') +
       '<div class="type-heading"><span class="type-dot estrategica"></span>Estratégica</div>' +
       data.estrategica.proposals.map(renderProposal).join('');
+
+    document.getElementById('analysis-competencia').innerHTML =
+      data.competencia.map(function (c) { return bulletItem('🏫', c); }).join('');
+
+    document.getElementById('analysis-dodont').innerHTML =
+      '<div class="do-dont-col do"><h3>✅ Qué te recomiendo hacer</h3>' + data.hacer.map(function (h) { return bulletItem('✅', h); }).join('') + '</div>' +
+      '<div class="do-dont-col dont"><h3>🚫 Qué no te recomiendo hacer</h3>' + data.noHacer.map(function (h) { return bulletItem('🚫', h); }).join('') + '</div>';
+
+    document.getElementById('analysis-tendencias').innerHTML =
+      data.tendencias.map(function (t2) { return bulletItem('🔮', t2); }).join('');
 
     document.getElementById('analysis-recos').innerHTML = buildRecos(account).map(function (r) {
       return '<div class="reco-item"><div class="reco-icon ' + r.icon + '">' + r.symbol + '</div>' +
