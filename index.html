@@ -585,10 +585,10 @@
   <div class="account-bar">
     <label for="global-cuenta">📍 Cuenta</label>
     <select id="global-cuenta">
-      <option value="colegio-sanrafael">Colegio San Rafael</option>
-      <option value="colegio-losandes">Colegio Los Andes</option>
-      <option value="preescolar-genios">Preescolar Pequeños Genios</option>
-      <option value="preescolar-arcoiris">Preescolar Arcoíris</option>
+      <option value="tacuri">Tacurí (Colegio)</option>
+      <option value="juanambu">Juanambú (Colegio)</option>
+      <option value="entrevalles">Entrevalles (Preescolar)</option>
+      <option value="tayana">Tayana (Preescolar)</option>
     </select>
   </div>
 
@@ -836,6 +836,11 @@
     <!-- ANÁLISIS -->
     <div class="camp-panel active" id="camp-analisis">
       <p class="date-sub" style="margin-top:-8px">Mostrando datos de la cuenta seleccionada arriba ⤴</p>
+      <div class="disclaimer-note" style="border-color:var(--good);color:var(--good-ink)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        📡 Conectado a tu cuenta real de Meta Ads (Aspaen Cali Publicidad) — leads, CPL, alcance y creatividades de Táctica/Estratégica son datos reales del período 16 jun–15 jul 2026. Las metas mensuales aún no están definidas: dime tus objetivos y los agrego.
+      </div>
+      <p class="vc-note">Nota: los datos orgánicos de Instagram/Facebook (Inicio, Posts, Calendario) todavía son de ejemplo — esa conexión falta por hacer.</p>
 
       <div id="analysis-kpis" class="kpi-row"></div>
 
@@ -883,10 +888,10 @@
           <div class="form-group">
             <label for="p-cuenta">Cuenta</label>
             <select id="p-cuenta">
-              <option value="colegio-sanrafael">Colegio San Rafael</option>
-              <option value="colegio-losandes">Colegio Los Andes</option>
-              <option value="preescolar-genios">Preescolar Pequeños Genios</option>
-              <option value="preescolar-arcoiris">Preescolar Arcoíris</option>
+              <option value="tacuri">Tacurí (Colegio)</option>
+              <option value="juanambu">Juanambú (Colegio)</option>
+              <option value="entrevalles">Entrevalles (Preescolar)</option>
+              <option value="tayana">Tayana (Preescolar)</option>
             </select>
           </div>
           <div class="form-group">
@@ -1020,13 +1025,16 @@
   function fmtNum(n) {
     return n.toLocaleString('en-US', { maximumFractionDigits: 0 });
   }
+  function fmtCOP(n) {
+    return '$' + n.toLocaleString('es-CO', { maximumFractionDigits: 0 }) + ' COP';
+  }
   var VERDICT_CLASS = { 'Ganadora': 'good', 'Débil': 'warn', 'Fatigada': 'crit' };
 
   var accountLabels = {
-    'colegio-sanrafael': 'Colegio San Rafael',
-    'colegio-losandes': 'Colegio Los Andes',
-    'preescolar-genios': 'Preescolar Pequeños Genios',
-    'preescolar-arcoiris': 'Preescolar Arcoíris'
+    'tacuri': 'Tacurí',
+    'juanambu': 'Juanambú',
+    'entrevalles': 'Entrevalles',
+    'tayana': 'Tayana'
   };
   var tipoLabels = { tactica: 'Comunicación Táctica', estrategica: 'Comunicación Estratégica' };
   var tipoObjective = { tactica: 'Clientes potenciales / Conversiones (leads)', estrategica: 'Reconocimiento de marca / Interacción' };
@@ -1091,34 +1099,34 @@
 
   // ---- Datos de Inicio y Posts (contenido orgánico) por cuenta ----
   var homeData = {
-    'colegio-sanrafael': {
+    'tacuri': {
       lastPost: { stat: '812K vistas', sub: '+142% sobre tu promedio en Instagram' },
-      idea: { vc: 'ambiente', quote: '"¿Cómo es un día normal de clases en San Rafael?"', title: 'Un día en la vida de un estudiante de San Rafael', tag: 'Vlog', tagClass: 'vlog' },
+      idea: { vc: 'ambiente', quote: '"¿Cómo es un día normal de clases en Tacurí?"', title: 'Un día en la vida de un estudiante de Tacurí', tag: 'Vlog', tagClass: 'vlog' },
       agenda: { title: 'Rutina de la mañana en el colegio', sub: 'Carrusel · borrador guardado' },
       ig: { followers: '18.4K', delta: '+64 esta semana', er: '6,2%' },
       fb: { followers: '9.1K', delta: '+12 esta semana', er: '3,8%' },
       bestTime: '06:00–09:00',
       bestTimeSub: 'Franja de más alcance con papás,<br>basado en 54 posts analizados'
     },
-    'colegio-losandes': {
+    'juanambu': {
       lastPost: { stat: '340K vistas', sub: '+88% sobre tu promedio en Instagram' },
-      idea: { vc: 'proyeccion', quote: '"¿Los Andes tiene intercambios o solo clases de inglés?"', title: 'Así vive un estudiante de Los Andes su inmersión internacional', tag: 'Reel', tagClass: 'reel' },
+      idea: { vc: 'proyeccion', quote: '"¿Juanambú tiene intercambios o solo clases de inglés?"', title: 'Así vive un estudiante de Juanambú su inmersión internacional', tag: 'Reel', tagClass: 'reel' },
       agenda: { title: 'Testimonio de un exalumno becado', sub: 'Reel · en edición' },
       ig: { followers: '11.2K', delta: '+31 esta semana', er: '5,4%' },
       fb: { followers: '7.6K', delta: '+9 esta semana', er: '3,1%' },
       bestTime: '18:00–20:00',
       bestTimeSub: 'Franja de más alcance con papás,<br>basado en 40 posts analizados'
     },
-    'preescolar-genios': {
+    'entrevalles': {
       lastPost: { stat: '96K vistas', sub: '+205% sobre tu promedio en Instagram' },
-      idea: { vc: 'ambiente', quote: '"¿Cómo logran que los niños no lloren el primer día?"', title: 'Así vivimos la adaptación en Pequeños Genios', tag: 'Story', tagClass: 'story' },
+      idea: { vc: 'ambiente', quote: '"¿Cómo logran que los niños no lloren el primer día?"', title: 'Así vivimos la adaptación en Entrevalles', tag: 'Story', tagClass: 'story' },
       agenda: { title: 'Actividad Montessori de la semana', sub: 'Reel · agendado' },
       ig: { followers: '7.8K', delta: '+22 esta semana', er: '9,1%' },
       fb: { followers: '4.3K', delta: '+6 esta semana', er: '4,4%' },
       bestTime: '07:00–09:00',
       bestTimeSub: 'Franja de más alcance con mamás,<br>basado en 36 posts analizados'
     },
-    'preescolar-arcoiris': {
+    'tayana': {
       lastPost: { stat: '54K vistas', sub: '+61% sobre tu promedio en Instagram' },
       idea: { vc: 'infraestructura', quote: '"¿Cómo son los salones por dentro?"', title: 'Un recorrido por nuestros salones y zonas de juego', tag: 'Carrusel', tagClass: 'reel' },
       agenda: { title: 'Fotos de la huerta con los niños', sub: 'Carrusel · borrador guardado' },
@@ -1130,50 +1138,50 @@
   };
 
   var postsData = {
-    'colegio-sanrafael': {
+    'tacuri': {
       hashtags: [['#undíaensanrafael','92','8.4K'],['#papasenrafael','71','5.9K'],['#inmersionsanrafael','52','3.8K'],['#deportessanrafael','34','2.1K'],['#egresadossanrafael','22','1.3K']],
       series: [['#undíaensanrafael','6 posts · 8.4K eng. prom.','3.0x tu mediana'],['#inmersionsanrafael','3 posts · 3.8K eng. prom.','1.7x tu mediana'],['#deportessanrafael','5 posts · 2.1K eng. prom.','1.1x tu mediana']],
       pattern: [['Mejor formato','Reel corto (día a día)'],['Duración','15 a 30 seg']],
       themes: ['Rutina escolar', 'Bilingüismo / inmersiones', 'Deportes'],
       patternText: 'El contenido con más alcance combina rutina escolar relatable, un momento de inglés/inmersión, y cierre con niños sonriendo.',
       organic: [
-        { vc: 'ambiente', format: 'Reel', title: 'Un día en la vida de un estudiante de San Rafael', why: 'Refuerza Ambiente educativo — la variable #1 en importancia junto a Infraestructura, y la más explorada primero por el segmento alto-alto.' },
+        { vc: 'ambiente', format: 'Reel', title: 'Un día en la vida de un estudiante de Tacurí', why: 'Refuerza Ambiente educativo — la variable #1 en importancia junto a Infraestructura, y la más explorada primero por el segmento alto-alto.' },
         { vc: 'proyeccion', format: 'Reel', title: 'Así se ve una clase de inmersión con profesor nativo', why: 'Proyección Internacional es, según la encuesta, la razón #1 (71%) por la que una familia considera un colegio Aspaen — y hoy casi no aparece en tu contenido orgánico.' },
         { vc: 'infraestructura', format: 'Carrusel', title: 'Un recorrido por nuestras canchas y laboratorios', why: 'Infraestructura sigue siendo la variable más importante para colegios, incluso en el segmento de mayor poder adquisitivo.' }
       ]
     },
-    'colegio-losandes': {
+    'juanambu': {
       hashtags: [['#losandesencali','64','5.1K'],['#becaslosandes','48','3.6K'],['#inglesdesdepequeños','30','2.0K'],['#deporteslosandes','19','1.1K']],
       series: [['#losandesencali','5 posts · 5.1K eng. prom.','2.2x tu mediana'],['#becaslosandes','4 posts · 3.6K eng. prom.','1.6x tu mediana']],
       pattern: [['Mejor formato','Testimonio en video'],['Duración','18 a 35 seg']],
       themes: ['Becas y resultados', 'Bilingüismo', 'Vida estudiantil'],
       patternText: 'Los testimonios de estudiantes reales (no institucionales) generan más comentarios que los videos de marca.',
       organic: [
-        { vc: 'proyeccion', format: 'Reel', title: 'Un estudiante de Los Andes cuenta su intercambio', why: 'Proyección Internacional es la razón #1 para elegir un colegio Aspaen (71%) — priorízala en tu contenido orgánico de colegio.' },
-        { vc: 'ambiente', format: 'Story', title: 'Un recreo cualquiera en Los Andes', why: 'Ambiente educativo es de las variables que más se explora al inicio de la búsqueda en el segmento alto.' },
+        { vc: 'proyeccion', format: 'Reel', title: 'Un estudiante de Juanambú cuenta su intercambio', why: 'Proyección Internacional es la razón #1 para elegir un colegio Aspaen (71%) — priorízala en tu contenido orgánico de colegio.' },
+        { vc: 'ambiente', format: 'Story', title: 'Un recreo cualquiera en Juanambú', why: 'Ambiente educativo es de las variables que más se explora al inicio de la búsqueda en el segmento alto.' },
         { vc: 'infraestructura', format: 'Carrusel', title: 'Laboratorios y biblioteca, por dentro', why: 'Infraestructura es la variable #1 en importancia para colegios en general (56%).' }
       ]
     },
-    'preescolar-genios': {
+    'entrevalles': {
       hashtags: [['#pequeñosgenios','58','4.4K'],['#montessoricali','41','3.0K'],['#primerdiadeclases','26','1.8K']],
       series: [['#pequeñosgenios','7 posts · 4.4K eng. prom.','2.6x tu mediana'],['#montessoricali','4 posts · 3.0K eng. prom.','1.8x tu mediana']],
       pattern: [['Mejor formato','Reel de actividad Montessori'],['Duración','10 a 20 seg']],
       themes: ['Método Montessori', 'Adaptación', 'Ambiente cálido'],
       patternText: 'El contenido que muestra al niño feliz en el momento (no posado) tiene el doble de guardados que el resto.',
       organic: [
-        { vc: 'ambiente', format: 'Reel', title: 'Así se ve un niño feliz aprendiendo en Pequeños Genios', why: 'Ambiente educativo es la variable #1 en preescolares (55%) y sube a 62% en el segmento alto-medio.' },
+        { vc: 'ambiente', format: 'Reel', title: 'Así se ve un niño feliz aprendiendo en Entrevalles', why: 'Ambiente educativo es la variable #1 en preescolares (55%) y sube a 62% en el segmento alto-medio.' },
         { vc: 'infraestructura', format: 'Carrusel', title: 'Nuestros espacios pensados para niños pequeños', why: 'Infraestructura empata como variable #1 en preescolares (55%) — y es de las principales barreras cuando no se muestra suficiente.' },
         { vc: 'proyeccion', format: 'Story', title: 'Así aprenden inglés jugando desde los 2 años', why: 'El segmento alto-alto de preescolares premia mucho el Ambiente internacional (69%, el más alto de todas las variables medidas).' }
       ]
     },
-    'preescolar-arcoiris': {
+    'tayana': {
       hashtags: [['#arcoiriscali','37','2.6K'],['#preinscripciones2027','29','1.9K'],['#jueglibre','21','1.3K']],
       series: [['#arcoiriscali','5 posts · 2.6K eng. prom.','2.0x tu mediana'],['#jueglibre','3 posts · 1.3K eng. prom.','1.2x tu mediana']],
       pattern: [['Mejor formato','Reel muy visual, sin narración'],['Duración','10 a 15 seg']],
       themes: ['Juego libre', 'Seguridad', 'Alimentación'],
       patternText: 'Los reels sin texto ni narración, solo niños jugando, superan en interacción a los que llevan mucho texto.',
       organic: [
-        { vc: 'ambiente', format: 'Reel', title: 'Un día de juego libre en Arcoíris', why: 'Ninguna de tus creatividades estratégicas está ganando hoy en este ángulo — y Ambiente educativo es de las 3 variables más importantes en preescolares.' },
+        { vc: 'ambiente', format: 'Reel', title: 'Un día de juego libre en Tayana', why: 'Ninguna de tus creatividades estratégicas está ganando hoy en este ángulo — y Ambiente educativo es de las 3 variables más importantes en preescolares.' },
         { vc: 'infraestructura', format: 'Carrusel', title: 'Nuestros salones y zonas de juego, por dentro', why: 'Instalaciones es una de las principales barreras para NO elegir un preescolar Aspaen — mostrarlas más ayuda a cerrar esa brecha.' },
         { vc: 'proyeccion', format: 'Imagen', title: 'Un vistazo a nuestro programa bilingüe', why: 'El Ambiente internacional es la variable que más crece en importancia en el segmento alto-alto de preescolares (69%).' }
       ]
@@ -1181,25 +1189,25 @@
   };
 
   // ---- Calendario: 3 posts semanales (con réplica a Alumni solo en colegios) + parrilla de historias ----
-  var isColegio = { 'colegio-sanrafael': true, 'colegio-losandes': true, 'preescolar-genios': false, 'preescolar-arcoiris': false };
+  var isColegio = { 'tacuri': true, 'juanambu': true, 'entrevalles': false, 'tayana': false };
 
   var weeklyPosts = {
-    'colegio-sanrafael': [
-      { day: 'Lunes', format: 'Reel', title: 'Un día en la vida de un estudiante de San Rafael', alumni: false },
-      { day: 'Miércoles', format: 'Carrusel', title: 'Un día típico en San Rafael (antes/después)', alumni: false },
+    'tacuri': [
+      { day: 'Lunes', format: 'Reel', title: 'Un día en la vida de un estudiante de Tacurí', alumni: false },
+      { day: 'Miércoles', format: 'Carrusel', title: 'Un día típico en Tacurí (antes/después)', alumni: false },
       { day: 'Viernes', format: 'Reel', title: 'Inmersión con profesores nativos', alumni: true }
     ],
-    'colegio-losandes': [
+    'juanambu': [
       { day: 'Lunes', format: 'Reel', title: '"Abrimos inscripciones"', alumni: false },
-      { day: 'Miércoles', format: 'Reel', title: 'Un recorrido por Los Andes guiado por un estudiante', alumni: true },
+      { day: 'Miércoles', format: 'Reel', title: 'Un recorrido por Juanambú guiado por un estudiante', alumni: true },
       { day: 'Viernes', format: 'Carrusel', title: 'Un vistazo a nuestros laboratorios y espacios', alumni: false }
     ],
-    'preescolar-genios': [
+    'entrevalles': [
       { day: 'Lunes', format: 'Reel', title: '"Últimos cupos + Montessori"' },
       { day: 'Miércoles', format: 'Reel', title: '"Así aprendemos" — serie semanal' },
       { day: 'Viernes', format: 'Imagen', title: 'Un vistazo a nuestra huerta / jardín' }
     ],
-    'preescolar-arcoiris': [
+    'tayana': [
       { day: 'Lunes', format: 'Reel', title: 'Refresca "Preinscripciones abiertas" en video' },
       { day: 'Miércoles', format: 'Reel', title: '"Un día de juego libre"' },
       { day: 'Viernes', format: 'Carrusel', title: 'Todo lo que incluye tu pensión' }
@@ -1207,22 +1215,22 @@
   };
 
   var storiesPlan = {
-    'colegio-sanrafael': [
+    'tacuri': [
       [['Lunes','Bienvenida de inicio de semana','lista'],['Miércoles','Actividad deportiva interclases','evento'],['Viernes','Cierre de semana y logros','lista']],
       [['Lunes','Recordatorio: preinscripciones abiertas','lista'],['Miércoles','Izada de bandera / acto cívico','evento'],['Viernes','Salida pedagógica de 5°','evento']],
       [['Lunes','Tip para papás nuevos','lista'],['Miércoles','Día del idioma','evento'],['Viernes','Resumen de la semana','lista']]
     ],
-    'colegio-losandes': [
+    'juanambu': [
       [['Lunes','Bienvenida de semana','lista'],['Miércoles','Entrenamiento del equipo de fútbol','evento'],['Viernes','Cierre semanal','lista']],
       [['Lunes','Recordatorio de becas disponibles','lista'],['Miércoles','Izada de bandera','evento'],['Viernes','Feria de ciencias','evento']],
       [['Lunes','Tip de proceso de admisión','lista'],['Miércoles','Semana cultural','evento'],['Viernes','Resumen semanal','lista']]
     ],
-    'preescolar-genios': [
+    'entrevalles': [
       [['Lunes','Bienvenida de la semana','lista'],['Miércoles','Actividad Montessori del día','evento'],['Viernes','Cierre de semana con fotos','evento']],
       [['Lunes','Recordatorio de cupos','lista'],['Miércoles','Celebración de cumpleaños del mes','evento'],['Viernes','Actividad sensorial','evento']],
       [['Lunes','Tip para la adaptación','lista'],['Miércoles','Día de la familia','evento'],['Viernes','Resumen semanal','lista']]
     ],
-    'preescolar-arcoiris': [
+    'tayana': [
       [['Lunes','Bienvenida de la semana','lista'],['Miércoles','Juego libre en el patio','evento'],['Viernes','Cierre de semana','evento']],
       [['Lunes','Recordatorio de preinscripciones','lista'],['Miércoles','Celebración de cumpleaños del mes','evento'],['Viernes','Actividad de arte','evento']],
       [['Lunes','Tip de alimentación saludable','lista'],['Miércoles','Día del amigo','evento'],['Viernes','Resumen semanal','lista']]
@@ -1334,16 +1342,16 @@
 
   // ---- Mock data: cada cuenta trae su campaña táctica y estratégica, con creatividades y propuestas ----
   var campData = {
-    'colegio-sanrafael': {
+    'tacuri': {
       competencia: [
         'Frente a la competencia (score promedio 3,58), tu Formación Académica ya gana claramente (4,13) — es una fortaleza real, no percibida.',
         'La competencia sigue por delante en NPS general (6,62 vs 5,46 de tu red) — no es un problema de captación, es de experiencia y percepción.',
-        'La awareness de "Red Aspaen" (35,9%) es mucho más alta que la de San Rafael como sede individual (9,1%) — la gente conoce la marca paraguas más que tu colegio puntual.'
+        'La awareness de "Red Aspaen" (35,9%) es mucho más alta que la de Tacurí como sede individual (9,1%) — la gente conoce la marca paraguas más que tu colegio puntual.'
       ],
       hacer: [
         'Lidera con Proyección Internacional: es la razón #1 (71%) por la que una familia considera un colegio Aspaen, y hoy casi no aparece en tu contenido.',
         'Muestra Infraestructura sin miedo: es la variable #1 en importancia para colegios (56%) y tu colegio ya la gana frente a la competencia en instalaciones.',
-        'Menciona la Red Aspaen en tu contenido, no solo "San Rafael" — la marca paraguas tiene 4x más awareness que tu sede individual.'
+        'Menciona la Red Aspaen en tu contenido, no solo "Tacurí" — la marca paraguas tiene 4x más awareness que tu sede individual.'
       ],
       noHacer: [
         'No sigas invirtiendo en el ángulo de precio/cupos sin evidencia — tu creatividad de precio tiene el CTR más bajo de la cuenta.',
@@ -1356,11 +1364,11 @@
         'La brecha de NPS frente a la competencia sugiere que vale la pena invertir también en contenido de "experiencia real de familia", no solo en captación.'
       ],
       tactica: {
-        camp: { goalLabel: 'Leads', goal: 200, current: 178, cpl: 5.90, cplObj: 5.50, spend: 1050, budget: 1300 },
+        camp: { goalLabel: 'Leads', goal: null, current: 16, cpl: 42393, cplObj: null, spend: 678289, budget: null, real: true, period: '16 jun – 15 jul 2026' },
         creatives: [
-          { name: '"Agenda tu visita guiada"', format: 'Reel', days: 12, m: [['Leads','64'],['CPL','$5.20'],['CTR','1.8%']], verdict: 'Ganadora', note: 'Tu mejor CPL del mes — sigue esta línea de gancho con testimonio real.' },
-          { name: '"Cupos limitados 2027"', format: 'Carrusel', days: 18, m: [['Leads','22'],['CPL','$9.10'],['CTR','0.9%']], verdict: 'Débil', note: 'CTR bajo: el gancho de precio no funciona, prueba con beneficio en vez de costo.' },
-          { name: '"Conoce nuestras instalaciones"', format: 'Video', days: 25, m: [['Leads','9'],['CPL','$14.30'],['Frec.','4.2']], verdict: 'Fatigada', note: 'Frecuencia 4.2 — la misma audiencia ya la vio varias veces, refréscala o pausa.' }
+          { name: 'Js_Tacurí_Matriculas_Abiertas_VID4', format: 'Reel', days: 30, m: [['Leads','10'],['CPL','$10.210'],['Gasto','$102.097']], verdict: 'Ganadora', note: 'Tu mejor pieza de la campaña dedicada — bájale gasto a las que no traen leads y súbeselo a esta.' },
+          { name: 'Js_Tacurí_Matriculas_Abiertas_CTW2', format: 'Video', days: 30, m: [['Leads','0'],['Gasto','$43.904'],['Impr.','4.521']], verdict: 'Débil', note: '0 leads con gasto real — pausa esta pieza esta semana.' },
+          { name: 'Js_Matriculas_Abiertas_Tacurí (formulario unificado)', format: 'Conjunto', days: 30, m: [['Leads','2'],['CPL','$122.481'],['Gasto','$244.961']], verdict: 'Débil', note: 'El peor CPL de toda la sede — este conjunto (dentro de la campaña "Formulario unificado") está quemando presupuesto sin convertir.' }
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: '"¿Aún hay cupo para tu hijo en 2027?"', why: 'Aprovecha la urgencia que ya funcionó en "Agenda tu visita guiada", con un gancho más específico de escasez.',
@@ -1373,10 +1381,10 @@
             ],
             necesitas: ['Grabación en el colegio (pasillo, entrada)', '1 papá real dispuesto a dar testimonio corto', 'Texto animado tipo contador de cupos', 'Música de tendencia, ritmo suave-urgente'],
             como: 'Ritmo rápido, cámara en mano, estilo auténtico (no muy pulido), subtítulos quemados en pantalla.' },
-          { fmt: 'Carrusel', kind: 'carrusel', title: 'Un día típico en San Rafael (antes/después)', why: 'Reemplaza el ángulo de precio, que rinde mal, por beneficio mostrado en vez de contado.',
+          { fmt: 'Carrusel', kind: 'carrusel', title: 'Un día típico en Tacurí (antes/después)', why: 'Reemplaza el ángulo de precio, que rinde mal, por beneficio mostrado en vez de contado.',
             vc: 'infraestructura', vcNote: 'Infraestructura es la variable #1 en importancia para colegios (56%) y se mantiene arriba incluso en el segmento de mayor poder adquisitivo.',
             slides: [
-              { visual: 'Foto exterior del colegio en la mañana', texto: 'Así empieza un día en San Rafael' },
+              { visual: 'Foto exterior del colegio en la mañana', texto: 'Así empieza un día en Tacurí' },
               { visual: 'Niños en el salón de clase', texto: 'Clases con máximo 20 estudiantes por salón' },
               { visual: 'Niños en el descanso / zona deportiva', texto: 'Espacios deportivos y de juego todos los días' },
               { visual: 'Comedor a la hora del almuerzo', texto: 'Alimentación balanceada incluida' },
@@ -1386,17 +1394,16 @@
         ]
       },
       estrategica: {
-        camp: { goalLabel: 'Alcance', goal: 60000, current: 52300, freq: 2.1, cpm: 8.40, spend: 620, budget: 800 },
+        camp: { goalLabel: 'Alcance', goal: null, current: 101919, freq: 1.48, cpm: 754, spend: 113793, budget: null, real: true, period: '16 jun – 15 jul 2026' },
         creatives: [
-          { name: '"Un día en San Rafael"', format: 'Reel', m: [['Alcance','38.4K'],['Frec.','1.6'],['CPM','$6.20']], verdict: 'Ganadora', note: 'Buen alcance con frecuencia sana — sigue produciendo este formato de "día a día".' },
-          { name: '"Testimonio de egresados"', format: 'Video', m: [['Alcance','14.2K'],['Frec.','3.4'],['CPM','$11.80']], verdict: 'Fatigada', note: 'Frecuencia alta con poco alcance nuevo — cambia audiencia o pausa.' },
-          { name: '"Valores del colegio"', format: 'Carrusel', m: [['Alcance','9.8K'],['Frec.','1.2'],['CPM','$15.40']], verdict: 'Débil', note: 'CPM alto sin generar interacción, el mensaje es muy genérico frente al resto.' }
+          { name: 'Js_Tacuri_Estrategica_Refuerzo5', format: 'Reel', m: [['Alcance','97.036'],['Frec.','1,47'],['CPM','$756']], verdict: 'Ganadora', note: 'Concentra casi todo el alcance de la sede — es tu pieza dominante, vale la pena reforzarla con una segunda versión antes de que se fatigue.' },
+          { name: 'Js_Tacuri_Estrategica_GlobalVoices_VID', format: 'Video', m: [['Alcance','651'],['Frec.','1,04'],['CPM','$794']], verdict: 'Débil', note: 'Alcance mínimo — está corriendo con presupuesto casi simbólico, no es una prueba real todavía.' }
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: '"Voces de papás" — serie de testimonios cortos', why: 'El testimonio en video funciona pero se fatigó rápido; una serie con caras distintas mantiene frescura sin perder el formato ganador.',
             vc: 'ambiente', vcNote: 'Refuerza sentido de comunidad y felicidad — Ambiente educativo.',
             duracion: '18 seg', guion: [
-              { t: '0–2s', escena: 'Papá o mamá mirando a cámara', texto: '"Yo miré otros colegios, y elegí San Rafael porque…"' },
+              { t: '0–2s', escena: 'Papá o mamá mirando a cámara', texto: '"Yo miré otros colegios, y elegí Tacurí porque…"' },
               { t: '2–10s', escena: 'Continúa el testimonio genuino (casa o colegio)', texto: 'Habla libre, sin guion memorizado' },
               { t: '10–15s', escena: 'Corte a un niño sonriendo saliendo del colegio', texto: 'Sin texto, solo música' },
               { t: '15–18s', escena: 'Logo', texto: '"Conoce más historias como esta"' }
@@ -1409,7 +1416,7 @@
               { t: '0–3s', escena: 'La profesora empezando la clase', texto: 'Sin texto' },
               { t: '3–12s', escena: 'Niños participando, levantando la mano, riendo', texto: 'Sin texto' },
               { t: '12–16s', escena: 'Toma de un trabajo o manualidad terminada', texto: 'Sin texto' },
-              { t: '16–18s', escena: 'Logo', texto: '"Así aprendemos en San Rafael"' }
+              { t: '16–18s', escena: 'Logo', texto: '"Así aprendemos en Tacurí"' }
             ],
             necesitas: ['Permiso de grabación en salón (colegio + papás)', '1 clase dinámica para grabar (arte, ciencias o educación física funcionan mejor)', 'Sin guion rígido'],
             como: 'Estilo documental, cámara observando sin interrumpir la clase.' },
@@ -1419,23 +1426,23 @@
               { t: '0–3s', escena: 'Profesor nativo saludando a la clase en inglés', texto: 'Sin texto' },
               { t: '3–12s', escena: 'Niños participando en una actividad de inmersión (juego, canción o rol)', texto: 'Texto: "Inmersión real, todos los días"' },
               { t: '12–16s', escena: 'Un niño respondiendo en inglés con naturalidad', texto: 'Sin texto' },
-              { t: '16–18s', escena: 'Logo', texto: '"Proyección internacional desde San Rafael"' }
+              { t: '16–18s', escena: 'Logo', texto: '"Proyección internacional desde Tacurí"' }
             ],
             necesitas: ['Autorización para grabar la clase de inglés', 'Profesor nativo cómodo frente a cámara', 'Un momento espontáneo de un niño hablando inglés'],
             como: 'Natural, sin actuación, con subtítulos en español para que se entienda el valor sin necesidad de hablar inglés.' }
         ]
       }
     },
-    'colegio-losandes': {
+    'juanambu': {
       competencia: [
         'Tu Ubicación (score 4,19) y Resultados de egresados (3,95) ya ganan a la competencia (3,45 y 3,65) — son argumentos de venta poco usados hoy.',
-        'La Red Aspaen tiene 35,9% de awareness ayudado, pero Los Andes como sede individual apenas llega a 7,3% — la marca paraguas te puede ayudar más de lo que la estás usando.',
+        'La Red Aspaen tiene 35,9% de awareness ayudado, pero Juanambú como sede individual apenas llega a 7,3% — la marca paraguas te puede ayudar más de lo que la estás usando.',
         'El NPS de la competencia (6,62) sigue por encima del de tu red (5,46) — la experiencia post-matrícula importa tanto como la captación.'
       ],
       hacer: [
         'Escala "Abrimos inscripciones", tu creatividad con mejor CPL — sube presupuesto antes de crear piezas nuevas.',
         'Muestra Proyección Internacional: es la razón #1 (71%) por la que las familias consideran un colegio Aspaen y hoy no la tienes en tu contenido activo.',
-        'Refuerza el nombre "Red Aspaen" junto al de Los Andes — te apoyas en una marca con 5x más reconocimiento que tu sede sola.'
+        'Refuerza el nombre "Red Aspaen" junto al de Juanambú — te apoyas en una marca con 5x más reconocimiento que tu sede sola.'
       ],
       noHacer: [
         'No repitas "Beca por buen rendimiento" como imagen estática — ya está fatigada (frecuencia 3.9) y con CTR bajo.',
@@ -1448,16 +1455,16 @@
         'Para el segmento alto-alto, lo que más pesa ahora es Deportivo, Experiencia internacional, Personal y Relacionamiento social — contenido que muestre esto tiene más espacio de crecimiento que el institucional clásico.'
       ],
       tactica: {
-        camp: { goalLabel: 'Leads', goal: 150, current: 96, cpl: 7.40, cplObj: 6.00, spend: 710, budget: 900 },
+        camp: { goalLabel: 'Leads', goal: null, current: 25, cpl: 29972, cplObj: null, spend: 749295, budget: null, real: true, period: '16 jun – 15 jul 2026' },
         creatives: [
-          { name: '"Abrimos inscripciones"', format: 'Reel', days: 10, m: [['Leads','51'],['CPL','$6.10'],['CTR','1.4%']], verdict: 'Ganadora', note: 'Tu gancho de inscripción abierta está rindiendo mejor que el resto.' },
-          { name: '"Beca por buen rendimiento"', format: 'Imagen', days: 20, m: [['Leads','12'],['CPL','$15.80'],['Frec.','3.9']], verdict: 'Fatigada', note: 'Frecuencia alta y CTR bajo — el formato estático ya se agotó con esta audiencia.' }
+          { name: 'Js_Juanambu_Matriculas_Abiertas_VID5', format: 'Reel', days: 30, m: [['Leads','6'],['CPL','$12.737'],['Gasto','$76.420']], verdict: 'Ganadora', note: 'La mejor combinación de volumen y CPL de la sede — dale más presupuesto antes de crear piezas nuevas.' },
+          { name: 'Js_Juanambu_Post_Promoted_VID5', format: 'Video', days: 30, m: [['Leads','4'],['CPL','$32.068'],['Gasto','$128.271']], verdict: 'Débil', note: 'Es tu pieza con más gasto y el peor CPL — revisa el mensaje o bájale presupuesto.' }
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: '"Últimos cupos con beca"', why: 'Combina el gancho de inscripción (ganador) con el incentivo de beca, que solo no funcionó como imagen estática.',
             vc: null, vcNote: 'Pieza de conversión pura (precio/beca) — no refuerza ninguna variable crítica directamente. Está bien que exista, pero balancéala con piezas de marca.',
             duracion: '20 seg', guion: [
-              { t: '0–3s', escena: 'Texto en pantalla', texto: '"¿Sabías que Los Andes tiene becas por rendimiento?"' },
+              { t: '0–3s', escena: 'Texto en pantalla', texto: '"¿Sabías que Juanambú tiene becas por rendimiento?"' },
               { t: '3–10s', escena: 'Estudiante mostrando un reconocimiento o notas', texto: 'Sin diálogo, solo texto de apoyo' },
               { t: '10–16s', escena: 'Voz en off', texto: '"Aplica antes de que se acaben los cupos con beca"' },
               { t: '16–20s', escena: 'CTA + logo', texto: '"Escríbenos y te contamos cómo aplicar"' }
@@ -1466,23 +1473,23 @@
             como: 'Tono aspiracional, ritmo medio, sin urgencia agresiva.' },
           { fmt: 'Imagen', kind: 'imagen', title: 'Comparativo: beca vs. sin beca', why: 'Formato estático de bajo costo para reforzar el mensaje de beca con un dato concreto en vez de solo una foto institucional.',
             vc: null, vcNote: 'También es una pieza de conversión pura, sin variable crítica asociada.',
-            visual: 'Gráfico tipo infografía con dos columnas simples ("Sin beca" / "Con beca Los Andes"), sin necesidad de fotos de niños.',
-            textoPrincipal: 'Con beca por rendimiento, tu hijo estudia en Los Andes por menos de lo que piensas',
+            visual: 'Gráfico tipo infografía con dos columnas simples ("Sin beca" / "Con beca Juanambú"), sin necesidad de fotos de niños.',
+            textoPrincipal: 'Con beca por rendimiento, tu hijo estudia en Juanambú por menos de lo que piensas',
             textoSecundario: 'Cupos limitados — escríbenos',
             necesitas: ['Cifra real del valor/porcentaje de la beca', 'Diseño simple tipo infografía', 'Autorización de mercadeo para publicar cifras'] }
         ]
       },
       estrategica: {
-        camp: { goalLabel: 'Alcance', goal: 45000, current: 41000, freq: 2.8, cpm: 9.90, spend: 500, budget: 650 },
+        camp: { goalLabel: 'Alcance', goal: null, current: 41282, freq: 1.82, cpm: 1549, spend: 116612, budget: null, real: true, period: '16 jun – 15 jul 2026' },
         creatives: [
-          { name: '"Bienvenida a Los Andes"', format: 'Video', m: [['Alcance','28K'],['Frec.','1.9'],['CPM','$8.10']], verdict: 'Ganadora', note: 'Tu creatividad con mejor CPM y frecuencia sana.' },
-          { name: '"Nuestra huerta escolar"', format: 'Carrusel', m: [['Alcance','13K'],['Frec.','3.6'],['CPM','$13.20']], verdict: 'Fatigada', note: 'Frecuencia de 3.6 — ya casi no está llegando a gente nueva.' }
+          { name: 'Js_Juanambú_Estrategica_Refuerzo7', format: 'Video', m: [['Alcance','19.300'],['Frec.','1,39'],['CPM','$1.637']], verdict: 'Ganadora', note: 'Tu pieza con más alcance de la sede — el CPM es el más alto de las 4 sedes, vale la pena probar un nuevo ángulo visual.' },
+          { name: 'Js_Juanambú_Estrategica_Refuerzo1', format: 'Video', m: [['Alcance','13.899'],['Frec.','1,24'],['CPM','$1.458']], verdict: 'Ganadora', note: 'Mejor CPM que la anterior aunque con menos escala — candidata a recibir más presupuesto.' }
         ],
         proposals: [
-          { fmt: 'Reel', kind: 'video', title: 'Un recorrido por Los Andes guiado por un estudiante', why: 'La bienvenida en video funciona; un recorrido mantiene el mismo estilo con contenido nuevo.',
+          { fmt: 'Reel', kind: 'video', title: 'Un recorrido por Juanambú guiado por un estudiante', why: 'La bienvenida en video funciona; un recorrido mantiene el mismo estilo con contenido nuevo.',
             vc: 'infraestructura', vcNote: 'Infraestructura es la variable #1 en importancia para colegios (56%).',
             duracion: '18 seg', guion: [
-              { t: '0–3s', escena: 'Estudiante saluda a cámara', texto: '"Bienvenidos a un día en Los Andes"' },
+              { t: '0–3s', escena: 'Estudiante saluda a cámara', texto: '"Bienvenidos a un día en Juanambú"' },
               { t: '3–14s', escena: 'Recorrido por pasillos, biblioteca, laboratorio', texto: 'Comentarios breves del estudiante sobre cada espacio' },
               { t: '14–18s', escena: 'Cierre en la puerta principal', texto: '"Este es mi colegio" + logo' }
             ],
@@ -1491,7 +1498,7 @@
           { fmt: 'Carrusel', kind: 'carrusel', title: 'Un vistazo a nuestros laboratorios y espacios', why: 'Refuerza el mensaje de infraestructura de forma más económica que un video, con datos concretos que la competencia no está mostrando.',
             vc: 'infraestructura', vcNote: 'Infraestructura sigue siendo la #1 razón por la que un colegio es considerado, incluso en el segmento más alto (47–57%).',
             slides: [
-              { visual: 'Fachada del colegio', texto: 'Conoce los espacios de Los Andes' },
+              { visual: 'Fachada del colegio', texto: 'Conoce los espacios de Juanambú' },
               { visual: 'Laboratorio de ciencias', texto: 'Laboratorio equipado para ciencias naturales' },
               { visual: 'Biblioteca', texto: 'Biblioteca con más de 2.000 títulos' },
               { visual: 'Zona deportiva', texto: 'Canchas y zona deportiva propia' },
@@ -1510,7 +1517,7 @@
         ]
       }
     },
-    'preescolar-genios': {
+    'entrevalles': {
       competencia: [
         'Preescolares de la zona muestran más contenido del método pedagógico (Montessori, Waldorf, Reggio) como diferenciador.',
         'Aumento de Reels tipo "un día típico" desde la llegada hasta la salida.',
@@ -1532,10 +1539,10 @@
         'Para el segmento más alto, el bilingüismo y los resultados de egresados pesan menos (38%) de lo que se asume — el diferencial real ahí es Ambiente internacional e Infraestructura.'
       ],
       tactica: {
-        camp: { goalLabel: 'Leads', goal: 120, current: 133, cpl: 4.60, cplObj: 5.00, spend: 610, budget: 700 },
+        camp: { goalLabel: 'Leads', goal: null, current: 21, cpl: 9819, cplObj: null, spend: 206191, budget: null, real: true, period: '16 jun – 15 jul 2026' },
         creatives: [
-          { name: '"Agenda tu cupo para el próximo año"', format: 'Reel', days: 14, m: [['Leads','78'],['CPL','$3.90'],['CTR','2.1%']], verdict: 'Ganadora', note: 'Tu mejor CPL de todas las cuentas — el gancho de urgencia funciona muy bien aquí.' },
-          { name: '"Conoce nuestro método Montessori"', format: 'Carrusel', days: 16, m: [['Leads','55'],['CPL','$5.60'],['CTR','1.1%']], verdict: 'Ganadora', note: 'También cumple objetivo — el diferencial pedagógico convence.' }
+          { name: 'Js_Post_Promoted_VID2 (Entrevalles)', format: 'Reel', days: 30, m: [['Leads','14'],['CPL','$8.657'],['Gasto','$121.192']], verdict: 'Ganadora', note: 'El mejor CPL con volumen real de toda la sede — súbele presupuesto antes de crear piezas nuevas.' },
+          { name: 'Js_CTW1 (Entrevalles)', format: 'Video', days: 30, m: [['Leads','0'],['Gasto','$5.097']], verdict: 'Débil', note: 'Gasto bajo pero sin ningún lead — pausa o cambia el mensaje.' }
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: '"Últimos cupos + Montessori"', why: 'Combina el mensaje de urgencia con el diferencial pedagógico, tus dos creatividades con mejor CPL.',
@@ -1560,10 +1567,10 @@
         ]
       },
       estrategica: {
-        camp: { goalLabel: 'Alcance', goal: 30000, current: 33500, freq: 1.8, cpm: 7.20, spend: 340, budget: 400 },
+        camp: { goalLabel: 'Alcance', goal: null, current: 33693, freq: 2.48, cpm: 1365, spend: 113912, budget: null, real: true, period: '16 jun – 15 jul 2026' },
         creatives: [
-          { name: '"Un día en Pequeños Genios"', format: 'Reel', m: [['Alcance','22K'],['Frec.','1.5'],['CPM','$6.10']], verdict: 'Ganadora', note: 'Alcance por encima de la meta con el CPM más bajo de la cuenta.' },
-          { name: '"Testimonios de mamás"', format: 'Video', m: [['Alcance','11.5K'],['Frec.','2.6'],['CPM','$9.80']], verdict: 'Débil', note: 'CPM más alto que el resto sin ganar alcance adicional.' }
+          { name: 'Js_Entrevalles_Estrategica_Refuerzo3', format: 'Reel', m: [['Alcance','18.450'],['Frec.','2,06'],['CPM','$1.495']], verdict: 'Fatigada', note: 'Frecuencia 2,06 — la más alta de tus piezas estratégicas, vigila que no se agote esta semana.' },
+          { name: 'Js_Entrevalles_Estrategica_GlobalVoices_VID', format: 'Video', m: [['Alcance','7.538'],['Frec.','1,12'],['CPM','$1.232']], verdict: 'Ganadora', note: 'Frecuencia sana y mejor CPM que la anterior — candidata a recibir más presupuesto.' }
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: '"Así aprendemos" — serie semanal', why: 'Aprovecha el formato ganador de "un día en..." con contenido recurrente de bajo costo.',
@@ -1571,7 +1578,7 @@
             duracion: '15 seg', guion: [
               { t: '0–3s', escena: 'Actividad distinta cada semana (pintura, música, exterior)', texto: 'Sin texto' },
               { t: '3–12s', escena: 'Niños interactuando, risas genuinas', texto: 'Sin texto' },
-              { t: '12–15s', escena: 'Logo', texto: '"Así aprendemos en Pequeños Genios"' }
+              { t: '12–15s', escena: 'Logo', texto: '"Así aprendemos en Entrevalles"' }
             ],
             necesitas: ['Rotar 1 actividad distinta cada semana', 'Autorización de grabación de menores', 'Misma intro/outro para mantener consistencia'],
             como: 'Luminoso, ritmo alegre, música infantil de fondo.' },
@@ -1579,25 +1586,25 @@
             vc: 'infraestructura', vcNote: 'Infraestructura empata como variable #1 en preescolares (55%) junto con Ambiente educativo.',
             visual: 'Foto real de niños interactuando con plantas en la huerta/jardín del preescolar, buena luz natural.',
             textoPrincipal: 'Aprendemos de la naturaleza todos los días',
-            textoSecundario: 'Pequeños Genios',
+            textoSecundario: 'Entrevalles',
             necesitas: ['Foto real en buena luz natural', 'Autorización de imagen de los niños que aparezcan'] },
           { fmt: 'Reel', kind: 'video', title: 'Bilingüismo desde los 2 años', why: 'El Ambiente internacional es la variable que más pesa en el segmento alto-alto de preescolares (69%, la más alta de toda la encuesta) y hoy no la muestras.',
             vc: 'proyeccion', vcNote: 'Cubre la variable con mayor peso en el segmento más exigente de preescolares.',
             duracion: '15 seg', guion: [
               { t: '0–3s', escena: 'Niños cantando una canción en inglés en rutina diaria', texto: 'Sin texto' },
               { t: '3–10s', escena: 'Niño señalando objetos y diciendo su nombre en inglés', texto: 'Texto: "Bilingüismo desde los 2 años"' },
-              { t: '10–15s', escena: 'Logo', texto: '"Pequeños Genios"' }
+              { t: '10–15s', escena: 'Logo', texto: '"Entrevalles"' }
             ],
             necesitas: ['Grabación de una rutina bilingüe real (canción, objetos, saludo)', 'Autorización de grabación de menores'],
             como: 'Alegre y cotidiano, sin actuación, mostrando que el inglés ya es parte del día a día.' }
         ]
       }
     },
-    'preescolar-arcoiris': {
+    'tayana': {
       competencia: [
         'La competencia resalta horarios extendidos y alimentación como principal gancho táctico.',
         'Publicidad enfocada en tranquilidad/seguridad de los papás (cámaras, protocolos) como ángulo emocional.',
-        '"Instalaciones" y "falta de información" son, según la encuesta, de las principales razones por las que un preescolar Aspaen NO es elegido — vale la pena revisar si Arcoíris está mostrando suficiente de esto.'
+        '"Instalaciones" y "falta de información" son, según la encuesta, de las principales razones por las que un preescolar Aspaen NO es elegido — vale la pena revisar si Tayana está mostrando suficiente de esto.'
       ],
       hacer: [
         'Cambia "Preinscripciones abiertas" de imagen a Reel — el mensaje capta leads pero el formato ya se fatigó.',
@@ -1605,7 +1612,7 @@
         'Prueba el ángulo de seguridad/tranquilidad que está funcionando en la competencia y que aún no exploras.'
       ],
       noHacer: [
-        'No sigas invirtiendo en "Conoce Arcoíris" sin cambiar el mensaje — su CTR (0.6%) es el más bajo de todas tus cuentas.',
+        'No sigas invirtiendo en "Conoce Tayana" sin cambiar el mensaje — su CTR (0.6%) es el más bajo de todas tus cuentas.',
         'No asumas que basta con mostrar la oferta: si "falta de información" es una barrera real, tu contenido también debe explicar precios/proceso de admisión con claridad.'
       ],
       tendencias: [
@@ -1614,10 +1621,10 @@
         'El Ambiente internacional es la variable que más crece en el segmento alto-alto de preescolares (69%) — un espacio casi vacío en tu contenido actual.'
       ],
       tactica: {
-        camp: { goalLabel: 'Leads', goal: 100, current: 61, cpl: 8.90, cplObj: 6.50, spend: 540, budget: 650 },
+        camp: { goalLabel: 'Leads', goal: null, current: 24, cpl: 11942, cplObj: null, spend: 286614, budget: null, real: true, period: '16 jun – 15 jul 2026' },
         creatives: [
-          { name: '"Preinscripciones abiertas"', format: 'Imagen', days: 22, m: [['Leads','40'],['CPL','$7.20'],['Frec.','3.8']], verdict: 'Fatigada', note: 'El mensaje capta leads pero el formato estático ya se agotó con esta audiencia.' },
-          { name: '"Conoce Arcoíris"', format: 'Video', days: 9, m: [['Leads','21'],['CPL','$11.50'],['CTR','0.6%']], verdict: 'Débil', note: 'CTR bajo — el mensaje institucional no está generando suficiente interés.' }
+          { name: 'Js_Post_Promoted_VID6 (Tayana)', format: 'Reel', days: 30, m: [['Leads','5'],['CPL','$2.865'],['Gasto','$14.324']], verdict: 'Ganadora', note: 'El mejor CPL de las 4 sedes — súbele presupuesto ya, es tu oportunidad más clara de bajar el CPL general.' },
+          { name: 'Js_Post_Promoted_VID1 (Tayana)', format: 'Reel', days: 30, m: [['Leads','2'],['CPL','$24.385'],['Gasto','$48.770']], verdict: 'Débil', note: 'Tu mayor gasto individual con el peor CPL de la sede — redistribuye ese presupuesto hacia VID6.' }
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: 'Refresca "Preinscripciones abiertas" en video', why: 'La oferta funciona; cámbiala de imagen estática a Reel para reducir la fatiga sin perder el mensaje.',
@@ -1633,7 +1640,7 @@
           { fmt: 'Carrusel', kind: 'carrusel', title: 'Todo lo que incluye tu pensión', why: 'Aclara el valor real de la oferta con más detalle del que cabe en un solo mensaje, apoyando el ángulo de alimentación/horario que está funcionando en la competencia.',
             vc: null, vcNote: 'También ataca directamente "Falta de información", una de las principales barreras para NO elegir un preescolar Aspaen — sin ser una variable crítica en sí.',
             slides: [
-              { visual: 'Fachada', texto: '¿Qué incluye tu pensión en Arcoíris?' },
+              { visual: 'Fachada', texto: '¿Qué incluye tu pensión en Tayana?' },
               { visual: 'Comedor / alimentación', texto: 'Alimentación balanceada incluida' },
               { visual: 'Actividad extracurricular', texto: 'Talleres de arte y música incluidos' },
               { visual: 'Horario', texto: 'Horario extendido disponible' },
@@ -1643,10 +1650,10 @@
         ]
       },
       estrategica: {
-        camp: { goalLabel: 'Alcance', goal: 25000, current: 19800, freq: 3.1, cpm: 12.40, spend: 300, budget: 380 },
+        camp: { goalLabel: 'Alcance', goal: null, current: 103126, freq: 1.44, cpm: 766, spend: 114013, budget: null, real: true, period: '16 jun – 15 jul 2026' },
         creatives: [
-          { name: '"Nuestros valores"', format: 'Carrusel', m: [['Alcance','11.2K'],['Frec.','3.5'],['CPM','$14.90']], verdict: 'Fatigada', note: 'Frecuencia alta y CPM alto — ya casi no llega a audiencia nueva.' },
-          { name: '"Actividades al aire libre"', format: 'Reel', m: [['Alcance','8.6K'],['Frec.','2.4'],['CPM','$9.60']], verdict: 'Débil', note: 'Mejor que el carrusel, pero ninguna creatividad estratégica está ganando en esta cuenta.' }
+          { name: 'Js_Tayana_Estrategica_Refuerzo2', format: 'Video', m: [['Alcance','53.070'],['Frec.','1,26'],['CPM','$1.100']], verdict: 'Ganadora', note: 'Tu pieza con más alcance — frecuencia sana, todavía tiene espacio para más presupuesto.' },
+          { name: 'Js_Tayana_Estrategica_GlobalVoices_VID', format: 'Video', m: [['Alcance','46.392'],['Frec.','1,21'],['CPM','$655']], verdict: 'Ganadora', note: 'El mejor CPM de todas tus piezas estratégicas en las 4 sedes — tu mejor candidata para escalar.' }
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: '"Un día de juego libre" — ángulo 100% visual y emocional', why: 'Ninguna creatividad estratégica está ganando aquí; prueba un ángulo visual antes de seguir invirtiendo en carruseles de texto.',
@@ -1654,7 +1661,7 @@
             duracion: '15 seg', guion: [
               { t: '0–3s', escena: 'Niños corriendo en el patio', texto: 'Sin texto' },
               { t: '3–12s', escena: 'Momentos de juego libre, risas, sin narración', texto: 'Sin texto' },
-              { t: '12–15s', escena: 'Logo', texto: '"Aprender jugando en Arcoíris"' }
+              { t: '12–15s', escena: 'Logo', texto: '"Aprender jugando en Tayana"' }
             ],
             necesitas: ['Grabación en el patio en horario de recreo', 'Buena luz natural', 'No necesita guion hablado'],
             como: 'Muy visual, casi sin texto, música emotiva de fondo.' },
@@ -1662,13 +1669,13 @@
             vc: 'ambiente', vcNote: 'La tranquilidad de los papás es parte del ambiente de confianza que rodea al niño — cercano a Ambiente educativo, aunque no es una de las 3 variables núcleo.',
             visual: 'Foto real de la entrada del preescolar con personal de recepción/seguridad visible.',
             textoPrincipal: 'Tu hijo, siempre seguro y acompañado',
-            textoSecundario: 'Arcoíris',
+            textoSecundario: 'Tayana',
             necesitas: ['Foto real de la entrada/recepción', 'Confirmar protocolos de seguridad vigentes antes de mencionarlos'] },
           { fmt: 'Imagen', kind: 'imagen', title: 'Un vistazo a nuestro programa bilingüe', why: 'El Ambiente internacional es la variable que más pesa en el segmento alto-alto de preescolares (69%, la más alta de toda la encuesta) y hoy no la tocas.',
             vc: 'proyeccion', vcNote: 'Cierra el vacío de Proyección Internacional en tu comunicación estratégica.',
             visual: 'Foto real de niños con material didáctico en inglés (tarjetas, libros ilustrados) durante una actividad bilingüe.',
             textoPrincipal: 'Aprenden inglés jugando, desde pequeños',
-            textoSecundario: 'Arcoíris',
+            textoSecundario: 'Tayana',
             necesitas: ['Foto real de una actividad bilingüe', 'Autorización de imagen de los niños que aparezcan'] }
         ]
       }
@@ -1678,6 +1685,23 @@
   function renderCampaignCard(tipo, data) {
     var c = data.camp;
     var isTactica = tipo === 'tactica';
+
+    if (c.real) {
+      var statsHtmlReal = isTactica
+        ? '<div><div class="k">' + c.goalLabel + '</div><div class="v">' + fmtNum(c.current) + '</div></div>' +
+          '<div><div class="k">CPL</div><div class="v">' + fmtCOP(c.cpl) + '</div></div>' +
+          '<div><div class="k">Gasto</div><div class="v">' + fmtCOP(c.spend) + '</div></div>'
+        : '<div><div class="k">' + c.goalLabel + '</div><div class="v">' + fmtNum(c.current) + '</div></div>' +
+          '<div><div class="k">Frecuencia</div><div class="v">' + c.freq.toString().replace('.', ',') + '</div></div>' +
+          '<div><div class="k">CPM</div><div class="v">' + fmtCOP(c.cpm) + '</div></div>';
+      var fatigueWarn = !isTactica && c.freq > 2.2;
+      return '<div class="campaign-card"><div class="campaign-top">' +
+        '<div class="campaign-name">' + tipoLabels[tipo] + '</div>' +
+        '<span class="status-pill ' + (fatigueWarn ? 'warn' : 'good') + '">' + (fatigueWarn ? '⚠️ Revisar frecuencia' : '📡 Datos reales') + '</span></div>' +
+        '<div class="campaign-stats">' + statsHtmlReal + '</div>' +
+        '<div class="progress-caption">Meta Ads · período ' + c.period + ' (últimos 30 días) — sin meta mensual definida todavía.</div></div>';
+    }
+
     var pct = Math.min(100, Math.round((c.current / c.goal) * 100));
     var cls = isTactica ? (c.cpl <= c.cplObj ? 'good' : (pct >= 80 ? 'warn' : 'crit')) : (pct >= 100 ? 'good' : (pct >= 70 ? 'warn' : 'crit'));
     var statsHtml = isTactica
@@ -1761,11 +1785,15 @@
     if (ganadora) {
       reco.push({ icon: 'good', symbol: '📈', title: 'Escala ' + ganadora.name, text: 'Es de tus mejores creatividades. Si le subes presupuesto, es tu forma más directa de mejorar el resultado de toda la cuenta.' });
     }
-    var pctT = Math.round((t.camp.current / t.camp.goal) * 100);
-    if (pctT < 80) {
-      reco.push({ icon: 'warn', symbol: '🕒', title: 'Táctica va al ' + pctT + '% de su meta de leads', text: 'Redistribuye presupuesto hacia la creatividad con mejor CPL antes de que cierre el mes.' });
+    if (t.camp.goal) {
+      var pctT = Math.round((t.camp.current / t.camp.goal) * 100);
+      if (pctT < 80) {
+        reco.push({ icon: 'warn', symbol: '🕒', title: 'Táctica va al ' + pctT + '% de su meta de leads', text: 'Redistribuye presupuesto hacia la creatividad con mejor CPL antes de que cierre el mes.' });
+      } else {
+        reco.push({ icon: 'good', symbol: '✅', title: 'Táctica va bien encaminada (' + pctT + '% de la meta)', text: 'Mantén el ritmo actual de gasto y sigue vigilando el CPL de cada creatividad.' });
+      }
     } else {
-      reco.push({ icon: 'good', symbol: '✅', title: 'Táctica va bien encaminada (' + pctT + '% de la meta)', text: 'Mantén el ritmo actual de gasto y sigue vigilando el CPL de cada creatividad.' });
+      reco.push({ icon: 'good', symbol: '📊', title: fmtNum(t.camp.current) + ' leads en el período con ' + fmtCOP(t.camp.cpl) + ' de CPL', text: 'Aún no tienes una meta mensual definida — dime tu objetivo de leads y CPL y lo agrego para medir avance real.' });
     }
     return reco;
   }
@@ -1774,11 +1802,19 @@
     var data = campData[account];
     var t = data.tactica.camp, e = data.estrategica.camp;
 
-    document.getElementById('analysis-kpis').innerHTML =
-      '<div class="kpi-tile"><div class="kpi-label">Leads (táctica)</div><div class="kpi-value">' + fmtNum(t.current) + '</div><div class="kpi-sub">Meta: ' + fmtNum(t.goal) + '</div></div>' +
-      '<div class="kpi-tile"><div class="kpi-label">CPL promedio</div><div class="kpi-value">$' + t.cpl.toFixed(2) + '</div><div class="kpi-sub">Objetivo: $' + t.cplObj.toFixed(2) + '</div></div>' +
-      '<div class="kpi-tile"><div class="kpi-label">Alcance (estratégica)</div><div class="kpi-value">' + fmtNum(e.current) + '</div><div class="kpi-sub">Meta: ' + fmtNum(e.goal) + '</div></div>' +
-      '<div class="kpi-tile"><div class="kpi-label">Gasto total</div><div class="kpi-value">' + fmtMoney(t.spend + e.spend) + '</div><div class="kpi-sub">Presupuesto: ' + fmtMoney(t.budget + e.budget) + '</div></div>';
+    if (t.real) {
+      document.getElementById('analysis-kpis').innerHTML =
+        '<div class="kpi-tile"><div class="kpi-label">Leads (táctica)</div><div class="kpi-value">' + fmtNum(t.current) + '</div><div class="kpi-sub">Últimos 30 días</div></div>' +
+        '<div class="kpi-tile"><div class="kpi-label">CPL promedio</div><div class="kpi-value" style="font-size:17px">' + fmtCOP(t.cpl) + '</div></div>' +
+        '<div class="kpi-tile"><div class="kpi-label">Alcance (estratégica)</div><div class="kpi-value">' + fmtNum(e.current) + '</div><div class="kpi-sub">Últimos 30 días</div></div>' +
+        '<div class="kpi-tile"><div class="kpi-label">Gasto total</div><div class="kpi-value" style="font-size:17px">' + fmtCOP(t.spend + e.spend) + '</div><div class="kpi-sub">Meta Ads · 16 jun–15 jul</div></div>';
+    } else {
+      document.getElementById('analysis-kpis').innerHTML =
+        '<div class="kpi-tile"><div class="kpi-label">Leads (táctica)</div><div class="kpi-value">' + fmtNum(t.current) + '</div><div class="kpi-sub">Meta: ' + fmtNum(t.goal) + '</div></div>' +
+        '<div class="kpi-tile"><div class="kpi-label">CPL promedio</div><div class="kpi-value">$' + t.cpl.toFixed(2) + '</div><div class="kpi-sub">Objetivo: $' + t.cplObj.toFixed(2) + '</div></div>' +
+        '<div class="kpi-tile"><div class="kpi-label">Alcance (estratégica)</div><div class="kpi-value">' + fmtNum(e.current) + '</div><div class="kpi-sub">Meta: ' + fmtNum(e.goal) + '</div></div>' +
+        '<div class="kpi-tile"><div class="kpi-label">Gasto total</div><div class="kpi-value">' + fmtMoney(t.spend + e.spend) + '</div><div class="kpi-sub">Presupuesto: ' + fmtMoney(t.budget + e.budget) + '</div></div>';
+    }
 
     document.getElementById('analysis-campaigns').innerHTML =
       renderCampaignCard('tactica', data.tactica) + renderCampaignCard('estrategica', data.estrategica);
@@ -1866,10 +1902,10 @@
     renderAnalysis(this.value);
     renderCalendario(this.value);
   });
-  renderHome('colegio-sanrafael');
-  renderPosts('colegio-sanrafael');
-  renderAnalysis('colegio-sanrafael');
-  renderCalendario('colegio-sanrafael');
+  renderHome('tacuri');
+  renderPosts('tacuri');
+  renderAnalysis('tacuri');
+  renderCalendario('tacuri');
 
   // Campañas: "también correré el otro tipo" — mantiene la etiqueta sincronizada con el select de tipo
   function syncOtroTipoLabel() {
