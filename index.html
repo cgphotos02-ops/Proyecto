@@ -964,6 +964,13 @@
     </div>
 
     <div class="card">
+      <h2>🥇 Tu sede vs. toda la Red Aspaen — ranking nacional (29 sedes)</h2>
+      <p class="vc-note" style="margin-top:-4px">Las 29 sedes Aspaen del país, ordenadas por seguidores — % del total nacional, posts/reels/likes/comentarios del mes, engagement y su diferencia vs. el promedio nacional. Fuente: informe interno de marketing (info_aspaen.xlsx).</p>
+      <div id="aspaen-nacional-tabla"></div>
+      <p class="vc-note" id="aspaen-nacional-nota"></p>
+    </div>
+
+    <div class="card">
       <h2>🎯 Mezcla de contenido: Operativo / Táctico / Estratégico</h2>
       <p class="vc-note" style="margin-top:-4px">Cómo reparte cada quien sus publicaciones entre contenido operativo (institucional/informativo), táctico (captación) y estratégico (marca/awareness).</p>
       <div class="charts-row" id="aspaen-mix-donuts"></div>
@@ -2603,6 +2610,76 @@
     return 'crit';
   }
 
+  // ---- Aspaen: ranking nacional completo (29 sedes), mismo estilo que "Share of voice en Cali" ----
+  var aspaenNacionalTabla = {
+    promedioEngagement: 9.07,
+    totales: { seguidores: 108777, post: 55, reels: 269, likes: 34337, comentarios: 646, engagement: 9.07 },
+    cuentas: [
+      { nombre: 'Alcázares', ciudad: 'Medellín', seguidores: 9300, share: 8.55, post: 3, reels: 13, likes: 3371, comentarios: 46, engagement: 6.29, deltaVsPromedio: -2.784 },
+      { nombre: 'GCI', ciudad: 'Cartagena', seguidores: 7373, share: 6.78, post: 2, reels: 9, likes: 4389, comentarios: 60, engagement: 5.21, deltaVsPromedio: -3.864 },
+      { nombre: 'Corales', ciudad: 'Barranquilla', seguidores: 6568, share: 6.04, post: 0, reels: 10, likes: 2489, comentarios: 51, engagement: 5.20, deltaVsPromedio: -3.874 },
+      { nombre: 'GC', ciudad: 'Cartagena', seguidores: 6562, share: 6.03, post: 1, reels: 9, likes: 1778, comentarios: 25, engagement: 8.23, deltaVsPromedio: -0.844 },
+      { nombre: 'Pepe Grillo', ciudad: 'Cartagena', seguidores: 6072, share: 5.58, post: 1, reels: 8, likes: 972, comentarios: 26, engagement: 7.13, deltaVsPromedio: -1.944 },
+      { nombre: 'Carrizales', ciudad: 'Medellín', seguidores: 5910, share: 5.43, post: 1, reels: 12, likes: 489, comentarios: 5, engagement: 4.66, deltaVsPromedio: -4.414 },
+      { nombre: 'Iragua', ciudad: 'Bogotá', seguidores: 5456, share: 5.02, post: 10, reels: 18, likes: 1814, comentarios: 40, engagement: 9.01, deltaVsPromedio: -0.064 },
+      { nombre: 'Cantillana', ciudad: 'Bucaramanga', seguidores: 4533, share: 4.17, post: 0, reels: 8, likes: 1265, comentarios: 10, engagement: 7.49, deltaVsPromedio: -1.584 },
+      { nombre: 'Juanambú', ciudad: 'Cali', seguidores: 4340, share: 3.99, post: 5, reels: 9, likes: 624, comentarios: 9, engagement: 11.40, deltaVsPromedio: 2.326 },
+      { nombre: 'Alta Mar', ciudad: 'Barranquilla', seguidores: 4218, share: 3.88, post: 1, reels: 7, likes: 1437, comentarios: 21, engagement: 6.75, deltaVsPromedio: -2.324 },
+      { nombre: 'Ocean Kids', ciudad: 'Barranquilla', seguidores: 3829, share: 3.52, post: 0, reels: 5, likes: 828, comentarios: 43, engagement: 4.50, deltaVsPromedio: -4.574 },
+      { nombre: 'Yatay', ciudad: 'Bucaramanga', seguidores: 3803, share: 3.50, post: 2, reels: 10, likes: 19, comentarios: 0, engagement: 3.54, deltaVsPromedio: -5.534 },
+      { nombre: 'Saucará', ciudad: 'Bucaramanga', seguidores: 3415, share: 3.14, post: 2, reels: 10, likes: 219, comentarios: 1, engagement: 4.85, deltaVsPromedio: -4.224 },
+      { nombre: 'Tacurí', ciudad: 'Cali', seguidores: 3358, share: 3.09, post: 2, reels: 11, likes: 976, comentarios: 26, engagement: 14.88, deltaVsPromedio: 5.806 },
+      { nombre: 'Tayana', ciudad: 'Cali', seguidores: 3320, share: 3.05, post: 0, reels: 12, likes: 414, comentarios: 7, engagement: 17.21, deltaVsPromedio: 8.136 },
+      { nombre: 'Entrevalles', ciudad: 'Cali', seguidores: 3159, share: 2.90, post: 1, reels: 13, likes: 322, comentarios: 1, engagement: 11.70, deltaVsPromedio: 2.626 },
+      { nombre: 'Almirán', ciudad: 'Medellín', seguidores: 2835, share: 2.61, post: 1, reels: 11, likes: 1080, comentarios: 27, engagement: 5.24, deltaVsPromedio: -3.834 },
+      { nombre: 'Yumaná', ciudad: 'Neiva', seguidores: 2813, share: 2.59, post: 2, reels: 8, likes: 2742, comentarios: 18, engagement: 3.23, deltaVsPromedio: -5.844 },
+      { nombre: 'Atavanza', ciudad: 'Bogotá', seguidores: 2744, share: 2.52, post: 5, reels: 9, likes: 584, comentarios: 3, engagement: 15.65, deltaVsPromedio: 6.576 },
+      { nombre: 'Yumanitos', ciudad: 'Neiva', seguidores: 2515, share: 2.31, post: 1, reels: 7, likes: 502, comentarios: 7, engagement: 7.56, deltaVsPromedio: -1.514 },
+      { nombre: 'Chía', ciudad: 'Chía', seguidores: 2430, share: 2.23, post: 3, reels: 6, likes: 1502, comentarios: 160, engagement: 5.27, deltaVsPromedio: -3.804 },
+      { nombre: 'La Fragua', ciudad: 'Neiva', seguidores: 2398, share: 2.20, post: 2, reels: 7, likes: 1784, comentarios: 9, engagement: 6.02, deltaVsPromedio: -3.054 },
+      { nombre: 'Little Explorers', ciudad: 'Cartagena', seguidores: 2161, share: 1.99, post: 0, reels: 8, likes: 758, comentarios: 10, engagement: 8.35, deltaVsPromedio: -0.724 },
+      { nombre: 'Cerezos', ciudad: 'Manizales', seguidores: 2030, share: 1.87, post: 1, reels: 5, likes: 699, comentarios: 5, engagement: 15.60, deltaVsPromedio: 6.526 },
+      { nombre: 'Horizontes', ciudad: 'Manizales', seguidores: 1763, share: 1.62, post: 1, reels: 6, likes: 702, comentarios: 5, engagement: 15.20, deltaVsPromedio: 6.126 },
+      { nombre: 'Tamaití', ciudad: 'Bucaramanga', seguidores: 1743, share: 1.60, post: 2, reels: 11, likes: 7, comentarios: 0, engagement: 0.87, deltaVsPromedio: -8.204 },
+      { nombre: 'Almenares', ciudad: 'Medellín', seguidores: 1700, share: 1.56, post: 1, reels: 12, likes: 773, comentarios: 15, engagement: 9.86, deltaVsPromedio: 0.786 },
+      { nombre: 'Urapanes', ciudad: 'Manizales', seguidores: 1520, share: 1.40, post: 2, reels: 3, likes: 390, comentarios: 1, engagement: 7.80, deltaVsPromedio: -1.274 },
+      { nombre: 'Kinabalu', ciudad: 'Bogotá', seguidores: 909, share: 0.84, post: 3, reels: 12, likes: 1408, comentarios: 15, engagement: 34.45, deltaVsPromedio: 25.376 }
+    ]
+  };
+
+  function renderAspaenNacionalTabla(account) {
+    var miNombre = accountLabels[account];
+    var maxSeg = Math.max.apply(null, aspaenNacionalTabla.cuentas.map(function (c) { return c.seguidores; }));
+    var maxEng = Math.max.apply(null, aspaenNacionalTabla.cuentas.map(function (c) { return c.engagement; }));
+    var t = aspaenNacionalTabla.totales;
+    var rows = aspaenNacionalTabla.cuentas.map(function (c) {
+      var esTu = c.nombre === miNombre;
+      var segPct = Math.round((c.seguidores / maxSeg) * 100);
+      var engPct = Math.round((c.engagement / maxEng) * 100);
+      var rc = deltaColorClass(c.deltaVsPromedio);
+      return '<tr' + (esTu ? ' class="highlight-row"' : '') + '>' +
+        '<td>' + c.nombre + (esTu ? ' (tú)' : '') + '</td>' +
+        '<td>' + c.ciudad + '</td>' +
+        '<td class="share-bar-cell"><div class="share-bar-track"><div class="share-bar-fill" style="width:' + segPct + '%"></div><div class="share-bar-value">' + fmtEs(c.seguidores, 0) + '</div></div></td>' +
+        '<td>' + fmtEs(c.share) + '%</td>' +
+        '<td>' + c.post + '</td>' +
+        '<td>' + c.reels + '</td>' +
+        '<td>' + fmtEs(c.likes, 0) + '</td>' +
+        '<td>' + c.comentarios + '</td>' +
+        '<td class="share-bar-cell"><div class="share-bar-track"><div class="share-bar-fill" style="width:' + engPct + '%"></div><div class="share-bar-value">' + fmtEs(c.engagement) + '%</div></div></td>' +
+        '<td class="delta-cell ' + rc + '" style="background:var(--' + rc + '-soft);color:var(--' + rc + '-ink)">' + (c.deltaVsPromedio >= 0 ? '+' : '') + fmtEs(c.deltaVsPromedio, 3) + '%</td>' +
+        '</tr>';
+    }).join('');
+    var totalRow = '<tr class="total-row"><td>Total</td><td>—</td><td>' + fmtEs(t.seguidores, 0) + '</td><td>100,00%</td><td>' + t.post + '</td><td>' + t.reels + '</td><td>' + fmtEs(t.likes, 0) + '</td><td>' + t.comentarios + '</td><td>' + fmtEs(t.engagement) + '%</td><td>0,000%</td></tr>';
+    document.getElementById('aspaen-nacional-tabla').innerHTML =
+      '<div class="share-table-wrap"><table class="share-table"><thead><tr>' +
+      '<th>Cuenta</th><th>Ciudad</th><th>Seguidores</th><th>Share</th><th>Post</th><th>Reels</th><th>Likes</th><th>Comentarios</th><th>Engagement</th><th>Eng. vs prom. nacional</th>' +
+      '</tr></thead><tbody>' + rows + totalRow + '</tbody></table></div>';
+    var mia = aspaenNacionalTabla.cuentas.filter(function (c) { return c.nombre === miNombre; })[0];
+    var top = aspaenNacionalTabla.cuentas[0];
+    document.getElementById('aspaen-nacional-nota').textContent = accountLabels[account] + ' tiene ' + fmtEs(mia.share) + '% del total de seguidores de la Red Aspaen (' + fmtEs(mia.seguidores, 0) + ' de ' + fmtEs(t.seguidores, 0) + ') y un engagement de ' + fmtEs(mia.engagement) + '%, ' + (mia.deltaVsPromedio >= 0 ? '+' : '') + fmtEs(mia.deltaVsPromedio, 2) + ' puntos vs. el promedio nacional (' + fmtEs(aspaenNacionalTabla.promedioEngagement) + '%). La sede con más seguidores del país es ' + top.nombre + ' (' + top.ciudad + '), con ' + fmtEs(top.seguidores, 0) + '.';
+  }
+
   function renderAspaenPage(account) {
     document.getElementById('referentes-period').textContent = '📅 ' + aspaenNacional.period + ' · ' + aspaenNacional.cuentas + ' cuentas Aspaen a nivel nacional';
     var sede = aspaenSedes[account].metrics;
@@ -2632,6 +2709,8 @@
           '<td class="delta-cell ' + rc + '" style="background:var(--' + rc + '-soft);color:var(--' + rc + '-ink)">' + mine.rank + '/' + aspaenNacional.cuentas + '</td>' +
           '</tr>';
       }).join('') + '</tbody></table></div>';
+
+    renderAspaenNacionalTabla(account);
 
     var s = referentesData.sedes[account];
     var tuSegs = [
