@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-07-17T00:05:06.597Z",
+  "generatedAt": "2026-07-17T00:06:23.798Z",
   "source": "github-actions",
   "accounts": {
     "tacuri": {
       "tactica": {
-        "current": 80,
-        "cpl": 8479,
+        "current": 16,
+        "cpl": 42393,
         "spend": 678289,
         "period": "Últimos 30 días"
       },
@@ -19,8 +19,8 @@
     },
     "juanambu": {
       "tactica": {
-        "current": 125,
-        "cpl": 5994,
+        "current": 25,
+        "cpl": 29972,
         "spend": 749295,
         "period": "Últimos 30 días"
       },
@@ -34,8 +34,8 @@
     },
     "entrevalles": {
       "tactica": {
-        "current": 105,
-        "cpl": 1964,
+        "current": 21,
+        "cpl": 9819,
         "spend": 206191,
         "period": "Últimos 30 días"
       },
@@ -49,8 +49,8 @@
     },
     "tayana": {
       "tactica": {
-        "current": 120,
-        "cpl": 2388,
+        "current": 24,
+        "cpl": 11942,
         "spend": 286614,
         "period": "Últimos 30 días"
       },
