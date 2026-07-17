@@ -1,8 +1,11 @@
 name: Actualizar datos de Meta Ads
 
 on:
-  schedule:
-    - cron: '0 11 * * *'  # 6:00 a.m. hora Colombia, todos los días
+  # Programación automática pausada: Meta está bloqueando el acceso de la API ("API access blocked")
+  # y mientras tanto los datos se cargan manualmente. Se puede seguir disparando a mano abajo,
+  # o reactivar el cron cuando se resuelva el bloqueo.
+  # schedule:
+  #   - cron: '0 11 * * *'  # 6:00 a.m. hora Colombia, todos los días
   workflow_dispatch: {}
 
 permissions:

@@ -1,66 +1,22 @@
 {
-  "generatedAt": "2026-07-17T16:01:58.928Z",
-  "source": "github-actions",
+  "generatedAt": "2026-07-17T00:06:23.798Z",
+  "source": "manual",
   "accounts": {
     "tacuri": {
-      "tactica": {
-        "current": 0,
-        "cpl": null,
-        "spend": 0,
-        "period": "Últimos 30 días"
-      },
-      "estrategica": {
-        "current": 0,
-        "freq": 0,
-        "cpm": null,
-        "spend": 0,
-        "period": "Últimos 30 días"
-      }
+      "tactica": { "current": 16, "cpl": 42393, "spend": 678289, "period": "16 jun – 15 jul 2026" },
+      "estrategica": { "current": 101919, "freq": 1.48, "cpm": 754, "spend": 113794, "period": "16 jun – 15 jul 2026" }
     },
     "juanambu": {
-      "tactica": {
-        "current": 0,
-        "cpl": null,
-        "spend": 0,
-        "period": "Últimos 30 días"
-      },
-      "estrategica": {
-        "current": 0,
-        "freq": 0,
-        "cpm": null,
-        "spend": 0,
-        "period": "Últimos 30 días"
-      }
+      "tactica": { "current": 25, "cpl": 29972, "spend": 749295, "period": "16 jun – 15 jul 2026" },
+      "estrategica": { "current": 41282, "freq": 1.82, "cpm": 1549, "spend": 116612, "period": "16 jun – 15 jul 2026" }
     },
     "entrevalles": {
-      "tactica": {
-        "current": 0,
-        "cpl": null,
-        "spend": 0,
-        "period": "Últimos 30 días"
-      },
-      "estrategica": {
-        "current": 0,
-        "freq": 0,
-        "cpm": null,
-        "spend": 0,
-        "period": "Últimos 30 días"
-      }
+      "tactica": { "current": 21, "cpl": 9819, "spend": 206191, "period": "16 jun – 15 jul 2026" },
+      "estrategica": { "current": 33693, "freq": 2.48, "cpm": 1365, "spend": 113914, "period": "16 jun – 15 jul 2026" }
     },
     "tayana": {
-      "tactica": {
-        "current": 0,
-        "cpl": null,
-        "spend": 0,
-        "period": "Últimos 30 días"
-      },
-      "estrategica": {
-        "current": 0,
-        "freq": 0,
-        "cpm": null,
-        "spend": 0,
-        "period": "Últimos 30 días"
-      }
+      "tactica": { "current": 24, "cpl": 11942, "spend": 286614, "period": "16 jun – 15 jul 2026" },
+      "estrategica": { "current": 73786, "freq": 2.02, "cpm": 766, "spend": 114015, "period": "16 jun – 15 jul 2026" }
     }
   }
 }
