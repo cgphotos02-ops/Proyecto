@@ -866,6 +866,12 @@
       <div id="analysis-kpis" class="kpi-row"></div>
 
       <div class="card">
+        <h2>🏕️ Summer Camp (aparte, no es matrícula)</h2>
+        <p class="vc-note" style="margin-top:-4px">Campaña de temporada distinta a matrícula — la separamos para no mezclar los dos objetivos.</p>
+        <div id="analysis-summercamp" class="kpi-row"></div>
+      </div>
+
+      <div class="card">
         <h2>📣 Campañas de esta cuenta</h2>
         <div id="analysis-campaigns"></div>
       </div>
@@ -1366,6 +1372,13 @@
   });
 
   // ---- Mock data: cada cuenta trae su campaña táctica y estratégica, con creatividades y propuestas ----
+  var summercampData = {
+    tacuri: { current: 18, cpl: 8693, spend: 156474 },
+    juanambu: { current: 24, cpl: 5786, spend: 138854 },
+    entrevalles: { current: 12, cpl: 8997, spend: 107967 },
+    tayana: { current: 4, cpl: 44327, spend: 177306 }
+  };
+
   var campData = {
     'tacuri': {
       competencia: [
@@ -1389,11 +1402,11 @@
         'La brecha de NPS frente a la competencia sugiere que vale la pena invertir también en contenido de "experiencia real de familia", no solo en captación.'
       ],
       tactica: {
-        camp: { goalLabel: 'Leads', goal: null, current: 224, cpl: 11431, cplObj: null, spend: 2560296, budget: null, real: true, period: '1 ene – 17 jul 2026' },
+        camp: { goalLabel: 'Leads', goal: null, current: 206, cpl: 11669, cplObj: null, spend: 2403822, budget: null, real: true, period: '1 ene – 17 jul 2026 (sin Summer Camp)' },
         creatives: [
-          { name: 'Js_Tacurí_Matriculas_Abiertas_VID4', format: 'Reel', days: 30, m: [['Leads','10'],['CPL','$10.210'],['Gasto','$102.097']], verdict: 'Ganadora', note: 'Tu mejor pieza de la campaña dedicada — bájale gasto a las que no traen leads y súbeselo a esta.' },
-          { name: 'Js_Tacurí_Matriculas_Abiertas_CTW2', format: 'Video', days: 30, m: [['Leads','0'],['Gasto','$43.904'],['Impr.','4.521']], verdict: 'Débil', note: '0 leads con gasto real — pausa esta pieza esta semana.' },
-          { name: 'Js_Matriculas_Abiertas_Tacurí (formulario unificado)', format: 'Conjunto', days: 30, m: [['Leads','2'],['CPL','$122.481'],['Gasto','$244.961']], verdict: 'Débil', note: 'El peor CPL de toda la sede — este conjunto (dentro de la campaña "Formulario unificado") está quemando presupuesto sin convertir.' }
+          { name: 'Js_Tacurí_OpenHouse_VID', format: 'Reel', days: 199, m: [['Leads','58'],['CPL','$4.875'],['Gasto','$282.754']], verdict: 'Ganadora', note: 'Tu pieza con más volumen de leads en todo el año — el ángulo de Open House claramente conecta.' },
+          { name: 'Js_Tacurí_Webinar_CTW', format: 'Video', days: 199, m: [['Leads','31'],['CPL','$2.972'],['Gasto','$92.131']], verdict: 'Ganadora', note: 'El CPL más bajo de tus piezas propias — formato webinar (Hiperpaternidad) muy eficiente, vale la pena repetir el formato con otro tema.' },
+          { name: 'Js_Post_Promoted_VID5 (WhatsApp Matrículas Abiertas)', format: 'Video', days: 199, m: [['Leads','0'],['Gasto','$123.172'],['Reach','4.057']], verdict: 'Débil', note: '0 leads con el gasto más alto de toda la cuenta en lo que va del año — pausa esta pieza.' }
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: '"¿Aún hay cupo para tu hijo en 2027?"', why: 'Aprovecha la urgencia que ya funcionó en "Agenda tu visita guiada", con un gancho más específico de escasez.',
@@ -1421,8 +1434,9 @@
       estrategica: {
         camp: { goalLabel: 'Alcance', goal: null, current: 909268, freq: 1.61, cpm: 637, spend: 932391, budget: null, real: true, period: '1 ene – 17 jul 2026' },
         creatives: [
-          { name: 'Js_Tacuri_Estrategica_Refuerzo5', format: 'Reel', m: [['Alcance','97.036'],['Frec.','1,47'],['CPM','$756']], verdict: 'Ganadora', note: 'Concentra casi todo el alcance de la sede — es tu pieza dominante, vale la pena reforzarla con una segunda versión antes de que se fatigue.' },
-          { name: 'Js_Tacuri_Estrategica_GlobalVoices_VID', format: 'Video', m: [['Alcance','651'],['Frec.','1,04'],['CPM','$794']], verdict: 'Débil', note: 'Alcance mínimo — está corriendo con presupuesto casi simbólico, no es una prueba real todavía.' }
+          { name: 'Js_Tacurí_Awerness_VID', format: 'Reel', m: [['Alcance','348.421'],['Frec.','1,22'],['CPM','$433']], verdict: 'Ganadora', note: 'El mejor CPM de la sede en todo el año, con frecuencia sana — el molde a repetir para el próximo refuerzo.' },
+          { name: 'Js_Tacuri_Estrategica_Refuerzo5', format: 'Reel', m: [['Alcance','232.449'],['Frec.','1,53'],['CPM','$737']], verdict: 'Ganadora', note: 'Tu pieza activa actual — buen alcance, todavía con frecuencia saludable.' },
+          { name: 'Js_Tacurí_Awerness_Q3_VID (Unificadas)', format: 'Reel', m: [['Alcance','290.960'],['Frec.','2,18'],['CPM','$714']], verdict: 'Fatigada', note: 'La frecuencia más alta de tus piezas de alcance — ya cumplió su ciclo, considera reemplazarla en el próximo refuerzo.' }
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: '"Voces de papás" — serie de testimonios cortos', why: 'El testimonio en video funciona pero se fatigó rápido; una serie con caras distintas mantiene frescura sin perder el formato ganador.',
@@ -1480,10 +1494,11 @@
         'Para el segmento alto-alto, lo que más pesa ahora es Deportivo, Experiencia internacional, Personal y Relacionamiento social — contenido que muestre esto tiene más espacio de crecimiento que el institucional clásico.'
       ],
       tactica: {
-        camp: { goalLabel: 'Leads', goal: null, current: 201, cpl: 17603, cplObj: null, spend: 3538267, budget: null, real: true, period: '1 ene – 17 jul 2026' },
+        camp: { goalLabel: 'Leads', goal: null, current: 177, cpl: 19206, cplObj: null, spend: 3399413, budget: null, real: true, period: '1 ene – 17 jul 2026 (sin Summer Camp)' },
         creatives: [
-          { name: 'Js_Juanambu_Matriculas_Abiertas_VID5', format: 'Reel', days: 30, m: [['Leads','6'],['CPL','$12.737'],['Gasto','$76.420']], verdict: 'Ganadora', note: 'La mejor combinación de volumen y CPL de la sede — dale más presupuesto antes de crear piezas nuevas.' },
-          { name: 'Js_Juanambu_Post_Promoted_VID5', format: 'Video', days: 30, m: [['Leads','4'],['CPL','$32.068'],['Gasto','$128.271']], verdict: 'Débil', note: 'Es tu pieza con más gasto y el peor CPL — revisa el mensaje o bájale presupuesto.' }
+          { name: 'Js_Juanambú_OpenHouse_VID2', format: 'Reel', days: 199, m: [['Leads','22'],['CPL','$2.591'],['Gasto','$57.012']], verdict: 'Ganadora', note: 'Tu mejor CPL del año — mismo Open House que la VID1, pero mucho más eficiente; revisa qué cambia entre ambas versiones.' },
+          { name: 'Js_Juanambú_OpenHouse_VID1', format: 'Reel', days: 199, m: [['Leads','40'],['CPL','$13.281'],['Gasto','$531.234']], verdict: 'Ganadora', note: 'La de más volumen de leads, pero a 5x el CPL de la VID2 — vale la pena migrar presupuesto hacia la versión más barata.' },
+          { name: 'Js_Juanambú_OpenHouse_CTW2', format: 'Video', days: 199, m: [['Leads','16'],['CPL','$22.891'],['Gasto','$366.249']], verdict: 'Débil', note: 'El CPL más alto de la sede con gasto considerable — pausa o reduce presupuesto.' }
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: '"Últimos cupos con beca"', why: 'Combina el gancho de inscripción (ganador) con el incentivo de beca, que solo no funcionó como imagen estática.',
@@ -1507,8 +1522,9 @@
       estrategica: {
         camp: { goalLabel: 'Alcance', goal: null, current: 772463, freq: 1.79, cpm: 725, spend: 1000090, budget: null, real: true, period: '1 ene – 17 jul 2026' },
         creatives: [
-          { name: 'Js_Juanambú_Estrategica_Refuerzo7', format: 'Video', m: [['Alcance','19.300'],['Frec.','1,39'],['CPM','$1.637']], verdict: 'Ganadora', note: 'Tu pieza con más alcance de la sede — el CPM es el más alto de las 4 sedes, vale la pena probar un nuevo ángulo visual.' },
-          { name: 'Js_Juanambú_Estrategica_Refuerzo1', format: 'Video', m: [['Alcance','13.899'],['Frec.','1,24'],['CPM','$1.458']], verdict: 'Ganadora', note: 'Mejor CPM que la anterior aunque con menos escala — candidata a recibir más presupuesto.' }
+          { name: 'Js_Juanambú_Awerness_', format: 'Reel', m: [['Alcance','326.868'],['Frec.','1,29'],['CPM','$447']], verdict: 'Ganadora', note: 'El CPM más eficiente de la sede en el año — el formato a repetir.' },
+          { name: 'Js_Juanambú_Awerness_Q3_VID (Unificadas)', format: 'Reel', m: [['Alcance','322.576'],['Frec.','2,26'],['CPM','$704']], verdict: 'Fatigada', note: 'La frecuencia más alta de la sede — necesita refresco de creativo.' },
+          { name: 'Js_Juanambú_Estrategica_Refuerzo7', format: 'Video', m: [['Alcance','71.007'],['Frec.','1,56'],['CPM','$1.329']], verdict: 'Débil', note: 'El CPM más caro de toda la cuenta (las 4 sedes) — revisa el ángulo o pausa.' }
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: 'Un recorrido por Juanambú guiado por un estudiante', why: 'La bienvenida en video funciona; un recorrido mantiene el mismo estilo con contenido nuevo.',
@@ -1564,10 +1580,11 @@
         'Para el segmento más alto, el bilingüismo y los resultados de egresados pesan menos (38%) de lo que se asume — el diferencial real ahí es Ambiente internacional e Infraestructura.'
       ],
       tactica: {
-        camp: { goalLabel: 'Leads', goal: null, current: 400, cpl: 5457, cplObj: null, spend: 2182838, budget: null, real: true, period: '1 ene – 17 jul 2026' },
+        camp: { goalLabel: 'Leads', goal: null, current: 388, cpl: 5349, cplObj: null, spend: 2074871, budget: null, real: true, period: '1 ene – 17 jul 2026 (sin Summer Camp)' },
         creatives: [
-          { name: 'Js_Post_Promoted_VID2 (Entrevalles)', format: 'Reel', days: 30, m: [['Leads','14'],['CPL','$8.657'],['Gasto','$121.192']], verdict: 'Ganadora', note: 'El mejor CPL con volumen real de toda la sede — súbele presupuesto antes de crear piezas nuevas.' },
-          { name: 'Js_CTW1 (Entrevalles)', format: 'Video', days: 30, m: [['Leads','0'],['Gasto','$5.097']], verdict: 'Débil', note: 'Gasto bajo pero sin ningún lead — pausa o cambia el mensaje.' }
+          { name: 'Js_Entrevalles_Post_Promoted_VID1', format: 'Reel', days: 199, m: [['Leads','66'],['CPL','$2.162'],['Gasto','$142.708']], verdict: 'Ganadora', note: 'Tu pieza con más leads del año, y con uno de los mejores CPL — el patrón a repetir.' },
+          { name: 'Js_Entrevalles_OpenHouse_VID1', format: 'Reel', days: 199, m: [['Leads','61'],['CPL','$2.290'],['Gasto','$139.701']], verdict: 'Ganadora', note: 'Open House sigue siendo un ángulo fuerte para esta sede.' },
+          { name: 'Js_Entrevalles_Webinar_CTW', format: 'Video', days: 199, m: [['Leads','58'],['CPL','$2.245'],['Gasto','$130.200']], verdict: 'Ganadora', note: 'Entrevalles no tiene un punto débil claro este año — las tres piezas top están todas en el mismo rango de CPL eficiente ($2.000-2.300).' }
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: '"Últimos cupos + Montessori"', why: 'Combina el mensaje de urgencia con el diferencial pedagógico, tus dos creatividades con mejor CPL.',
@@ -1594,8 +1611,9 @@
       estrategica: {
         camp: { goalLabel: 'Alcance', goal: null, current: 813111, freq: 1.74, cpm: 675, spend: 952247, budget: null, real: true, period: '1 ene – 17 jul 2026' },
         creatives: [
-          { name: 'Js_Entrevalles_Estrategica_Refuerzo3', format: 'Reel', m: [['Alcance','18.450'],['Frec.','2,06'],['CPM','$1.495']], verdict: 'Fatigada', note: 'Frecuencia 2,06 — la más alta de tus piezas estratégicas, vigila que no se agote esta semana.' },
-          { name: 'Js_Entrevalles_Estrategica_GlobalVoices_VID', format: 'Video', m: [['Alcance','7.538'],['Frec.','1,12'],['CPM','$1.232']], verdict: 'Ganadora', note: 'Frecuencia sana y mejor CPM que la anterior — candidata a recibir más presupuesto.' }
+          { name: 'Js_Entrevalles_Awerness_VID', format: 'Reel', m: [['Alcance','369.376'],['Frec.','1,15'],['CPM','$410']], verdict: 'Ganadora', note: 'El mejor CPM de las 4 sedes en todo el año, con frecuencia muy sana — el molde a repetir.' },
+          { name: 'Js_Entrevalles_Awerness_Q3_VID (Unificadas)', format: 'Reel', m: [['Alcance','355.305'],['Frec.','2,10'],['CPM','$648']], verdict: 'Ganadora', note: 'Buen alcance, frecuencia ya empezando a subir — vigilar en el próximo refuerzo.' },
+          { name: 'Js_Entrevalles_Estrategica_Refuerzo3', format: 'Reel', m: [['Alcance','51.631'],['Frec.','2,93'],['CPM','$1.332']], verdict: 'Fatigada', note: 'La frecuencia más alta de toda la cuenta (2,93) y el CPM más caro de la sede — pausa y refresca el creativo.' }
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: '"Así aprendemos" — serie semanal', why: 'Aprovecha el formato ganador de "un día en..." con contenido recurrente de bajo costo.',
@@ -1646,10 +1664,11 @@
         'El Ambiente internacional es la variable que más crece en el segmento alto-alto de preescolares (69%) — un espacio casi vacío en tu contenido actual.'
       ],
       tactica: {
-        camp: { goalLabel: 'Leads', goal: null, current: 345, cpl: 6273, cplObj: null, spend: 2163690, budget: null, real: true, period: '1 ene – 17 jul 2026' },
+        camp: { goalLabel: 'Leads', goal: null, current: 341, cpl: 5825, cplObj: null, spend: 1986384, budget: null, real: true, period: '1 ene – 17 jul 2026 (sin Summer Camp)' },
         creatives: [
-          { name: 'Js_Post_Promoted_VID6 (Tayana)', format: 'Reel', days: 30, m: [['Leads','5'],['CPL','$2.865'],['Gasto','$14.324']], verdict: 'Ganadora', note: 'El mejor CPL de las 4 sedes — súbele presupuesto ya, es tu oportunidad más clara de bajar el CPL general.' },
-          { name: 'Js_Post_Promoted_VID1 (Tayana)', format: 'Reel', days: 30, m: [['Leads','2'],['CPL','$24.385'],['Gasto','$48.770']], verdict: 'Débil', note: 'Tu mayor gasto individual con el peor CPL de la sede — redistribuye ese presupuesto hacia VID6.' }
+          { name: 'Js_Tayana_Agendatuvisita_VID4', format: 'Reel', days: 199, m: [['Leads','107'],['CPL','$1.173'],['Gasto','$125.520']], verdict: 'Ganadora', note: 'El mejor CPL de las 4 sedes en todo el año, y con el mayor volumen — tu pieza más rentable, punto.' },
+          { name: 'Js_Tayana_Post_Promoted_VID2', format: 'Video', days: 199, m: [['Leads','31'],['CPL','$1.212'],['Gasto','$37.556']], verdict: 'Ganadora', note: 'Segundo mejor CPL de la cuenta — mismo patrón ganador que la Agendatuvisita_VID4.' },
+          { name: 'Campaña OpenDay WhatsApp (completa)', format: 'Video', days: 199, m: [['Leads','0'],['Gasto','$109.467'],['Reach','n/a']], verdict: 'Débil', note: 'Toda la campaña quedó en 0 leads registrados pese al gasto — pausar y no repetir este enfoque para Tayana.' }
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: 'Refresca "Preinscripciones abiertas" en video', why: 'La oferta funciona; cámbiala de imagen estática a Reel para reducir la fatiga sin perder el mensaje.',
@@ -1677,8 +1696,9 @@
       estrategica: {
         camp: { goalLabel: 'Alcance', goal: null, current: 861895, freq: 1.70, cpm: 623, spend: 912452, budget: null, real: true, period: '1 ene – 17 jul 2026' },
         creatives: [
-          { name: 'Js_Tayana_Estrategica_Refuerzo2', format: 'Video', m: [['Alcance','53.070'],['Frec.','1,26'],['CPM','$1.100']], verdict: 'Ganadora', note: 'Tu pieza con más alcance — frecuencia sana, todavía tiene espacio para más presupuesto.' },
-          { name: 'Js_Tayana_Estrategica_GlobalVoices_VID', format: 'Video', m: [['Alcance','46.392'],['Frec.','1,21'],['CPM','$655']], verdict: 'Ganadora', note: 'El mejor CPM de todas tus piezas estratégicas en las 4 sedes — tu mejor candidata para escalar.' }
+          { name: 'Js_Tayana_Awerness_VID', format: 'Reel', m: [['Alcance','280.578'],['Frec.','1,31'],['CPM','$448']], verdict: 'Ganadora', note: 'El mejor CPM del año para esta sede, con frecuencia sana — el molde a repetir.' },
+          { name: 'Js_Tayana_Awerness_Q3_VID (Unificadas)', format: 'Reel', m: [['Alcance','321.964'],['Frec.','2,19'],['CPM','$645']], verdict: 'Fatigada', note: 'Buen alcance pero frecuencia ya alta — necesita creativo nuevo en el próximo refuerzo.' },
+          { name: 'Js_Tayana_Estrategica_Refuerzo2', format: 'Video', m: [['Alcance','159.769'],['Frec.','1,48'],['CPM','$799']], verdict: 'Débil', note: 'El CPM más caro entre las piezas activas de Tayana — revisar el ángulo.' }
         ],
         proposals: [
           { fmt: 'Reel', kind: 'video', title: '"Un día de juego libre" — ángulo 100% visual y emocional', why: 'Ninguna creatividad estratégica está ganando aquí; prueba un ángulo visual antes de seguir invirtiendo en carruseles de texto.',
@@ -1839,6 +1859,14 @@
         '<div class="kpi-tile"><div class="kpi-label">CPL promedio</div><div class="kpi-value">$' + t.cpl.toFixed(2) + '</div><div class="kpi-sub">Objetivo: $' + t.cplObj.toFixed(2) + '</div></div>' +
         '<div class="kpi-tile"><div class="kpi-label">Alcance (estratégica)</div><div class="kpi-value">' + fmtNum(e.current) + '</div><div class="kpi-sub">Meta: ' + fmtNum(e.goal) + '</div></div>' +
         '<div class="kpi-tile"><div class="kpi-label">Gasto total</div><div class="kpi-value">' + fmtMoney(t.spend + e.spend) + '</div><div class="kpi-sub">Presupuesto: ' + fmtMoney(t.budget + e.budget) + '</div></div>';
+    }
+
+    var sc = summercampData[account];
+    if (sc) {
+      document.getElementById('analysis-summercamp').innerHTML =
+        '<div class="kpi-tile"><div class="kpi-label">Leads Summer Camp</div><div class="kpi-value">' + fmtNum(sc.current) + '</div><div class="kpi-sub">1 ene – 17 jul 2026</div></div>' +
+        '<div class="kpi-tile"><div class="kpi-label">CPL Summer Camp</div><div class="kpi-value" style="font-size:17px">' + fmtCOP(sc.cpl) + '</div></div>' +
+        '<div class="kpi-tile"><div class="kpi-label">Gasto Summer Camp</div><div class="kpi-value" style="font-size:17px">' + fmtCOP(sc.spend) + '</div></div>';
     }
 
     document.getElementById('analysis-campaigns').innerHTML =

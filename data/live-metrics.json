@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-07-17T18:00:00Z",
+  "generatedAt": "2026-07-17T19:00:00Z",
   "source": "manual-excel-1ene-17jul",
   "accounts": {
     "tacuri": {
-      "tactica": { "current": 224, "cpl": 11431, "spend": 2560296, "period": "1 ene – 17 jul 2026" },
+      "tactica": { "current": 206, "cpl": 11669, "spend": 2403822, "period": "1 ene – 17 jul 2026 (sin Summer Camp)" },
       "estrategica": { "current": 909268, "freq": 1.61, "cpm": 637, "spend": 932391, "period": "1 ene – 17 jul 2026" }
     },
     "juanambu": {
-      "tactica": { "current": 201, "cpl": 17603, "spend": 3538267, "period": "1 ene – 17 jul 2026" },
+      "tactica": { "current": 177, "cpl": 19206, "spend": 3399413, "period": "1 ene – 17 jul 2026 (sin Summer Camp)" },
       "estrategica": { "current": 772463, "freq": 1.79, "cpm": 725, "spend": 1000090, "period": "1 ene – 17 jul 2026" }
     },
     "entrevalles": {
-      "tactica": { "current": 400, "cpl": 5457, "spend": 2182838, "period": "1 ene – 17 jul 2026" },
+      "tactica": { "current": 388, "cpl": 5349, "spend": 2074871, "period": "1 ene – 17 jul 2026 (sin Summer Camp)" },
       "estrategica": { "current": 813111, "freq": 1.74, "cpm": 675, "spend": 952247, "period": "1 ene – 17 jul 2026" }
     },
     "tayana": {
-      "tactica": { "current": 345, "cpl": 6273, "spend": 2163690, "period": "1 ene – 17 jul 2026" },
+      "tactica": { "current": 341, "cpl": 5825, "spend": 1986384, "period": "1 ene – 17 jul 2026 (sin Summer Camp)" },
       "estrategica": { "current": 861895, "freq": 1.70, "cpm": 623, "spend": 912452, "period": "1 ene – 17 jul 2026" }
     }
   }
