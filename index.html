@@ -597,10 +597,10 @@
     <h1 class="greeting" id="home-greeting">Buenos días 👋</h1>
     <div class="date-sub" id="today-date"></div>
 
-    <div class="tabs">
-      <div class="tab active">Todo</div>
-      <div class="tab">Instagram</div>
-      <div class="tab">Facebook</div>
+    <div class="tabs" id="home-network-tabs">
+      <div class="tab active" data-network="todo">Todo</div>
+      <div class="tab" data-network="ig">Instagram</div>
+      <div class="tab" data-network="fb">Facebook</div>
     </div>
 
     <div class="card highlight-card">
@@ -629,15 +629,15 @@
       </div>
     </div>
 
-    <div class="grid-2">
-      <div class="card">
+    <div class="grid-2" id="home-networks-grid">
+      <div class="card" id="home-ig-card">
         <h2>📊 Mis redes</h2>
         <div class="network-tile">
           <div class="net-icon ig">IG</div>
           <div id="home-ig-stats"></div>
         </div>
       </div>
-      <div class="card">
+      <div class="card" id="home-fb-card">
         <h2>&nbsp;</h2>
         <div class="network-tile">
           <div class="net-icon tt">FB</div>
@@ -1881,6 +1881,21 @@
     document.getElementById('home-besttime').textContent = h.bestTime;
     document.getElementById('home-besttime-sub').innerHTML = h.bestTimeSub;
   }
+
+  // ---- Filtro Todo / Instagram / Facebook en Inicio ----
+  document.querySelectorAll('#home-network-tabs .tab').forEach(function (tabEl) {
+    tabEl.addEventListener('click', function () {
+      document.querySelectorAll('#home-network-tabs .tab').forEach(function (t) { t.classList.remove('active'); });
+      tabEl.classList.add('active');
+      var network = tabEl.getAttribute('data-network');
+      var igCard = document.getElementById('home-ig-card');
+      var fbCard = document.getElementById('home-fb-card');
+      igCard.style.display = (network === 'fb') ? 'none' : '';
+      fbCard.style.display = (network === 'ig') ? 'none' : '';
+      igCard.style.gridColumn = (network === 'ig') ? '1 / -1' : '';
+      fbCard.style.gridColumn = (network === 'fb') ? '1 / -1' : '';
+    });
+  });
 
   function renderPosts(account) {
     var p = postsData[account];
