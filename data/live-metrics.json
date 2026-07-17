@@ -1,22 +1,94 @@
 {
-  "generatedAt": "2026-07-17T19:00:00Z",
-  "source": "manual-excel-1ene-17jul",
+  "generatedAt": "2026-07-17T20:00:00Z",
+  "source": "manual-meta-ads-periods",
   "accounts": {
     "tacuri": {
-      "tactica": { "current": 206, "cpl": 11669, "spend": 2403822, "period": "1 ene – 17 jul 2026 (sin Summer Camp)" },
-      "estrategica": { "current": 909268, "freq": 1.61, "cpm": 637, "spend": 932391, "period": "1 ene – 17 jul 2026" }
+      "tactica": {
+        "periods": {
+          "ytd": { "current": 206, "cpl": 11669, "spend": 2403822, "period": "Año 2026 (1 ene–17 jul, sin Summer Camp)" },
+          "yesterday": { "current": 0, "cpl": null, "spend": 15727, "period": "Ayer (16 jul 2026)" },
+          "last_7d": { "current": 7, "cpl": 17815, "spend": 124708, "period": "Última semana (10–16 jul 2026)" },
+          "this_month": { "current": 12, "cpl": 24221, "spend": 290654, "period": "Mes actual (1–17 jul 2026)" },
+          "last_30d": { "current": 16, "cpl": 41421, "spend": 662737, "period": "Últimos 30 días (17 jun–16 jul 2026)" },
+          "last_month": { "current": 15, "cpl": 42716, "spend": 640737, "period": "Mes pasado (1–30 jun 2026)" }
+        }
+      },
+      "estrategica": {
+        "periods": {
+          "ytd": { "current": 909268, "freq": 1.61, "cpm": 637, "spend": 932391, "period": "Año 2026 (1 ene–17 jul)" },
+          "yesterday": { "current": 5213, "freq": 1.00, "cpm": 693, "spend": 3611, "period": "Ayer (16 jul 2026)" },
+          "last_7d": { "current": 35082, "freq": 1.14, "cpm": 661, "spend": 26504, "period": "Última semana (10–16 jul 2026)" },
+          "this_month": { "current": 67040, "freq": 1.38, "cpm": 657, "spend": 60658, "period": "Mes actual (1–17 jul 2026)" },
+          "last_30d": { "current": 101557, "freq": 1.49, "cpm": 753, "spend": 113731, "period": "Últimos 30 días (17 jun–16 jul 2026)" },
+          "last_month": { "current": 106884, "freq": 1.38, "cpm": 773, "spend": 113834, "period": "Mes pasado (1–30 jun 2026)" }
+        }
+      }
     },
     "juanambu": {
-      "tactica": { "current": 177, "cpl": 19206, "spend": 3399413, "period": "1 ene – 17 jul 2026 (sin Summer Camp)" },
-      "estrategica": { "current": 772463, "freq": 1.79, "cpm": 725, "spend": 1000090, "period": "1 ene – 17 jul 2026" }
+      "tactica": {
+        "periods": {
+          "ytd": { "current": 177, "cpl": 19206, "spend": 3399413, "period": "Año 2026 (1 ene–17 jul, sin Summer Camp)" },
+          "yesterday": { "current": 2, "cpl": 8548, "spend": 17095, "period": "Ayer (16 jul 2026)" },
+          "last_7d": { "current": 8, "cpl": 12679, "spend": 101433, "period": "Última semana (10–16 jul 2026)" },
+          "this_month": { "current": 17, "cpl": 14065, "spend": 239108, "period": "Mes actual (1–17 jul 2026)" },
+          "last_30d": { "current": 27, "cpl": 26754, "spend": 722360, "period": "Últimos 30 días (17 jun–16 jul 2026)" },
+          "last_month": { "current": 18, "cpl": 46301, "spend": 833413, "period": "Mes pasado (1–30 jun 2026)" }
+        }
+      },
+      "estrategica": {
+        "periods": {
+          "ytd": { "current": 772463, "freq": 1.79, "cpm": 725, "spend": 1000090, "period": "Año 2026 (1 ene–17 jul)" },
+          "yesterday": { "current": 3139, "freq": 1.02, "cpm": 1044, "spend": 3356, "period": "Ayer (16 jul 2026)" },
+          "last_7d": { "current": 19755, "freq": 1.12, "cpm": 1258, "spend": 27779, "period": "Última semana (10–16 jul 2026)" },
+          "this_month": { "current": 31611, "freq": 1.41, "cpm": 1396, "spend": 62233, "period": "Mes actual (1–17 jul 2026)" },
+          "last_30d": { "current": 42958, "freq": 1.77, "cpm": 1530, "spend": 116524, "period": "Últimos 30 días (17 jun–16 jul 2026)" },
+          "last_month": { "current": 52936, "freq": 1.53, "cpm": 1401, "spend": 113684, "period": "Mes pasado (1–30 jun 2026)" }
+        }
+      }
     },
     "entrevalles": {
-      "tactica": { "current": 388, "cpl": 5349, "spend": 2074871, "period": "1 ene – 17 jul 2026 (sin Summer Camp)" },
-      "estrategica": { "current": 813111, "freq": 1.74, "cpm": 675, "spend": 952247, "period": "1 ene – 17 jul 2026" }
+      "tactica": {
+        "periods": {
+          "ytd": { "current": 388, "cpl": 5349, "spend": 2074871, "period": "Año 2026 (1 ene–17 jul, sin Summer Camp)" },
+          "yesterday": { "current": 1, "cpl": 6083, "spend": 6083, "period": "Ayer (16 jul 2026)" },
+          "last_7d": { "current": 2, "cpl": 17421, "spend": 34841, "period": "Última semana (10–16 jul 2026)" },
+          "this_month": { "current": 7, "cpl": 11978, "spend": 83849, "period": "Mes actual (1–17 jul 2026)" },
+          "last_30d": { "current": 19, "cpl": 10665, "spend": 202627, "period": "Últimos 30 días (17 jun–16 jul 2026)" },
+          "last_month": { "current": 30, "cpl": 8390, "spend": 251696, "period": "Mes pasado (1–30 jun 2026)" }
+        }
+      },
+      "estrategica": {
+        "periods": {
+          "ytd": { "current": 813111, "freq": 1.74, "cpm": 675, "spend": 952247, "period": "Año 2026 (1 ene–17 jul)" },
+          "yesterday": { "current": 2655, "freq": 1.04, "cpm": 1380, "spend": 3808, "period": "Ayer (16 jul 2026)" },
+          "last_7d": { "current": 11813, "freq": 1.76, "cpm": 1276, "spend": 26520, "period": "Última semana (10–16 jul 2026)" },
+          "this_month": { "current": 24160, "freq": 1.99, "cpm": 1276, "spend": 61325, "period": "Mes actual (1–17 jul 2026)" },
+          "last_30d": { "current": 33542, "freq": 2.50, "cpm": 1366, "spend": 114513, "period": "Últimos 30 días (17 jun–16 jul 2026)" },
+          "last_month": { "current": 33959, "freq": 2.44, "cpm": 1376, "spend": 114217, "period": "Mes pasado (1–30 jun 2026)" }
+        }
+      }
     },
     "tayana": {
-      "tactica": { "current": 341, "cpl": 5825, "spend": 1986384, "period": "1 ene – 17 jul 2026 (sin Summer Camp)" },
-      "estrategica": { "current": 861895, "freq": 1.70, "cpm": 623, "spend": 912452, "period": "1 ene – 17 jul 2026" }
+      "tactica": {
+        "periods": {
+          "ytd": { "current": 341, "cpl": 5825, "spend": 1986384, "period": "Año 2026 (1 ene–17 jul, sin Summer Camp)" },
+          "yesterday": { "current": 0, "cpl": null, "spend": 8102, "period": "Ayer (16 jul 2026)" },
+          "last_7d": { "current": 2, "cpl": 27425, "spend": 54849, "period": "Última semana (10–16 jul 2026)" },
+          "this_month": { "current": 7, "cpl": 19083, "spend": 133583, "period": "Mes actual (1–17 jul 2026)" },
+          "last_30d": { "current": 24, "cpl": 11688, "spend": 280520, "period": "Últimos 30 días (17 jun–16 jul 2026)" },
+          "last_month": { "current": 22, "cpl": 14688, "spend": 323144, "period": "Mes pasado (1–30 jun 2026)" }
+        }
+      },
+      "estrategica": {
+        "periods": {
+          "ytd": { "current": 861895, "freq": 1.70, "cpm": 623, "spend": 912452, "period": "Año 2026 (1 ene–17 jul)" },
+          "yesterday": { "current": 5044, "freq": 1.01, "cpm": 698, "spend": 3545, "period": "Ayer (16 jul 2026)" },
+          "last_7d": { "current": 34233, "freq": 1.20, "cpm": 676, "spend": 27743, "period": "Última semana (10–16 jul 2026)" },
+          "this_month": { "current": 67492, "freq": 1.36, "cpm": 662, "spend": 60837, "period": "Mes actual (1–17 jul 2026)" },
+          "last_30d": { "current": 103965, "freq": 1.43, "cpm": 764, "spend": 113944, "period": "Últimos 30 días (17 jun–16 jul 2026)" },
+          "last_month": { "current": 102565, "freq": 1.37, "cpm": 811, "spend": 113883, "period": "Mes pasado (1–30 jun 2026)" }
+        }
+      }
     }
   }
 }

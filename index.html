@@ -854,10 +854,11 @@
       <div class="account-bar" style="margin-bottom:14px">
         <label for="camp-period">📅 Periodo</label>
         <select id="camp-period">
+          <option value="ytd" selected>Año 2026 (1 ene–17 jul)</option>
           <option value="yesterday">Ayer</option>
           <option value="last_7d">Última semana</option>
           <option value="this_month">Mes actual</option>
-          <option value="last_30d" selected>Últimos 30 días</option>
+          <option value="last_30d">Últimos 30 días</option>
           <option value="last_month">Mes pasado</option>
         </select>
       </div>
@@ -2135,7 +2136,7 @@
   // Si el archivo no existe todavía o falla la carga (ej. abriendo el HTML localmente), se quedan los datos
   // de referencia ya guardados en este archivo — el panel nunca se rompe por esto.
   var liveAccounts = null;
-  var currentPeriod = 'last_30d';
+  var currentPeriod = 'ytd';
 
   function periodDataFor(sede, tipo, period) {
     var acc = liveAccounts && liveAccounts[sede];
