@@ -740,6 +740,20 @@
     <h1 class="greeting">Mi audiencia</h1>
     <div class="date-sub" id="audiencia-period">Quién te sigue y cuándo está más activa</div>
 
+    <div class="card">
+      <h2>📊 Cumplimiento vs. meta — marzo 2026</h2>
+      <p class="vc-note" style="margin-top:-4px">Fuente: informe mensual de EMV (agencia) a Aspaen Cali.</p>
+      <div id="audiencia-marzo-kpis" class="kpi-row"></div>
+      <div id="audiencia-marzo-variacion" style="margin-top:10px"></div>
+      <div id="audiencia-marzo-parrilla" style="margin-top:10px"></div>
+    </div>
+
+    <div class="card">
+      <h2>🎯 Meta y plan de abril 2026</h2>
+      <p class="vc-note" id="audiencia-abril-objetivo" style="margin-top:-4px"></p>
+      <div id="audiencia-abril-metas"></div>
+    </div>
+
     <div id="audiencia-real">
       <div class="card">
         <h2>⚥ Sexo</h2>
@@ -878,6 +892,13 @@
       <div id="referentes-competencia"></div>
       <p class="vc-note" id="referentes-outlier-note"></p>
     </div>
+
+    <div class="card">
+      <h2>🥇 Share of voice en Cali — marzo 2026</h2>
+      <p class="vc-note" style="margin-top:-4px">Aspaen Cali (las 4 sedes juntas) vs. cada competidor — % del total de seguidores entre las 12 cuentas comparadas. Fuente: informe mensual de EMV.</p>
+      <div id="referentes-share"></div>
+      <p class="vc-note" id="referentes-marzo-note"></p>
+    </div>
   </section>
   <section class="view" id="view-campanas">
     <h1 class="greeting">Campañas</h1>
@@ -923,6 +944,12 @@
         <h2>🏕️ Summer Camp (aparte, no es matrícula)</h2>
         <p class="vc-note" style="margin-top:-4px">Campaña de temporada distinta a matrícula — la separamos para no mezclar los dos objetivos.</p>
         <div id="analysis-summercamp" class="kpi-row"></div>
+      </div>
+
+      <div class="card">
+        <h2>🎯 Meta de referencia — marzo 2026 (informe EMV)</h2>
+        <p class="vc-note" style="margin-top:-4px">Proyectado vs. ejecutado por campaña ese mes — es la meta más reciente que tenemos definida, distinta al total "Año 2026" de arriba (que es acumulado, no una meta).</p>
+        <div id="analysis-meta-marzo" class="kpi-row"></div>
       </div>
 
       <div class="card">
@@ -1427,6 +1454,24 @@
   });
 
   // ---- Mock data: cada cuenta trae su campaña táctica y estratégica, con creatividades y propuestas ----
+  // ---- Meta de referencia por campaña, marzo 2026 (informe EMV, tabla "Suficiencia Ciudad") ----
+  var metaMarzoData = {
+    tacuri: { tacticaLeadsProy: 125, tacticaLeadsEjec: 112, alcanceProy: 136256, alcanceEjec: 232638 },
+    juanambu: { tacticaLeadsProy: 62, tacticaLeadsEjec: 89, alcanceProy: 136256, alcanceEjec: 262987 },
+    entrevalles: { tacticaLeadsProy: 41, tacticaLeadsEjec: 60, alcanceProy: 100711, alcanceEjec: 284022 },
+    tayana: { tacticaLeadsProy: 141, tacticaLeadsEjec: 252, alcanceProy: 100711, alcanceEjec: 245610 }
+  };
+
+  function renderMetaMarzo(account) {
+    var m = metaMarzoData[account];
+    if (!m) return;
+    var pctLeads = Math.round((m.tacticaLeadsEjec / m.tacticaLeadsProy) * 100);
+    var pctAlcance = Math.round((m.alcanceEjec / m.alcanceProy) * 100);
+    document.getElementById('analysis-meta-marzo').innerHTML =
+      '<div class="kpi-tile"><div class="kpi-label">Leads táctica (marzo)</div><div class="kpi-value">' + m.tacticaLeadsEjec + '</div><div class="kpi-sub">Meta ' + m.tacticaLeadsProy + ' · ' + pctLeads + '% cumplido</div></div>' +
+      '<div class="kpi-tile"><div class="kpi-label">Alcance estratégica (marzo)</div><div class="kpi-value">' + fmtNum(m.alcanceEjec) + '</div><div class="kpi-sub">Meta ' + fmtNum(m.alcanceProy) + ' · ' + pctAlcance + '% cumplido</div></div>';
+  }
+
   var summercampData = {
     tacuri: { current: 18, cpl: 8693, spend: 156474 },
     juanambu: { current: 24, cpl: 5786, spend: 138854 },
@@ -1923,6 +1968,7 @@
         '<div class="kpi-tile"><div class="kpi-label">CPL Summer Camp</div><div class="kpi-value" style="font-size:17px">' + fmtCOP(sc.cpl) + '</div></div>' +
         '<div class="kpi-tile"><div class="kpi-label">Gasto Summer Camp</div><div class="kpi-value" style="font-size:17px">' + fmtCOP(sc.spend) + '</div></div>';
     }
+    renderMetaMarzo(account);
 
     document.getElementById('analysis-campaigns').innerHTML =
       renderCampaignCard('tactica', data.tactica) + renderCampaignCard('estrategica', data.estrategica);
@@ -2041,6 +2087,103 @@
     'tayana': { real: false }
   };
 
+  // ---- Cumplimiento vs. meta orgánica (marzo 2026) + meta de abril 2026 ----
+  // Fuente: "Marketing_Cali_Marzo y plan Abril.pdf" (informe mensual de EMV a Aspaen Cali).
+  var marzoAbrilData = {
+    tacuri: {
+      variacion: { seguidores: 1.23, interacciones: 95.33, noSeguidores: -8.12 },
+      leadsOrganicos: 2, matriculasOrganicas: 0,
+      engagement: { proy: 7.89, ejec: 9.65, cumpl: 122.31 },
+      visualizaciones: { proy: 82304, ejec: 122664, cumpl: 149 },
+      alcance: { proy: 1600, ejec: 1695, cumpl: 105.96 },
+      parrilla: { stories: 66.67, reels: 22.22, post: 5.56, carruseles: 5.56 },
+      totalPiezas: 54, pctNoSeguidores: 63.4,
+      abril: { objetivo: 'Fortalecer el descubrimiento sin perder la alta capacidad de conexión, buscando equilibrar mejor alcance e interacción.', kpi: '% de no seguidores / visualizaciones', metaLeads: 3, ejecMarzoLeads: 12, metaMatriculas: 0, ejecMarzoMatriculas: 0 }
+    },
+    juanambu: {
+      variacion: { seguidores: 1.01, interacciones: -56.08, noSeguidores: 0.00 },
+      leadsOrganicos: 4, matriculasOrganicas: 0,
+      engagement: { proy: 9.29, ejec: 7.19, cumpl: 77.39 },
+      visualizaciones: { proy: 12734, ejec: 171899, cumpl: 1350 },
+      alcance: { proy: 2296, ejec: 2723, cumpl: 118.60 },
+      parrilla: { stories: 61.82, reels: 23.64, post: 9.09, carruseles: 5.45 },
+      totalPiezas: 55, pctNoSeguidores: 78,
+      abril: { objetivo: 'Recuperar la capacidad de conexión sin perder el alcance, fortaleciendo la interacción y el vínculo con la audiencia.', kpi: 'Engagement', metaLeads: 2, ejecMarzoLeads: 2, metaMatriculas: 0, ejecMarzoMatriculas: 0 }
+    },
+    entrevalles: {
+      variacion: { seguidores: 1.23, interacciones: 100.37, noSeguidores: -3.73 },
+      leadsOrganicos: 13, matriculasOrganicas: 1,
+      engagement: { proy: 8.79, ejec: 5.62, cumpl: 63.97 },
+      visualizaciones: { proy: 83410, ejec: 104692, cumpl: 126 },
+      alcance: { proy: 1449, ejec: 1448, cumpl: 99.92 },
+      parrilla: { stories: 51.11, reels: 35.56, post: 11.11, carruseles: 2.22 },
+      totalPiezas: 45, pctNoSeguidores: 85.2,
+      abril: { objetivo: 'Fortalecer el descubrimiento sin perder la eficiencia actual, aprovechando su buen desempeño en visualizaciones para atraer más audiencias nuevas.', kpi: '% de no seguidores / alcance a nuevas audiencias', metaLeads: 6, ejecMarzoLeads: 14, metaMatriculas: 0, ejecMarzoMatriculas: 2 }
+    },
+    tayana: {
+      variacion: { seguidores: 1.47, interacciones: 437.01, noSeguidores: -22.36 },
+      leadsOrganicos: 2, matriculasOrganicas: 2,
+      engagement: { proy: 9.23, ejec: 9.17, cumpl: 99.36 },
+      visualizaciones: { proy: 78229, ejec: 88185, cumpl: 113 },
+      alcance: { proy: 1363, ejec: 1055, cumpl: 77.42 },
+      parrilla: { stories: 69.84, reels: 25.40, post: 3.17, carruseles: 0 },
+      totalPiezas: 63, pctNoSeguidores: 71.2,
+      abril: { objetivo: 'Corregir la baja capacidad de descubrimiento, reduciendo la dependencia en comunidad y fortaleciendo la expansión hacia nuevas audiencias.', kpi: '% de no seguidores / alcance', metaLeads: 4, ejecMarzoLeads: 7, metaMatriculas: 0, ejecMarzoMatriculas: 5 }
+    }
+  };
+
+  // ---- Share of voice en Cali, marzo 2026 (informe EMV) ----
+  var marzoShareData = {
+    cumplimientoEngagement: 89.87, promedioCiudad: 3.35,
+    cuentas: [
+      { nombre: 'Aspaen Cali', seguidores: 13962, share: 16.68, engagement: 7.91, deltaVsPromedio: 4.558, esAspaen: true },
+      { nombre: 'Colegio Berchmans', seguidores: 12917, share: 15.43, engagement: 2.56, deltaVsPromedio: -0.790 },
+      { nombre: 'Colegio Alemán de Cali', seguidores: 9363, share: 11.18, engagement: 1.25, deltaVsPromedio: -2.100 },
+      { nombre: 'Jardines Infantiles Origami', seguidores: 9524, share: 11.38, engagement: 0.38, deltaVsPromedio: -2.970 },
+      { nombre: 'Colegio Philadelphia Int.', seguidores: 8829, share: 10.55, engagement: 2.86, deltaVsPromedio: -0.490 },
+      { nombre: 'Colegio Bennett', seguidores: 7756, share: 9.26, engagement: 2.84, deltaVsPromedio: -0.510 },
+      { nombre: 'Colegio La Arboleda', seguidores: 6789, share: 8.11, engagement: 1.97, deltaVsPromedio: -1.380 },
+      { nombre: 'New Cambridge School Cali', seguidores: 6137, share: 7.33, engagement: 1.97, deltaVsPromedio: -1.380 },
+      { nombre: 'Jardín Infantil Baby Bennett', seguidores: 3178, share: 3.80, engagement: 2.09, deltaVsPromedio: -1.260 },
+      { nombre: 'Estimulemos Jardín Infantil', seguidores: 2390, share: 2.85, engagement: 2.18, deltaVsPromedio: -1.170 },
+      { nombre: 'kinder y Maternal Bam Bam', seguidores: 1903, share: 2.27, engagement: 0.37, deltaVsPromedio: -2.980 },
+      { nombre: 'Estrellita de Mar', seguidores: 969, share: 1.16, engagement: 0.15, deltaVsPromedio: -3.200 }
+    ]
+  };
+
+  function renderReferentesShare() {
+    var maxShare = Math.max.apply(null, marzoShareData.cuentas.map(function (c) { return c.share; }));
+    document.getElementById('referentes-share').innerHTML = marzoShareData.cuentas.map(function (c) {
+      var pct = Math.round((c.share / maxShare) * 100);
+      return '<div class="sede-row"><div class="sede-name"' + (c.esAspaen ? ' style="color:var(--accent-soft-ink)"' : '') + '>' + c.nombre + (c.esAspaen ? ' (tú)' : '') + '</div>' +
+        '<div class="sede-bar-track"><div class="sede-bar-fill ' + (c.esAspaen ? 'bar-fill-good' : 'bar-fill-accent') + '" style="width:' + pct + '%"></div></div>' +
+        '<div class="sede-counts">' + c.share + '%</div></div>';
+    }).join('');
+    document.getElementById('referentes-marzo-note').textContent = 'Aspaen Cali (agregado) tuvo el engagement más alto del grupo en marzo (7,91%, +4,56 puntos sobre el promedio de la ciudad de 3,35%) y cumplió el 89,87% de su meta de engagement — pero fue superado en seguidores/share por Colegio Berchmans (15,43%).';
+  }
+
+  function renderAudienciaMarzo(account) {
+    var m = marzoAbrilData[account];
+    if (!m) return;
+    document.getElementById('audiencia-marzo-kpis').innerHTML =
+      '<div class="kpi-tile"><div class="kpi-label">Engagement</div><div class="kpi-value">' + m.engagement.ejec + '%</div><div class="kpi-sub">Meta ' + m.engagement.proy + '% · ' + m.engagement.cumpl + '% cumplido</div></div>' +
+      '<div class="kpi-tile"><div class="kpi-label">Visualizaciones</div><div class="kpi-value" style="font-size:17px">' + fmtNum(m.visualizaciones.ejec) + '</div><div class="kpi-sub">Meta ' + fmtNum(m.visualizaciones.proy) + ' · ' + m.visualizaciones.cumpl + '% cumplido</div></div>' +
+      '<div class="kpi-tile"><div class="kpi-label">Alcance diario</div><div class="kpi-value">' + fmtNum(m.alcance.ejec) + '</div><div class="kpi-sub">Meta ' + fmtNum(m.alcance.proy) + ' · ' + m.alcance.cumpl + '% cumplido</div></div>' +
+      '<div class="kpi-tile"><div class="kpi-label">Leads / matrículas orgánicas</div><div class="kpi-value" style="font-size:17px">' + m.leadsOrganicos + ' / ' + m.matriculasOrganicas + '</div></div>';
+    document.getElementById('audiencia-marzo-variacion').innerHTML =
+      '<p class="vc-note">Variación mensual: seguidores ' + (m.variacion.seguidores >= 0 ? '+' : '') + m.variacion.seguidores + '% · interacciones ' + (m.variacion.interacciones >= 0 ? '+' : '') + m.variacion.interacciones + '% · no seguidores ' + m.variacion.noSeguidores + '% (' + m.pctNoSeguidores + '% del alcance total son no seguidores).</p>';
+    var pMax = Math.max(m.parrilla.stories, m.parrilla.reels, m.parrilla.post, m.parrilla.carruseles, 1);
+    document.getElementById('audiencia-marzo-parrilla').innerHTML = '<div class="vc-note" style="margin-bottom:6px">Mezcla de parrilla ejecutada (' + m.totalPiezas + ' piezas)</div>' +
+      [['Stories', m.parrilla.stories], ['Reels', m.parrilla.reels], ['Post', m.parrilla.post], ['Carruseles', m.parrilla.carruseles]].map(function (r) {
+        var pct = Math.round((r[1] / pMax) * 100);
+        return '<div class="sede-row"><div class="sede-name">' + r[0] + '</div><div class="sede-bar-track"><div class="sede-bar-fill bar-fill-accent" style="width:' + pct + '%"></div></div><div class="sede-counts">' + r[1] + '%</div></div>';
+      }).join('');
+    document.getElementById('audiencia-abril-objetivo').textContent = m.abril.objetivo + ' KPI prioritario: ' + m.abril.kpi + '.';
+    document.getElementById('audiencia-abril-metas').innerHTML =
+      '<div class="kpi-row"><div class="kpi-tile"><div class="kpi-label">Meta leads orgánicos (abril)</div><div class="kpi-value">' + m.abril.metaLeads + '</div><div class="kpi-sub">Marzo real: ' + m.abril.ejecMarzoLeads + '</div></div>' +
+      '<div class="kpi-tile"><div class="kpi-label">Meta matrículas orgánicas (abril)</div><div class="kpi-value">' + m.abril.metaMatriculas + '</div><div class="kpi-sub">Marzo real: ' + m.abril.ejecMarzoMatriculas + '</div></div></div>';
+  }
+
   // ---- Referentes: Red Aspaen nacional + competencia directa en Cali ----
   // Fuente: info_aspaen.xlsx (base de datos interna del equipo de marketing), mes más reciente disponible por cuenta.
   var referentesData = {
@@ -2094,6 +2237,7 @@
   function renderReferentes(account) {
     document.getElementById('referentes-period').textContent = '📅 ' + referentesData.period + ' · ' + referentesData.nacionalCuentas + ' cuentas Aspaen a nivel nacional';
     var s = referentesData.sedes[account];
+    renderReferentesShare();
 
     renderReferentesBars('referentes-nacional', [
       { name: accountLabels[account], value: s.seguidores, highlight: true },
@@ -2136,12 +2280,13 @@
   }
 
   function renderAudiencia(account) {
+    renderAudienciaMarzo(account);
     var a = audienceData[account];
     if (!a || !a.real) {
-      document.getElementById('audiencia-period').textContent = 'Aún no conectada';
+      document.getElementById('audiencia-period').textContent = 'Cumplimiento de metas: real (marzo 2026) · Demografía (edad/sexo/país): aún no conectada';
       document.getElementById('audiencia-real').style.display = 'none';
       document.getElementById('audiencia-empty').style.display = '';
-      document.getElementById('audiencia-empty-text').textContent = 'Todavía no tenemos datos de audiencia para esta cuenta. Mándame una captura de Instagram → tu perfil → Estadísticas → Público (sexo, edad, países) como hiciste con Tacurí, y la conecto.';
+      document.getElementById('audiencia-empty-text').textContent = 'Todavía no tenemos el desglose de sexo/edad/país para esta cuenta. Mándame una captura de Instagram → tu perfil → Estadísticas → Público como hiciste con Tacurí, y la conecto.';
       return;
     }
     document.getElementById('audiencia-period').textContent = 'Últimos 30 días (' + a.period + ') · Instagram';
