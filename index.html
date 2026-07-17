@@ -308,9 +308,9 @@
   .reco-title { font-weight: 700; font-size: 13.5px; }
   .reco-text { font-size: 12.5px; color: var(--ink-muted); margin-top: 2px; line-height: 1.5; }
 
-  .camp-subtabs, .ref-subtabs { display: flex; gap: 6px; margin-bottom: 20px; }
-  .camp-panel, .ref-panel { display: none; }
-  .camp-panel.active, .ref-panel.active { display: block; }
+  .camp-subtabs { display: flex; gap: 6px; margin-bottom: 20px; }
+  .camp-panel { display: none; }
+  .camp-panel.active { display: block; }
 
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
   .form-group { display: flex; flex-direction: column; gap: 6px; }
@@ -645,9 +645,17 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
       Tendencias
     </button>
-    <button class="nav-item" data-view="referentes">
+    <button class="nav-item" data-view="competencia">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20c0-3 2.5-5 6-5s6 2 6 5M14 20c0-2 1.8-3.5 4.5-3.5S23 18 23 20"/></svg>
-      Referentes
+      Competencia
+    </button>
+    <button class="nav-item" data-view="aspaen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 4 5.5 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.5-4-9s1.5-6.5 4-9z"/></svg>
+      Aspaen
+    </button>
+    <button class="nav-item" data-view="leads">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+      Leads
     </button>
     <button class="nav-item" data-view="campanas">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-7-6 18-3-8-8-3z"/></svg>
@@ -928,56 +936,49 @@
   <section class="view" id="view-tendencias">
     <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div><h3>Tendencias</h3><p>Audios, formatos y temas que están creciendo ahora mismo en tu nicho.</p></div>
   </section>
-  <section class="view" id="view-referentes">
-    <h1 class="greeting">Referentes</h1>
-    <div class="date-sub">Tu competencia directa en Cali, la Red Aspaen a nivel nacional, y todos tus leads en un solo lugar</div>
+  <section class="view" id="view-competencia">
+    <h1 class="greeting">Competencia</h1>
+    <div class="date-sub">Tu competencia directa en Cali — seguidores, engagement y share of voice</div>
+
+    <div class="card">
+      <h2 id="referentes-competencia-title">🏫 Tu competencia directa en Cali</h2>
+      <div id="referentes-competencia"></div>
+      <p class="vc-note" id="referentes-outlier-note"></p>
+    </div>
+
+    <div class="card">
+      <h2>🥇 Share of voice en Cali — marzo 2026</h2>
+      <p class="vc-note" style="margin-top:-4px">Aspaen Cali (las 4 sedes juntas) vs. cada competidor — % del total de seguidores entre las 12 cuentas comparadas. Fuente: informe mensual de EMV.</p>
+      <div id="referentes-variacion-pills" style="margin-bottom:14px"></div>
+      <div id="referentes-share"></div>
+      <p class="vc-note" id="referentes-marzo-note"></p>
+    </div>
+  </section>
+  <section class="view" id="view-aspaen">
+    <h1 class="greeting">Aspaen</h1>
+    <div class="date-sub">Cómo te comparas con la Red Aspaen a nivel nacional</div>
     <p class="vc-note" id="referentes-period"></p>
 
-    <div class="ref-subtabs">
-      <div class="tab active" data-ref="competencia">Competencia</div>
-      <div class="tab" data-ref="aspaen">Aspaen</div>
-      <div class="tab" data-ref="leads">Leads</div>
+    <div class="card">
+      <h2>📊 Tu cuenta vs. la Red Aspaen (29 sedes a nivel nacional)</h2>
+      <div id="referentes-nacional"></div>
     </div>
 
-    <!-- COMPETENCIA (Cali) -->
-    <div class="ref-panel active" id="ref-competencia">
-      <div class="card">
-        <h2 id="referentes-competencia-title">🏫 Tu competencia directa en Cali</h2>
-        <div id="referentes-competencia"></div>
-        <p class="vc-note" id="referentes-outlier-note"></p>
-      </div>
-
-      <div class="card">
-        <h2>🥇 Share of voice en Cali — marzo 2026</h2>
-        <p class="vc-note" style="margin-top:-4px">Aspaen Cali (las 4 sedes juntas) vs. cada competidor — % del total de seguidores entre las 12 cuentas comparadas. Fuente: informe mensual de EMV.</p>
-        <div id="referentes-variacion-pills" style="margin-bottom:14px"></div>
-        <div id="referentes-share"></div>
-        <p class="vc-note" id="referentes-marzo-note"></p>
-      </div>
+    <div class="card">
+      <h2>🎯 Mezcla de contenido: Operativo / Táctico / Estratégico</h2>
+      <p class="vc-note" style="margin-top:-4px">Cómo reparte cada quien sus publicaciones entre contenido operativo (institucional/informativo), táctico (captación) y estratégico (marca/awareness).</p>
+      <div id="referentes-mix"></div>
     </div>
+  </section>
+  <section class="view" id="view-leads">
+    <h1 class="greeting">Leads</h1>
+    <div class="date-sub">Todos tus leads — pagados de Meta Ads + orgánicos de Instagram, por sede</div>
 
-    <!-- ASPAEN (escala país) -->
-    <div class="ref-panel" id="ref-aspaen">
-      <div class="card">
-        <h2>📊 Tu cuenta vs. la Red Aspaen (29 sedes a nivel nacional)</h2>
-        <div id="referentes-nacional"></div>
-      </div>
-
-      <div class="card">
-        <h2>🎯 Mezcla de contenido: Operativo / Táctico / Estratégico</h2>
-        <p class="vc-note" style="margin-top:-4px">Cómo reparte cada quien sus publicaciones entre contenido operativo (institucional/informativo), táctico (captación) y estratégico (marca/awareness).</p>
-        <div id="referentes-mix"></div>
-      </div>
-    </div>
-
-    <!-- LEADS (campañas pagadas + orgánico) -->
-    <div class="ref-panel" id="ref-leads">
-      <div class="card">
-        <h2>🎯 Todos tus leads — pagados + orgánicos, por sede</h2>
-        <p class="vc-note" style="margin-top:-4px">Leads pagados de Meta Ads (Táctica, año 2026, sin Summer Camp) + Summer Camp aparte + leads/matrículas orgánicas de Instagram (marzo 2026, informe EMV) — las 4 sedes lado a lado.</p>
-        <div id="referentes-leads-table"></div>
-        <p class="vc-note" id="referentes-leads-note" style="margin-top:10px"></p>
-      </div>
+    <div class="card">
+      <h2>🎯 Todos tus leads — pagados + orgánicos, por sede</h2>
+      <p class="vc-note" style="margin-top:-4px">Leads pagados de Meta Ads (Táctica, año 2026, sin Summer Camp) + Summer Camp aparte + leads/matrículas orgánicas de Instagram (marzo 2026, informe EMV) — las 4 sedes lado a lado.</p>
+      <div id="referentes-leads-table"></div>
+      <p class="vc-note" id="referentes-leads-note" style="margin-top:10px"></p>
     </div>
   </section>
   <section class="view" id="view-campanas">
@@ -1200,17 +1201,7 @@
     });
   });
 
-  // Referentes: sub-tabs (Competencia / Aspaen / Leads)
-  document.querySelectorAll('.ref-subtabs .tab').forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      document.querySelectorAll('.ref-subtabs .tab').forEach(function (t) { t.classList.remove('active'); });
-      document.querySelectorAll('.ref-panel').forEach(function (p) { p.classList.remove('active'); });
-      tab.classList.add('active');
-      document.getElementById('ref-' + tab.dataset.ref).classList.add('active');
-    });
-  });
-
-  // Campañas: platform / toggle chips
+// Campañas: platform / toggle chips
   document.querySelectorAll('.chip-check').forEach(function (chip) {
     chip.addEventListener('click', function () { chip.classList.toggle('selected'); });
   });
