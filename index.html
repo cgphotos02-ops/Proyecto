@@ -948,18 +948,31 @@
   </section>
   <section class="view" id="view-aspaen">
     <h1 class="greeting">Aspaen</h1>
-    <div class="date-sub">Cómo te comparas con la Red Aspaen a nivel nacional</div>
+    <div class="date-sub">Cómo te comparas con la Red Aspaen a nivel nacional — dato por dato</div>
     <p class="vc-note" id="referentes-period"></p>
 
     <div class="card">
-      <h2>📊 Tu cuenta vs. la Red Aspaen (29 sedes a nivel nacional)</h2>
-      <div id="referentes-nacional"></div>
+      <h2>🏆 Tu resumen nacional</h2>
+      <div id="aspaen-summary-kpis" class="kpi-row"></div>
+      <p class="vc-note" id="aspaen-summary-note"></p>
+    </div>
+
+    <div class="card">
+      <h2>📊 Tú vs. la Red Aspaen — dato por dato (29 sedes)</h2>
+      <p class="vc-note" style="margin-top:-4px">La barra de "Tú" está a escala del líder nacional en ese dato — entre más llena, más cerca estás de ser el #1 del país. La posición está coloreada: verde = top 10, amarillo = medio, rojo = tercio más bajo.</p>
+      <div id="aspaen-metrics-table"></div>
     </div>
 
     <div class="card">
       <h2>🎯 Mezcla de contenido: Operativo / Táctico / Estratégico</h2>
       <p class="vc-note" style="margin-top:-4px">Cómo reparte cada quien sus publicaciones entre contenido operativo (institucional/informativo), táctico (captación) y estratégico (marca/awareness).</p>
-      <div id="referentes-mix"></div>
+      <div class="charts-row" id="aspaen-mix-donuts"></div>
+    </div>
+
+    <div class="card">
+      <h2>🚀 Estrategias para superar a la Red Nacional</h2>
+      <p class="vc-note" style="margin-top:-4px">Priorizadas por tus métricas más débiles frente al resto de la red — el objetivo es superar, no solo alcanzar el promedio.</p>
+      <div id="aspaen-strategies"></div>
     </div>
   </section>
   <section class="view" id="view-leads">
@@ -2486,27 +2499,165 @@
     }).join('');
   }
 
+  // ---- Aspaen: comparación dato-por-dato vs. la Red nacional (29 sedes) ----
+  // Fuente: info_aspaen.xlsx, mes más reciente disponible por cuenta (mayo-junio 2026).
+  var aspaenMetrics = [
+    { key: 'engagement', label: 'Engagement', unit: '%', dec: 2 },
+    { key: 'seguidores', label: 'Seguidores', unit: '', dec: 0 },
+    { key: 'visualizaciones', label: 'Visualizaciones (mes)', unit: '', dec: 0 },
+    { key: 'alcance', label: 'Alcance diario promedio', unit: '', dec: 0 },
+    { key: 'interacciones', label: 'Interacciones (mes)', unit: '', dec: 0 },
+    { key: 'likes', label: 'Likes (mes)', unit: '', dec: 0 },
+    { key: 'comentarios', label: 'Comentarios (mes)', unit: '', dec: 0 },
+    { key: 'pctNoSeguidores', label: '% no seguidores (descubrimiento)', unit: '%', dec: 1 },
+    { key: 'leadsOrg', label: 'Leads orgánicos (mes)', unit: '', dec: 0 },
+    { key: 'matriculasOrg', label: 'Matrículas orgánicas (mes)', unit: '', dec: 0 },
+    { key: 'reels', label: 'Reels publicados (mes)', unit: '', dec: 0 },
+    { key: 'carruseles', label: 'Carruseles publicados (mes)', unit: '', dec: 0 },
+    { key: 'posts', label: 'Posts publicados (mes)', unit: '', dec: 0 },
+    { key: 'stories', label: 'Stories publicadas (mes)', unit: '', dec: 0 }
+  ];
+
+  var aspaenNacional = {
+    cuentas: 29,
+    period: 'Mayo–junio 2026 (mes más reciente cargado por cuenta)',
+    metrics: {
+      engagement: { avg: 9.07, top: 34.45, topName: 'Kinabalu', topCiudad: 'Bogotá' },
+      seguidores: { avg: 3751, top: 9300, topName: 'Alcázares', topCiudad: 'Medellín' },
+      visualizaciones: { avg: 120889, top: 511048, topName: 'GCI', topCiudad: 'Cartagena' },
+      alcance: { avg: 2783, top: 9690, topName: 'Horizontes', topCiudad: 'Manizales' },
+      interacciones: { avg: 1752, top: 5212, topName: 'GC', topCiudad: 'Cartagena' },
+      likes: { avg: 1184, top: 4389, topName: 'GCI', topCiudad: 'Cartagena' },
+      comentarios: { avg: 22, top: 160, topName: 'Chía', topCiudad: 'Chía' },
+      pctNoSeguidores: { avg: 67.3, top: 85.9, topName: 'Ocean Kids', topCiudad: 'Barranquilla' },
+      leadsOrg: { avg: 4.76, top: 47, topName: 'Almirán', topCiudad: 'Medellín' },
+      matriculasOrg: { avg: 0.04, top: 1, topName: 'Cantillana', topCiudad: 'Bucaramanga' },
+      reels: { avg: 9.28, top: 18, topName: 'Iragua', topCiudad: 'Bogotá' },
+      carruseles: { avg: 3.76, top: 12, topName: 'Yumaná', topCiudad: 'Neiva' },
+      posts: { avg: 1.90, top: 10, topName: 'Iragua', topCiudad: 'Bogotá' },
+      stories: { avg: 42.90, top: 143, topName: 'Iragua', topCiudad: 'Bogotá' }
+    }
+  };
+
+  var aspaenSedes = {
+    tacuri: { metrics: {
+      engagement: { value: 14.88, rank: 6 }, seguidores: { value: 3358, rank: 14 }, visualizaciones: { value: 117364, rank: 14 },
+      alcance: { value: 1542, rank: 22 }, interacciones: { value: 1084, rank: 20 }, likes: { value: 976, rank: 13 },
+      comentarios: { value: 26, rank: 8 }, pctNoSeguidores: { value: 60.5, rank: 23 }, leadsOrg: { value: 0, rank: 29 },
+      matriculasOrg: { value: 0, rank: 22 }, reels: { value: 11, rank: 8 }, carruseles: { value: 5, rank: 8 },
+      posts: { value: 2, rank: 11 }, stories: { value: 36, rank: 13 }
+    } },
+    juanambu: { metrics: {
+      engagement: { value: 11.40, rank: 8 }, seguidores: { value: 4340, rank: 9 }, visualizaciones: { value: 97837, rank: 15 },
+      alcance: { value: 1546, rank: 21 }, interacciones: { value: 1714, rank: 12 }, likes: { value: 624, rank: 20 },
+      comentarios: { value: 9, rank: 17 }, pctNoSeguidores: { value: 60.2, rank: 24 }, leadsOrg: { value: 5, rank: 5 },
+      matriculasOrg: { value: 0, rank: 16 }, reels: { value: 9, rank: 17 }, carruseles: { value: 1, rank: 24 },
+      posts: { value: 5, rank: 2 }, stories: { value: 50, rank: 9 }
+    } },
+    entrevalles: { metrics: {
+      engagement: { value: 11.70, rank: 7 }, seguidores: { value: 3159, rank: 16 }, visualizaciones: { value: 59522, rank: 19 },
+      alcance: { value: 1755, rank: 20 }, interacciones: { value: 751, rank: 21 }, likes: { value: 322, rank: 26 },
+      comentarios: { value: 1, rank: 25 }, pctNoSeguidores: { value: 77.5, rank: 6 }, leadsOrg: { value: 4, rank: 10 },
+      matriculasOrg: { value: 0, rank: 11 }, reels: { value: 13, rank: 2 }, carruseles: { value: 1, rank: 22 },
+      posts: { value: 1, rank: 16 }, stories: { value: 15, rank: 27 }
+    } },
+    tayana: { metrics: {
+      engagement: { value: 17.21, rank: 2 }, seguidores: { value: 3320, rank: 15 }, visualizaciones: { value: 90819, rank: 16 },
+      alcance: { value: 1899, rank: 18 }, interacciones: { value: 439, rank: 23 }, likes: { value: 414, rank: 24 },
+      comentarios: { value: 7, rank: 20 }, pctNoSeguidores: { value: 74.0, rank: 12 }, leadsOrg: { value: 4, rank: 6 },
+      matriculasOrg: { value: 0, rank: 24 }, reels: { value: 12, rank: 7 }, carruseles: { value: 1, rank: 27 },
+      posts: { value: 0, rank: 29 }, stories: { value: 40, rank: 11 }
+    } }
+  };
+
+  var aspaenStrategias = {
+    tacuri: [
+      { icon: 'crit', title: 'Cero leads orgánicos (último lugar, 29/29)', text: 'Tu engagement es de los mejores del país (14,88%, rank 6/29) — la gente te ve y reacciona, pero nada la lleva a dejar sus datos. Agrega un CTA claro (link en bio, "escríbenos" en el 2º slide del carrusel, sticker de pregunta en historias) en tus 3 piezas de mayor engagement del mes.' },
+      { icon: 'warn', title: 'Alcance y descubrimiento por debajo del promedio', text: 'Tu alcance diario (1.542, rank 22/29) y tu % de no seguidores (60,5%, rank 23/29) están debajo del promedio nacional (2.783 y 67,3%). Conectas bien con tu comunidad, pero casi no llegas a audiencias nuevas — usa audios/trends en tus Reels específicamente para descubrimiento, no solo para tu comunidad ya ganada.' },
+      { icon: 'good', title: 'Carruseles y comentarios, tu mejor palanca', text: 'Tus comentarios (26, rank 8/29) y carruseles (5, rank 8/29) ya superan claramente el promedio nacional. Repite la fórmula del carrusel educativo en más piezas — es lo que mejor te está funcionando.' },
+      { icon: 'warn', title: 'Sin matrículas orgánicas este mes', text: 'Consecuencia directa del punto 1: sin leads, no hay matrículas que capturar. Resolver el CTA de conversión debería mover ambos números juntos.' }
+    ],
+    juanambu: [
+      { icon: 'good', title: 'Conversión y ritmo de feed, tus fortalezas', text: 'Tus leads orgánicos (5, rank 5/29) y tus posts de feed (5, rank 2/29 — solo te supera Iragua con 10) están entre lo mejor del país. Mantén el cronograma actual, está funcionando.' },
+      { icon: 'crit', title: 'Casi no usas carruseles (1 pieza, rank 24/29)', text: 'El promedio nacional es 3,76 — estás dejando de lado un formato que en tu misma red (Tacurí) ya genera buen engagement. Súmalo cada 1-2 semanas.' },
+      { icon: 'warn', title: 'Likes y alcance por debajo del promedio pese a tu base de seguidores', text: 'Tienes el 2º mejor número de seguidores de las 4 sedes de Cali (4.340), pero tus likes (624, rank 20/29) y tu alcance (1.546, rank 21/29) están debajo del promedio nacional (1.184 y 2.783). Tu contenido no se está moviendo tanto como podría — prueba ganchos más fuertes en el primer segundo de cada reel.' },
+      { icon: 'warn', title: 'Comentarios bajos (9, rank 17/29)', text: 'Tu engagement general ya es bueno (11,40%, rank 8/29) — actívalo cerrando tus posts con una pregunta directa para generar respuestas.' }
+    ],
+    entrevalles: [
+      { icon: 'good', title: 'Descubrimiento, tu fortaleza más clara', text: 'Tus reels (13, rank 2/29 — casi el mejor del país) y tu % de no seguidores (77,5%, rank 6/29, muy por encima del 67,3% promedio) muestran que tu contenido llega muy bien a gente nueva.' },
+      { icon: 'crit', title: 'Muy pocas historias (15 en el mes, rank 27/29)', text: 'El promedio nacional es 42,9 — estás publicando muy por debajo del resto de la red. Sube a al menos 3 historias por semana para no perder el alcance que sí estás logrando con reels.' },
+      { icon: 'crit', title: 'Likes y comentarios muy bajos pese al buen alcance', text: 'Likes (322, rank 26/29) y comentarios (1, rank 25/29) — la gente te ve pero casi no interactúa. Agrega preguntas y CTAs de comentario en cada reel para convertir ese alcance en conversación real.' },
+      { icon: 'warn', title: 'Carruseles casi inexistentes (1, rank 22/29)', text: 'Diversifica el formato — hoy dependes casi solo de reels y stories.' }
+    ],
+    tayana: [
+      { icon: 'good', title: 'El mejor engagement de las 4 sedes de Cali', text: 'Tu 17,21% de engagement es el rank 2/29 a nivel nacional — tu contenido conecta muy fuerte con tu comunidad. Úsalo como prueba social en el copy para atraer no-seguidores.' },
+      { icon: 'crit', title: 'Cero posts de feed en el mes (último lugar, 29/29)', text: 'No puedes crecer en descubrimiento sin publicar en el feed. Agenda al menos 2 posts por semana, aunque el foco siga siendo reels.' },
+      { icon: 'crit', title: 'Carruseles casi inexistentes (1, rank 27/29)', text: 'Casi no usas este formato pese a que en Tacurí (tu misma red) ya genera buen engagement.' },
+      { icon: 'warn', title: 'Alcance e interacciones por debajo del promedio pese al gran engagement', text: 'Alcance (1.899, rank 18/29) e interacciones (439, rank 23/29) están debajo del promedio nacional. Tu audiencia actual te quiere, pero necesitas llegar a más gente nueva.' }
+    ]
+  };
+
+  function aspaenRankClass(rank) {
+    if (rank <= 10) return 'good';
+    if (rank <= 19) return 'warn';
+    return 'crit';
+  }
+
+  function renderAspaenPage(account) {
+    document.getElementById('referentes-period').textContent = '📅 ' + aspaenNacional.period + ' · ' + aspaenNacional.cuentas + ' cuentas Aspaen a nivel nacional';
+    var sede = aspaenSedes[account].metrics;
+
+    var top10Count = aspaenMetrics.filter(function (m) { return sede[m.key].rank <= 10; }).length;
+    var best = aspaenMetrics.reduce(function (a, b) { return sede[a.key].rank <= sede[b.key].rank ? a : b; });
+    var worst = aspaenMetrics.reduce(function (a, b) { return sede[a.key].rank >= sede[b.key].rank ? a : b; });
+    document.getElementById('aspaen-summary-kpis').innerHTML =
+      '<div class="kpi-tile"><div class="kpi-label">Métricas en el Top 10 nacional</div><div class="kpi-value">' + top10Count + '/' + aspaenMetrics.length + '</div></div>' +
+      '<div class="kpi-tile"><div class="kpi-label">Tu mejor dato</div><div class="kpi-value" style="font-size:16px">' + best.label + '</div><div class="kpi-sub">Rank ' + sede[best.key].rank + '/' + aspaenNacional.cuentas + '</div></div>' +
+      '<div class="kpi-tile"><div class="kpi-label">Tu mayor oportunidad</div><div class="kpi-value" style="font-size:16px">' + worst.label + '</div><div class="kpi-sub">Rank ' + sede[worst.key].rank + '/' + aspaenNacional.cuentas + '</div></div>';
+    document.getElementById('aspaen-summary-note').textContent = 'El objetivo es superar a la Red Aspaen en cada dato, no solo alcanzar el promedio — por eso cada fila de abajo se compara contra el líder nacional, no solo contra el promedio.';
+
+    document.getElementById('aspaen-metrics-table').innerHTML =
+      '<div class="share-table-wrap"><table class="share-table"><thead><tr>' +
+      '<th>Métrica</th><th>Tú</th><th>Promedio Red Aspaen</th><th>Líder nacional</th><th>Posición</th>' +
+      '</tr></thead><tbody>' + aspaenMetrics.map(function (m) {
+        var nat = aspaenNacional.metrics[m.key];
+        var mine = sede[m.key];
+        var pct = Math.max(0, Math.min(100, Math.round((mine.value / nat.top) * 100)));
+        var rc = aspaenRankClass(mine.rank);
+        return '<tr>' +
+          '<td>' + m.label + '</td>' +
+          '<td class="share-bar-cell"><div class="share-bar-track"><div class="share-bar-fill" style="width:' + pct + '%"></div><div class="share-bar-value">' + fmtEs(mine.value, m.dec) + m.unit + '</div></div></td>' +
+          '<td>' + fmtEs(nat.avg, m.dec) + m.unit + '</td>' +
+          '<td>' + fmtEs(nat.top, m.dec) + m.unit + ' — ' + nat.topName + ' (' + nat.topCiudad + ')</td>' +
+          '<td class="delta-cell ' + rc + '" style="background:var(--' + rc + '-soft);color:var(--' + rc + '-ink)">' + mine.rank + '/' + aspaenNacional.cuentas + '</td>' +
+          '</tr>';
+      }).join('') + '</tbody></table></div>';
+
+    var s = referentesData.sedes[account];
+    var tuSegs = [
+      { label: 'Operativo', value: s.mix.operativo, color: '#f8be22' },
+      { label: 'Táctico', value: s.mix.tactico, color: '#1f7fc4' },
+      { label: 'Estratégico', value: s.mix.estrategico, color: '#29abc7' }
+    ];
+    var natSegs = [
+      { label: 'Operativo', value: referentesData.mixNacional.operativo, color: '#f8be22' },
+      { label: 'Táctico', value: referentesData.mixNacional.tactico, color: '#1f7fc4' },
+      { label: 'Estratégico', value: referentesData.mixNacional.estrategico, color: '#29abc7' }
+    ];
+    document.getElementById('aspaen-mix-donuts').innerHTML =
+      '<div class="chart-card-mini"><h4>Tú — ' + accountLabels[account] + '</h4>' + svgDonut(tuSegs, { size: 140, dec: 1, unit: '%' }) + '</div>' +
+      '<div class="chart-card-mini"><h4>Promedio Red Aspaen</h4>' + svgDonut(natSegs, { size: 140, dec: 1, unit: '%' }) + '</div>';
+
+    document.getElementById('aspaen-strategies').innerHTML = aspaenStrategias[account].map(function (r, i) {
+      var symbol = r.icon === 'good' ? '✅' : (r.icon === 'warn' ? '⚠️' : '🚨');
+      return '<div class="reco-item"><div class="reco-icon ' + r.icon + '">' + symbol + '</div>' +
+        '<div><div class="reco-title">' + r.title + '</div><div class="reco-text">' + r.text + '</div></div></div>';
+    }).join('');
+  }
+
   function renderReferentes(account) {
-    document.getElementById('referentes-period').textContent = '📅 ' + referentesData.period + ' · ' + referentesData.nacionalCuentas + ' cuentas Aspaen a nivel nacional';
     var s = referentesData.sedes[account];
     renderReferentesShare();
-
-    renderReferentesBars('referentes-nacional', [
-      { name: accountLabels[account], value: s.seguidores, highlight: true },
-      { name: 'Promedio Red Aspaen', value: referentesData.nacionalAvgSeguidores }
-    ]);
-    document.getElementById('referentes-nacional').innerHTML += '<p class="vc-note" style="margin-top:10px">Engagement de ' + accountLabels[account] + ': <b>' + s.engagement + '%</b> vs. promedio nacional <b>' + referentesData.nacionalAvgEngagement + '%</b>' +
-      (s.engagement > referentesData.nacionalAvgEngagement ? ' — estás por encima del promedio de las 29 cuentas Aspaen del país.' : ' — estás por debajo del promedio de las 29 cuentas Aspaen del país.') + '</p>' +
-      '<p class="vc-note">Top 5 de engagement a nivel nacional: ' + referentesData.topNacional.map(function (t) { return t.cuenta + ' (' + t.ciudad + ') ' + t.engagement + '%'; }).join(' · ') + '</p>';
-
-    renderReferentesBars('referentes-mix', [
-      { name: 'Operativo — ' + accountLabels[account], value: s.mix.operativo, highlight: true },
-      { name: 'Operativo — Red Aspaen', value: referentesData.mixNacional.operativo },
-      { name: 'Táctico — ' + accountLabels[account], value: s.mix.tactico, highlight: true },
-      { name: 'Táctico — Red Aspaen', value: referentesData.mixNacional.tactico },
-      { name: 'Estratégico — ' + accountLabels[account], value: s.mix.estrategico, highlight: true },
-      { name: 'Estratégico — Red Aspaen', value: referentesData.mixNacional.estrategico }
-    ], '%');
 
     var esColegio = isColegio[account];
     document.getElementById('referentes-competencia-title').textContent = esColegio ? '🏫 Tu competencia directa en Cali (colegios)' : '🏫 Tu competencia directa en Cali (preescolares)';
@@ -2695,6 +2846,7 @@
     renderAudiencia(this.value);
     renderConstancia(this.value);
     renderReferentes(this.value);
+    renderAspaenPage(this.value);
     updateCampPeriodNote(this.value);
   });
   renderHome('tacuri');
@@ -2704,6 +2856,7 @@
   renderAudiencia('tacuri');
   renderConstancia('tacuri');
   renderReferentes('tacuri');
+  renderAspaenPage('tacuri');
 
   // Carga datos reales de Meta Ads generados por el robot de GitHub Actions (data/live-metrics.json).
   // Si el archivo no existe todavía o falla la carga (ej. abriendo el HTML localmente), se quedan los datos
