@@ -506,6 +506,40 @@
   .simple-table th, .simple-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
   .simple-table th { color: var(--ink-muted); font-weight: 700; text-transform: uppercase; font-size: 10.5px; letter-spacing: .04em; }
 
+  /* Selector de periodo (calendario + accesos rápidos) */
+  .period-picker-wrap { position: relative; margin-bottom: 14px; }
+  .period-picker-label { font-size: 12px; font-weight: 700; color: var(--ink-muted); margin-bottom: 6px; }
+  .period-trigger {
+    display: flex; align-items: center; gap: 10px; font: inherit; font-size: 13.5px; font-weight: 700;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 10px 14px;
+    color: var(--ink); cursor: pointer; box-shadow: var(--shadow);
+  }
+  .period-trigger:hover { border-color: var(--accent); }
+  .period-popover {
+    position: absolute; top: calc(100% + 8px); left: 0; z-index: 30; display: flex;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+    box-shadow: var(--shadow); overflow: hidden; max-width: 96vw;
+  }
+  .period-popover[hidden] { display: none; }
+  .period-calendar { padding: 16px; border-right: 1px solid var(--border); overflow-x: auto; }
+  .period-calendar-months { display: flex; gap: 22px; }
+  .period-month-title { text-align: center; font-weight: 700; font-size: 12.5px; margin-bottom: 8px; color: var(--ink-muted); }
+  .period-month-grid { display: grid; grid-template-columns: repeat(7, 26px); gap: 3px; }
+  .period-month-grid .dow { font-size: 10px; color: var(--ink-faint); text-align: center; padding-bottom: 2px; }
+  .period-day { width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-size: 11.5px; border-radius: 6px; color: var(--ink-muted); }
+  .period-day.empty { visibility: hidden; }
+  .period-day.in-range { background: var(--surface-2); color: var(--ink); }
+  .period-day.range-edge { background: var(--ink); color: var(--bg); font-weight: 700; }
+  .period-day.today-mark { outline: 1px solid var(--accent); outline-offset: -1px; }
+  .period-quicklist { padding: 10px; min-width: 190px; display: flex; flex-direction: column; }
+  .period-quick-btn {
+    text-align: left; background: none; border: none; font: inherit; font-size: 13px; color: var(--ink);
+    padding: 9px 12px; border-radius: 8px; cursor: pointer;
+  }
+  .period-quick-btn:hover { background: var(--surface-2); }
+  .period-quick-btn.active { background: var(--accent-soft); color: var(--accent-soft-ink); font-weight: 700; }
+  @media (max-width: 700px) { .period-popover { flex-direction: column; } .period-calendar { border-right: none; border-bottom: 1px solid var(--border); } }
+
   /* Placeholder view */
   .placeholder { text-align: center; padding: 60px 20px; }
   .placeholder .icon-wrap {
@@ -851,16 +885,16 @@
       <p class="vc-note" id="live-data-note"></p>
       <p class="vc-note">Nota: los datos orgánicos de Instagram/Facebook (Inicio, Posts, Calendario) todavía son de ejemplo. Ya guardé tus 4 usuarios (@aspaentacuri, @aspaenjuanambu, @aspaenentrevalles, @aspaentayana) — en cuanto Meta habilite la conexión de cuentas de Instagram para tu ad account, quedan listas para jalar datos reales.</p>
 
-      <div class="account-bar" style="margin-bottom:14px">
-        <label for="camp-period">📅 Periodo</label>
-        <select id="camp-period">
-          <option value="ytd" selected>Año 2026 (1 ene–17 jul)</option>
-          <option value="yesterday">Ayer</option>
-          <option value="last_7d">Última semana</option>
-          <option value="this_month">Mes actual</option>
-          <option value="last_30d">Últimos 30 días</option>
-          <option value="last_month">Mes pasado</option>
-        </select>
+      <div class="period-picker-wrap">
+        <div class="period-picker-label">📅 Periodo principal</div>
+        <button type="button" class="period-trigger" id="period-trigger">
+          <span id="period-trigger-label">Año 2026 (1 ene–17 jul)</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="period-popover" id="period-popover" hidden>
+          <div class="period-calendar" id="period-calendar"></div>
+          <div class="period-quicklist" id="period-quicklist"></div>
+        </div>
       </div>
       <p class="vc-note" id="camp-period-note"></p>
 
@@ -1054,6 +1088,7 @@
     return n.toLocaleString('en-US', { maximumFractionDigits: 0 });
   }
   function fmtCOP(n) {
+    if (n == null) return '—';
     return '$' + n.toLocaleString('es-CO', { maximumFractionDigits: 0 }) + ' COP';
   }
   var VERDICT_CLASS = { 'Ganadora': 'good', 'Débil': 'warn', 'Fatigada': 'crit' };
@@ -2167,14 +2202,92 @@
       : '';
   }
 
-  var campPeriodSelect = document.getElementById('camp-period');
-  if (campPeriodSelect) {
-    campPeriodSelect.addEventListener('change', function () {
-      currentPeriod = this.value;
-      applyPeriodToCampData(currentPeriod);
-      var account = document.getElementById('global-cuenta').value;
-      updateCampPeriodNote(account);
-      renderAnalysis(account);
+  // ---- Selector de periodo: calendario + accesos rápidos (estilo Metricool) ----
+  var PERIOD_META = {
+    ytd: { start: '2026-01-01', end: '2026-07-17', label: 'Año 2026 (1 ene–17 jul)', quick: 'Año 2026' },
+    yesterday: { start: '2026-07-16', end: '2026-07-16', label: 'Ayer (16 jul 2026)', quick: 'Ayer' },
+    last_7d: { start: '2026-07-10', end: '2026-07-16', label: 'Última semana (10–16 jul 2026)', quick: 'Última semana' },
+    this_month: { start: '2026-07-01', end: '2026-07-17', label: 'Mes actual (1–17 jul 2026)', quick: 'Mes actual' },
+    last_30d: { start: '2026-06-17', end: '2026-07-16', label: 'Últimos 30 días (17 jun–16 jul 2026)', quick: 'Últimos 30 días' },
+    last_month: { start: '2026-06-01', end: '2026-06-30', label: 'Mes pasado (1–30 jun 2026)', quick: 'Mes pasado' }
+  };
+  var PERIOD_ORDER = ['ytd', 'yesterday', 'last_7d', 'this_month', 'last_30d', 'last_month'];
+
+  function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+
+  function buildMonthGrid(y, m, rangeStart, rangeEnd, todayStr) {
+    var dim = new Date(y, m + 1, 0).getDate();
+    var firstDow = new Date(y, m, 1).getDay();
+    var offset = firstDow === 0 ? 6 : firstDow - 1;
+    var cells = [];
+    for (var i = 0; i < offset; i++) cells.push(null);
+    for (var d = 1; d <= dim; d++) cells.push(d);
+    var monthNameRaw = new Date(y, m, 1).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+    var monthName = monthNameRaw.charAt(0).toUpperCase() + monthNameRaw.slice(1);
+    var dowLabels = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+    var html = '<div class="period-month"><div class="period-month-title">' + monthName + '</div><div class="period-month-grid">';
+    html += dowLabels.map(function (d) { return '<div class="dow">' + d + '</div>'; }).join('');
+    html += cells.map(function (d) {
+      if (d === null) return '<div class="period-day empty"></div>';
+      var dateStr = y + '-' + pad2(m + 1) + '-' + pad2(d);
+      var cls = 'period-day';
+      if (dateStr >= rangeStart && dateStr <= rangeEnd) cls += ' in-range';
+      if (dateStr === rangeStart || dateStr === rangeEnd) cls += ' range-edge';
+      if (dateStr === todayStr) cls += ' today-mark';
+      return '<div class="' + cls + '">' + d + '</div>';
+    }).join('');
+    html += '</div></div>';
+    return html;
+  }
+
+  function renderPeriodCalendar(period) {
+    var meta = PERIOD_META[period];
+    var sp = meta.start.split('-').map(Number), ep = meta.end.split('-').map(Number);
+    var months = [[sp[0], sp[1] - 1]];
+    if (sp[0] !== ep[0] || sp[1] !== ep[1]) months.push([ep[0], ep[1] - 1]);
+    var now = new Date();
+    var todayStr = now.getFullYear() + '-' + pad2(now.getMonth() + 1) + '-' + pad2(now.getDate());
+    document.getElementById('period-calendar').innerHTML = '<div class="period-calendar-months">' +
+      months.map(function (mm) { return buildMonthGrid(mm[0], mm[1], meta.start, meta.end, todayStr); }).join('') + '</div>';
+  }
+
+  function renderPeriodQuicklist(period) {
+    document.getElementById('period-quicklist').innerHTML = PERIOD_ORDER.map(function (key) {
+      var cls = 'period-quick-btn' + (key === period ? ' active' : '');
+      return '<button type="button" class="' + cls + '" data-period="' + key + '">' + PERIOD_META[key].quick + '</button>';
+    }).join('');
+    document.querySelectorAll('#period-quicklist .period-quick-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        selectPeriod(btn.dataset.period);
+        document.getElementById('period-popover').hidden = true;
+      });
+    });
+  }
+
+  function selectPeriod(period) {
+    currentPeriod = period;
+    document.getElementById('period-trigger-label').textContent = PERIOD_META[period].label;
+    renderPeriodCalendar(period);
+    renderPeriodQuicklist(period);
+    applyPeriodToCampData(currentPeriod);
+    var account = document.getElementById('global-cuenta').value;
+    updateCampPeriodNote(account);
+    renderAnalysis(account);
+  }
+
+  var periodTrigger = document.getElementById('period-trigger');
+  if (periodTrigger) {
+    renderPeriodCalendar(currentPeriod);
+    renderPeriodQuicklist(currentPeriod);
+    periodTrigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var pop = document.getElementById('period-popover');
+      pop.hidden = !pop.hidden;
+    });
+    document.addEventListener('click', function (e) {
+      var pop = document.getElementById('period-popover');
+      var wrap = document.querySelector('.period-picker-wrap');
+      if (!pop.hidden && wrap && !wrap.contains(e.target)) pop.hidden = true;
     });
   }
 
