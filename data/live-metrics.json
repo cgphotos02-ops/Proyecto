@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-07-17T00:06:23.798Z",
-  "source": "manual",
+  "generatedAt": "2026-07-17T18:00:00Z",
+  "source": "manual-excel-1ene-17jul",
   "accounts": {
     "tacuri": {
-      "tactica": { "current": 16, "cpl": 42393, "spend": 678289, "period": "16 jun – 15 jul 2026" },
-      "estrategica": { "current": 101919, "freq": 1.48, "cpm": 754, "spend": 113794, "period": "16 jun – 15 jul 2026" }
+      "tactica": { "current": 224, "cpl": 11431, "spend": 2560296, "period": "1 ene – 17 jul 2026" },
+      "estrategica": { "current": 909268, "freq": 1.61, "cpm": 637, "spend": 932391, "period": "1 ene – 17 jul 2026" }
     },
     "juanambu": {
-      "tactica": { "current": 25, "cpl": 29972, "spend": 749295, "period": "16 jun – 15 jul 2026" },
-      "estrategica": { "current": 41282, "freq": 1.82, "cpm": 1549, "spend": 116612, "period": "16 jun – 15 jul 2026" }
+      "tactica": { "current": 201, "cpl": 17603, "spend": 3538267, "period": "1 ene – 17 jul 2026" },
+      "estrategica": { "current": 772463, "freq": 1.79, "cpm": 725, "spend": 1000090, "period": "1 ene – 17 jul 2026" }
     },
     "entrevalles": {
-      "tactica": { "current": 21, "cpl": 9819, "spend": 206191, "period": "16 jun – 15 jul 2026" },
-      "estrategica": { "current": 33693, "freq": 2.48, "cpm": 1365, "spend": 113914, "period": "16 jun – 15 jul 2026" }
+      "tactica": { "current": 400, "cpl": 5457, "spend": 2182838, "period": "1 ene – 17 jul 2026" },
+      "estrategica": { "current": 813111, "freq": 1.74, "cpm": 675, "spend": 952247, "period": "1 ene – 17 jul 2026" }
     },
     "tayana": {
-      "tactica": { "current": 24, "cpl": 11942, "spend": 286614, "period": "16 jun – 15 jul 2026" },
-      "estrategica": { "current": 73786, "freq": 2.02, "cpm": 766, "spend": 114015, "period": "16 jun – 15 jul 2026" }
+      "tactica": { "current": 345, "cpl": 6273, "spend": 2163690, "period": "1 ene – 17 jul 2026" },
+      "estrategica": { "current": 861895, "freq": 1.70, "cpm": 623, "spend": 912452, "period": "1 ene – 17 jul 2026" }
     }
   }
 }
