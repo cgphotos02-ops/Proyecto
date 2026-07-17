@@ -858,7 +858,26 @@
     <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div><h3>Tendencias</h3><p>Audios, formatos y temas que están creciendo ahora mismo en tu nicho.</p></div>
   </section>
   <section class="view" id="view-referentes">
-    <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20c0-3 2.5-5 6-5s6 2 6 5M14 20c0-2 1.8-3.5 4.5-3.5S23 18 23 20"/></svg></div><h3>Referentes</h3><p>Cuentas parecidas a la tuya que te sirven de inspiración, con lo que les está funcionando.</p></div>
+    <h1 class="greeting">Referentes</h1>
+    <div class="date-sub">Red Aspaen a nivel nacional y tu competencia directa en Cali</div>
+    <p class="vc-note" id="referentes-period"></p>
+
+    <div class="card">
+      <h2>📊 Tu cuenta vs. la Red Aspaen (29 sedes a nivel nacional)</h2>
+      <div id="referentes-nacional"></div>
+    </div>
+
+    <div class="card">
+      <h2>🎯 Mezcla de contenido: Operativo / Táctico / Estratégico</h2>
+      <p class="vc-note" style="margin-top:-4px">Cómo reparte cada quien sus publicaciones entre contenido operativo (institucional/informativo), táctico (captación) y estratégico (marca/awareness).</p>
+      <div id="referentes-mix"></div>
+    </div>
+
+    <div class="card">
+      <h2 id="referentes-competencia-title">🏫 Tu competencia directa en Cali</h2>
+      <div id="referentes-competencia"></div>
+      <p class="vc-note" id="referentes-outlier-note"></p>
+    </div>
   </section>
   <section class="view" id="view-campanas">
     <h1 class="greeting">Campañas</h1>
@@ -2022,6 +2041,90 @@
     'tayana': { real: false }
   };
 
+  // ---- Referentes: Red Aspaen nacional + competencia directa en Cali ----
+  // Fuente: info_aspaen.xlsx (base de datos interna del equipo de marketing), mes más reciente disponible por cuenta.
+  var referentesData = {
+    period: 'Mayo–junio 2026 (mes más reciente cargado por cuenta)',
+    nacionalAvgSeguidores: 3751,
+    nacionalAvgEngagement: 10.55,
+    nacionalCuentas: 29,
+    mixNacional: { operativo: 48.1, tactico: 26.3, estrategico: 26.5 },
+    sedes: {
+      tacuri: { seguidores: 3358, engagement: 14.88, mix: { operativo: 45.5, tactico: 27.3, estrategico: 27.3 } },
+      juanambu: { seguidores: 4340, engagement: 11.40, mix: { operativo: 23.1, tactico: 23.1, estrategico: 53.8 } },
+      entrevalles: { seguidores: 3159, engagement: 11.70, mix: { operativo: 36.4, tactico: 45.5, estrategico: 18.2 } },
+      tayana: { seguidores: 3320, engagement: 17.21, mix: { operativo: 33.3, tactico: 11.1, estrategico: 55.6 } }
+    },
+    topNacional: [
+      { ciudad: 'Bogotá', cuenta: 'Kinabalu', engagement: 34.45 },
+      { ciudad: 'Cali', cuenta: 'Tayana', engagement: 17.21 },
+      { ciudad: 'Bogotá', cuenta: 'Atavanza', engagement: 15.65 },
+      { ciudad: 'Manizales', cuenta: 'Cerezos', engagement: 15.60 },
+      { ciudad: 'Manizales', cuenta: 'Horizontes', engagement: 15.20 }
+    ],
+    competenciaColegios: [
+      { nombre: 'Colegio Berchmans', seguidores: 12966, engagement: 3.49, reels: 9, posts: 25 },
+      { nombre: 'Colegio Alemán de Cali', seguidores: 9618, engagement: null, reels: 10, posts: 23 },
+      { nombre: 'Colegio Philadelphia Int.', seguidores: 9060, engagement: 6.81, reels: 10, posts: 6 },
+      { nombre: 'Colegio Bennett', seguidores: 7801, engagement: 5.08, reels: 6, posts: 6 },
+      { nombre: 'Colegio La Arboleda', seguidores: 7014, engagement: 2.13, reels: 5, posts: 9 },
+      { nombre: 'New Cambridge School Cali', seguidores: 6357, engagement: 2.32, reels: 6, posts: 9 }
+    ],
+    competenciaJardines: [
+      { nombre: 'Jardines Infantiles Origami', seguidores: 9632, engagement: 0.29, reels: 1, posts: 10 },
+      { nombre: 'Jardín Infantil Baby Bennett', seguidores: 3203, engagement: 3.31, reels: 1, posts: 3 },
+      { nombre: 'Estimulemos Jardín Infantil', seguidores: 2418, engagement: 1.45, reels: 8, posts: 4 },
+      { nombre: 'kinder y Maternal Bam Bam', seguidores: 1904, engagement: null, reels: 1, posts: 3 },
+      { nombre: 'Estrellita de Mar', seguidores: 1006, engagement: 0.55, reels: 3, posts: 9 }
+    ]
+  };
+
+  function renderReferentesBars(elId, rows, unit) {
+    var valid = rows.filter(function (r) { return r.value != null; });
+    var max = Math.max.apply(null, valid.map(function (r) { return r.value; }).concat([1]));
+    document.getElementById(elId).innerHTML = rows.map(function (r) {
+      var pct = r.value != null ? Math.round((r.value / max) * 100) : 0;
+      var valTxt = r.value != null ? (r.value.toLocaleString('es-CO', { maximumFractionDigits: 2 }) + (unit || '')) : 'Sin dato';
+      return '<div class="sede-row' + (r.highlight ? '' : '') + '"><div class="sede-name"' + (r.highlight ? ' style="color:var(--accent-soft-ink)"' : '') + '>' + r.name + (r.highlight ? ' (tú)' : '') + '</div>' +
+        '<div class="sede-bar-track"><div class="sede-bar-fill ' + (r.highlight ? 'bar-fill-good' : 'bar-fill-accent') + '" style="width:' + pct + '%"></div></div>' +
+        '<div class="sede-counts">' + valTxt + '</div></div>';
+    }).join('');
+  }
+
+  function renderReferentes(account) {
+    document.getElementById('referentes-period').textContent = '📅 ' + referentesData.period + ' · ' + referentesData.nacionalCuentas + ' cuentas Aspaen a nivel nacional';
+    var s = referentesData.sedes[account];
+
+    renderReferentesBars('referentes-nacional', [
+      { name: accountLabels[account], value: s.seguidores, highlight: true },
+      { name: 'Promedio Red Aspaen', value: referentesData.nacionalAvgSeguidores }
+    ]);
+    document.getElementById('referentes-nacional').innerHTML += '<p class="vc-note" style="margin-top:10px">Engagement de ' + accountLabels[account] + ': <b>' + s.engagement + '%</b> vs. promedio nacional <b>' + referentesData.nacionalAvgEngagement + '%</b>' +
+      (s.engagement > referentesData.nacionalAvgEngagement ? ' — estás por encima del promedio de las 29 cuentas Aspaen del país.' : ' — estás por debajo del promedio de las 29 cuentas Aspaen del país.') + '</p>' +
+      '<p class="vc-note">Top 5 de engagement a nivel nacional: ' + referentesData.topNacional.map(function (t) { return t.cuenta + ' (' + t.ciudad + ') ' + t.engagement + '%'; }).join(' · ') + '</p>';
+
+    renderReferentesBars('referentes-mix', [
+      { name: 'Operativo — ' + accountLabels[account], value: s.mix.operativo, highlight: true },
+      { name: 'Operativo — Red Aspaen', value: referentesData.mixNacional.operativo },
+      { name: 'Táctico — ' + accountLabels[account], value: s.mix.tactico, highlight: true },
+      { name: 'Táctico — Red Aspaen', value: referentesData.mixNacional.tactico },
+      { name: 'Estratégico — ' + accountLabels[account], value: s.mix.estrategico, highlight: true },
+      { name: 'Estratégico — Red Aspaen', value: referentesData.mixNacional.estrategico }
+    ], '%');
+
+    var esColegio = isColegio[account];
+    document.getElementById('referentes-competencia-title').textContent = esColegio ? '🏫 Tu competencia directa en Cali (colegios)' : '🏫 Tu competencia directa en Cali (preescolares)';
+    var lista = (esColegio ? referentesData.competenciaColegios : referentesData.competenciaJardines).map(function (c) {
+      return { name: c.nombre, value: c.seguidores };
+    });
+    lista.push({ name: accountLabels[account], value: s.seguidores, highlight: true });
+    lista.sort(function (a, b) { return b.value - a.value; });
+    renderReferentesBars('referentes-competencia', lista);
+    document.getElementById('referentes-outlier-note').textContent = esColegio
+      ? '⚠️ El dato de engagement de "Colegio Alemán de Cali" en la base venía con un valor fuera de rango (posible error de captura) — se excluyó del análisis de engagement.'
+      : '';
+  }
+
   function renderAudienceBars(elId, rows) {
     var max = Math.max.apply(null, rows.map(function (r) { return r[1]; }));
     document.getElementById(elId).innerHTML = rows.map(function (r) {
@@ -2158,6 +2261,7 @@
     renderCalendario(this.value);
     renderAudiencia(this.value);
     renderConstancia(this.value);
+    renderReferentes(this.value);
     updateCampPeriodNote(this.value);
   });
   renderHome('tacuri');
@@ -2166,6 +2270,7 @@
   renderCalendario('tacuri');
   renderAudiencia('tacuri');
   renderConstancia('tacuri');
+  renderReferentes('tacuri');
 
   // Carga datos reales de Meta Ads generados por el robot de GitHub Actions (data/live-metrics.json).
   // Si el archivo no existe todavía o falla la carga (ej. abriendo el HTML localmente), se quedan los datos
