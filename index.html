@@ -308,9 +308,9 @@
   .reco-title { font-weight: 700; font-size: 13.5px; }
   .reco-text { font-size: 12.5px; color: var(--ink-muted); margin-top: 2px; line-height: 1.5; }
 
-  .camp-subtabs { display: flex; gap: 6px; margin-bottom: 20px; }
-  .camp-panel { display: none; }
-  .camp-panel.active { display: block; }
+  .camp-subtabs, .ref-subtabs { display: flex; gap: 6px; margin-bottom: 20px; }
+  .camp-panel, .ref-panel { display: none; }
+  .camp-panel.active, .ref-panel.active { display: block; }
 
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
   .form-group { display: flex; flex-direction: column; gap: 6px; }
@@ -930,32 +930,54 @@
   </section>
   <section class="view" id="view-referentes">
     <h1 class="greeting">Referentes</h1>
-    <div class="date-sub">Red Aspaen a nivel nacional y tu competencia directa en Cali</div>
+    <div class="date-sub">Tu competencia directa en Cali, la Red Aspaen a nivel nacional, y todos tus leads en un solo lugar</div>
     <p class="vc-note" id="referentes-period"></p>
 
-    <div class="card">
-      <h2>📊 Tu cuenta vs. la Red Aspaen (29 sedes a nivel nacional)</h2>
-      <div id="referentes-nacional"></div>
+    <div class="ref-subtabs">
+      <div class="tab active" data-ref="competencia">Competencia</div>
+      <div class="tab" data-ref="aspaen">Aspaen</div>
+      <div class="tab" data-ref="leads">Leads</div>
     </div>
 
-    <div class="card">
-      <h2>🎯 Mezcla de contenido: Operativo / Táctico / Estratégico</h2>
-      <p class="vc-note" style="margin-top:-4px">Cómo reparte cada quien sus publicaciones entre contenido operativo (institucional/informativo), táctico (captación) y estratégico (marca/awareness).</p>
-      <div id="referentes-mix"></div>
+    <!-- COMPETENCIA (Cali) -->
+    <div class="ref-panel active" id="ref-competencia">
+      <div class="card">
+        <h2 id="referentes-competencia-title">🏫 Tu competencia directa en Cali</h2>
+        <div id="referentes-competencia"></div>
+        <p class="vc-note" id="referentes-outlier-note"></p>
+      </div>
+
+      <div class="card">
+        <h2>🥇 Share of voice en Cali — marzo 2026</h2>
+        <p class="vc-note" style="margin-top:-4px">Aspaen Cali (las 4 sedes juntas) vs. cada competidor — % del total de seguidores entre las 12 cuentas comparadas. Fuente: informe mensual de EMV.</p>
+        <div id="referentes-variacion-pills" style="margin-bottom:14px"></div>
+        <div id="referentes-share"></div>
+        <p class="vc-note" id="referentes-marzo-note"></p>
+      </div>
     </div>
 
-    <div class="card">
-      <h2 id="referentes-competencia-title">🏫 Tu competencia directa en Cali</h2>
-      <div id="referentes-competencia"></div>
-      <p class="vc-note" id="referentes-outlier-note"></p>
+    <!-- ASPAEN (escala país) -->
+    <div class="ref-panel" id="ref-aspaen">
+      <div class="card">
+        <h2>📊 Tu cuenta vs. la Red Aspaen (29 sedes a nivel nacional)</h2>
+        <div id="referentes-nacional"></div>
+      </div>
+
+      <div class="card">
+        <h2>🎯 Mezcla de contenido: Operativo / Táctico / Estratégico</h2>
+        <p class="vc-note" style="margin-top:-4px">Cómo reparte cada quien sus publicaciones entre contenido operativo (institucional/informativo), táctico (captación) y estratégico (marca/awareness).</p>
+        <div id="referentes-mix"></div>
+      </div>
     </div>
 
-    <div class="card">
-      <h2>🥇 Share of voice en Cali — marzo 2026</h2>
-      <p class="vc-note" style="margin-top:-4px">Aspaen Cali (las 4 sedes juntas) vs. cada competidor — % del total de seguidores entre las 12 cuentas comparadas. Fuente: informe mensual de EMV.</p>
-      <div id="referentes-variacion-pills" style="margin-bottom:14px"></div>
-      <div id="referentes-share"></div>
-      <p class="vc-note" id="referentes-marzo-note"></p>
+    <!-- LEADS (campañas pagadas + orgánico) -->
+    <div class="ref-panel" id="ref-leads">
+      <div class="card">
+        <h2>🎯 Todos tus leads — pagados + orgánicos, por sede</h2>
+        <p class="vc-note" style="margin-top:-4px">Leads pagados de Meta Ads (Táctica, año 2026, sin Summer Camp) + Summer Camp aparte + leads/matrículas orgánicas de Instagram (marzo 2026, informe EMV) — las 4 sedes lado a lado.</p>
+        <div id="referentes-leads-table"></div>
+        <p class="vc-note" id="referentes-leads-note" style="margin-top:10px"></p>
+      </div>
     </div>
   </section>
   <section class="view" id="view-campanas">
@@ -1175,6 +1197,16 @@
       document.querySelectorAll('.camp-panel').forEach(function (p) { p.classList.remove('active'); });
       tab.classList.add('active');
       document.getElementById('camp-' + tab.dataset.camp).classList.add('active');
+    });
+  });
+
+  // Referentes: sub-tabs (Competencia / Aspaen / Leads)
+  document.querySelectorAll('.ref-subtabs .tab').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      document.querySelectorAll('.ref-subtabs .tab').forEach(function (t) { t.classList.remove('active'); });
+      document.querySelectorAll('.ref-panel').forEach(function (p) { p.classList.remove('active'); });
+      tab.classList.add('active');
+      document.getElementById('ref-' + tab.dataset.ref).classList.add('active');
     });
   });
 
@@ -2504,6 +2536,42 @@
     document.getElementById('referentes-outlier-note').textContent = esColegio
       ? '⚠️ El dato de engagement de "Colegio Alemán de Cali" en la base venía con un valor fuera de rango (posible error de captura) — se excluyó del análisis de engagement.'
       : '';
+
+    renderReferentesLeads(account);
+  }
+
+  function renderReferentesLeads(account) {
+    var sedes = ['tacuri', 'juanambu', 'entrevalles', 'tayana'];
+    var rows = sedes.map(function (sede) {
+      var pagados = campData[sede].tactica.camp.current;
+      var sc = summercampData[sede].current;
+      var m = marzoAbrilData[sede];
+      var organicos = m.leadsOrganicos;
+      var matriculas = m.matriculasOrganicas;
+      var total = pagados + sc + organicos;
+      return { sede: sede, pagados: pagados, sc: sc, organicos: organicos, matriculas: matriculas, total: total };
+    });
+    var totales = rows.reduce(function (acc, r) {
+      acc.pagados += r.pagados; acc.sc += r.sc; acc.organicos += r.organicos; acc.matriculas += r.matriculas; acc.total += r.total;
+      return acc;
+    }, { pagados: 0, sc: 0, organicos: 0, matriculas: 0, total: 0 });
+    var body = rows.map(function (r) {
+      return '<tr' + (r.sede === account ? ' class="highlight-row"' : '') + '>' +
+        '<td>' + accountLabels[r.sede] + (r.sede === account ? ' (tú)' : '') + '</td>' +
+        '<td>' + fmtNum(r.pagados) + '</td>' +
+        '<td>' + fmtNum(r.sc) + '</td>' +
+        '<td>' + fmtNum(r.organicos) + '</td>' +
+        '<td>' + fmtNum(r.matriculas) + '</td>' +
+        '<td><b>' + fmtNum(r.total) + '</b></td>' +
+        '</tr>';
+    }).join('');
+    var totalRow = '<tr class="total-row"><td>Total</td><td>' + fmtNum(totales.pagados) + '</td><td>' + fmtNum(totales.sc) + '</td><td>' + fmtNum(totales.organicos) + '</td><td>' + fmtNum(totales.matriculas) + '</td><td>' + fmtNum(totales.total) + '</td></tr>';
+    document.getElementById('referentes-leads-table').innerHTML =
+      '<div class="share-table-wrap"><table class="share-table"><thead><tr>' +
+      '<th>Sede</th><th>Pagados (Meta Ads, año)</th><th>Summer Camp</th><th>Orgánicos (marzo)</th><th>Matrículas orgánicas (marzo)</th><th>Total leads</th>' +
+      '</tr></thead><tbody>' + body + totalRow + '</tbody></table></div>';
+    var top = rows.slice().sort(function (a, b) { return b.total - a.total; })[0];
+    document.getElementById('referentes-leads-note').textContent = 'Entre las 4 sedes, ' + accountLabels[top.sede] + ' es la que más leads totales acumula (' + fmtNum(top.total) + '). "Pagados" es el acumulado del año (1 ene–17 jul 2026, sin Summer Camp); "Orgánicos" y "Matrículas orgánicas" son de marzo 2026 (el último mes con informe de Instagram) — no están en la misma ventana de tiempo, así que compáralos con cuidado.';
   }
 
   function renderAudienceBars(elId, rows) {
