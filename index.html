@@ -492,6 +492,19 @@
   .sede-bar-fill { height: 100%; border-radius: 4px; background: var(--crit); }
   .sede-counts { width: 130px; flex: 0 0 130px; text-align: right; font-size: 12px; color: var(--ink-muted); }
   .leads-empty-state { text-align: center; padding: 30px 10px; color: var(--ink-faint); font-size: 13px; }
+  .bar-fill-good { background: var(--good) !important; }
+  .bar-fill-accent { background: var(--accent) !important; }
+
+  /* Constancia */
+  .constancia-check-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 13.5px; cursor: pointer; }
+  .constancia-check-row:last-child { border-bottom: none; }
+  .constancia-check-row input { width: 17px; height: 17px; accent-color: var(--accent); flex: 0 0 17px; }
+
+  /* Próximos: tabla genérica */
+  .simple-table-wrap { overflow-x: auto; }
+  .simple-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .simple-table th, .simple-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+  .simple-table th { color: var(--ink-muted); font-weight: 700; text-transform: uppercase; font-size: 10.5px; letter-spacing: .04em; }
 
   /* Placeholder view */
   .placeholder { text-align: center; padding: 60px 20px; }
@@ -550,10 +563,6 @@
     <button class="nav-item" data-view="audiencia">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
       Mi audiencia
-    </button>
-    <button class="nav-item" data-view="voz">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3"/></svg>
-      Mi voz
     </button>
     <button class="nav-item" data-view="proximos">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5l3 2"/></svg>
@@ -695,71 +704,59 @@
   <!-- MI AUDIENCIA -->
   <section class="view" id="view-audiencia">
     <h1 class="greeting">Mi audiencia</h1>
-    <div class="date-sub">Qué siente y qué pide la gente que te sigue</div>
+    <div class="date-sub" id="audiencia-period">Quién te sigue y cuándo está más activa</div>
 
-    <div class="card">
-      <p class="audience-desc">Tu audiencia te ve como una mamá cercana y organizada, y valora especialmente los contenidos de rutina familiar y recetas rápidas. Buscan tips prácticos que puedan aplicar el mismo día.</p>
-      <div class="sentiment-bar-track">
-        <div class="sentiment-seg good" style="width:84%"></div>
-        <div class="sentiment-seg neutral" style="width:13%"></div>
-        <div class="sentiment-seg crit" style="width:3%"></div>
+    <div id="audiencia-real">
+      <div class="card">
+        <h2>⚥ Sexo</h2>
+        <div id="audiencia-gender"></div>
       </div>
-      <div class="sentiment-legend">
-        <span><i class="legend-dot" style="background:var(--good)"></i>84% positivo</span>
-        <span><i class="legend-dot" style="background:var(--ink-faint)"></i>13% neutro</span>
-        <span><i class="legend-dot" style="background:var(--crit)"></i>3% negativo</span>
-        <span style="margin-left:auto">203 comentarios · guardado hoy</span>
+      <div class="card">
+        <h2>🎂 Rango de edad</h2>
+        <div id="audiencia-age"></div>
+      </div>
+      <div class="card">
+        <h2>🌎 Principales países</h2>
+        <div id="audiencia-places"></div>
+      </div>
+      <div class="card">
+        <h2>⏰ Cuándo está más activa tu audiencia</h2>
+        <div class="hero-stat">
+          <div class="hero-number" id="audiencia-besttime"></div>
+          <div class="hero-sub">Momentos de mayor actividad de tus seguidores (Instagram, últimos 30 días)</div>
+        </div>
       </div>
     </div>
 
-    <div class="card">
-      <h2>💡 Ideas de contenido</h2>
-      <div class="content-idea">
-        <div class="quote">"¿Cómo organizas las loncheras sin gastar tanto tiempo cada mañana?"</div>
-        <div class="idea-title">Así preparo 5 loncheras en 15 minutos los domingos</div>
-        <span class="tag reel">Reel</span>
-      </div>
-      <div class="content-idea">
-        <div class="quote">"Se nota que disfrutas mucho a tus hijos, ¿siempre fue así o costó?"</div>
-        <div class="idea-title">Lo que nadie me dijo del primer año de mamá</div>
-        <span class="tag story">Story</span>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>Temas que dominan</h2>
-      <div class="keyword-tags">
-        <span class="keyword-tag">Rutina familiar</span>
-        <span class="keyword-tag">Recetas rápidas</span>
-        <span class="keyword-tag">Maternidad</span>
-        <span class="keyword-tag">Organización del hogar</span>
-        <span class="keyword-tag">Vida en pareja</span>
-      </div>
-      <h2 style="margin-top:16px">Palabras que repiten</h2>
-      <div class="keyword-tags">
-        <span class="keyword-tag">hermosa</span>
-        <span class="keyword-tag">practico</span>
-        <span class="keyword-tag">consejo</span>
-        <span class="keyword-tag">se nota el amor</span>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="action-row">
-        <button class="btn primary">↻ Regenerar análisis IA</button>
-        <button class="btn">⬇ Descargar comentarios nuevos</button>
-      </div>
-      <div class="comment-counts">
-        <span>Instagram: <b>203 comentarios</b></span>
-        <span>TikTok: <b>87 comentarios</b></span>
-      </div>
-      <div class="explore-link">🔍 Explorar comentarios uno por uno</div>
+    <div class="card" id="audiencia-empty" style="display:none">
+      <div class="leads-empty-state" id="audiencia-empty-text"></div>
     </div>
   </section>
 
   <!-- PLACEHOLDER VIEWS -->
   <section class="view" id="view-constancia">
-    <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V9M12 19V5M20 19v-6"/></svg></div><h3>Constancia</h3><p>Aquí verías tu racha de publicaciones, huecos en el calendario y comparación semana a semana. Se arma cuando confirmemos qué métricas quieres seguir.</p></div>
+    <h1 class="greeting">Constancia</h1>
+    <div class="date-sub">Tu meta: 3 posts por semana (lunes, miércoles, viernes)</div>
+
+    <div class="card">
+      <h2>✅ Esta semana</h2>
+      <div id="constancia-week"></div>
+    </div>
+
+    <div class="card">
+      <h2>🔥 Racha</h2>
+      <div class="hero-stat">
+        <div class="hero-number" id="constancia-streak"></div>
+        <div class="hero-sub" id="constancia-streak-sub"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📊 Últimas semanas</h2>
+      <div id="constancia-history"></div>
+    </div>
+
+    <p class="vc-note">La racha se cuenta desde que empieces a marcar aquí — no hay forma de ver automáticamente lo que publicaste antes de usar esta herramienta.</p>
   </section>
   <section class="view" id="view-ideas">
     <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="9" r="6"/><path d="M9 21h6M10 18h4"/></svg></div><h3>Ideas IA</h3><p>Un banco de ideas de contenido generadas a partir de tus comentarios, tendencias y lo que mejor te funciona.</p></div>
@@ -767,11 +764,22 @@
   <section class="view" id="view-asistente">
     <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="13" rx="2"/><path d="M8 21h8M9 8h.01M15 8h.01"/></svg></div><h3>Asistente</h3><p>Un chat para pedir guiones, respuestas a comentarios o ajustes de estrategia, con el contexto de tu cuenta ya cargado.</p></div>
   </section>
-  <section class="view" id="view-voz">
-    <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3"/></svg></div><h3>Mi voz</h3><p>Un perfil de tu tono habitual (cercano, directo, con humor, etc.) para que las ideas y guiones generados suenen como tú.</p></div>
-  </section>
   <section class="view" id="view-proximos">
-    <div class="placeholder"><div class="icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5l3 2"/></svg></div><h3>Próximos</h3><p>Los posts que tienes en borrador o agendados, con su fecha propuesta.</p></div>
+    <h1 class="greeting">Próximos</h1>
+    <div class="date-sub">Tu cronograma de posts — el mismo que le compartes a tu jefa</div>
+
+    <div class="card">
+      <h2>📋 Pega tu cronograma</h2>
+      <p class="vc-note" style="margin-top:-4px">Copia las filas de tu Excel de programación (con encabezado) y pégalas aquí. Se muestran tal cual, con las columnas que tú uses.</p>
+      <textarea class="leads-textarea" id="proximos-input" placeholder="Pega aquí las filas copiadas de tu Excel de cronograma…"></textarea>
+      <div class="action-row" style="margin-top:10px">
+        <button class="btn primary" id="show-proximos-btn">📆 Mostrar cronograma</button>
+      </div>
+    </div>
+
+    <div id="proximos-output">
+      <div class="card"><div class="leads-empty-state">Pega tu cronograma y dale a "Mostrar cronograma" para verlo aquí.</div></div>
+    </div>
   </section>
   <section class="view" id="view-calendario">
     <h1 class="greeting">Calendario</h1>
@@ -1923,16 +1931,164 @@
     }).join('');
   }
 
+  // ---- Mi audiencia (datos reales de Instagram, cuenta por cuenta) ----
+  var audienceData = {
+    'tacuri': {
+      real: true,
+      period: '17 jun – 16 jul 2026',
+      gender: [['Mujeres', 76.9], ['Hombres', 23.1]],
+      age: [['13-17', 1.1], ['18-24', 6.8], ['25-34', 26.6], ['35-44', 36.5], ['45-54', 19.7], ['55-64', 5.9], ['65+', 3.4]],
+      places: [['Colombia', 90.6], ['Estados Unidos', 3.2], ['España', 1.5], ['México', 0.8], ['Canadá', 0.5]],
+      bestTime: 'Dom 15:00–21:00 · Mar 18:00–21:00'
+    },
+    'juanambu': { real: false },
+    'entrevalles': { real: false },
+    'tayana': { real: false }
+  };
+
+  function renderAudienceBars(elId, rows) {
+    var max = Math.max.apply(null, rows.map(function (r) { return r[1]; }));
+    document.getElementById(elId).innerHTML = rows.map(function (r) {
+      var pct = Math.round((r[1] / max) * 100);
+      return '<div class="sede-row"><div class="sede-name">' + r[0] + '</div>' +
+        '<div class="sede-bar-track"><div class="sede-bar-fill bar-fill-accent" style="width:' + pct + '%"></div></div>' +
+        '<div class="sede-counts">' + r[1].toLocaleString('es-CO', { maximumFractionDigits: 1 }) + '%</div></div>';
+    }).join('');
+  }
+
+  function renderAudiencia(account) {
+    var a = audienceData[account];
+    if (!a || !a.real) {
+      document.getElementById('audiencia-period').textContent = 'Aún no conectada';
+      document.getElementById('audiencia-real').style.display = 'none';
+      document.getElementById('audiencia-empty').style.display = '';
+      document.getElementById('audiencia-empty-text').textContent = 'Todavía no tenemos datos de audiencia para esta cuenta. Mándame una captura de Instagram → tu perfil → Estadísticas → Público (sexo, edad, países) como hiciste con Tacurí, y la conecto.';
+      return;
+    }
+    document.getElementById('audiencia-period').textContent = 'Últimos 30 días (' + a.period + ') · Instagram';
+    document.getElementById('audiencia-real').style.display = '';
+    document.getElementById('audiencia-empty').style.display = 'none';
+    renderAudienceBars('audiencia-gender', a.gender);
+    renderAudienceBars('audiencia-age', a.age);
+    renderAudienceBars('audiencia-places', a.places);
+    document.getElementById('audiencia-besttime').textContent = a.bestTime;
+  }
+
+  // ---- Constancia (racha de publicación, marcada por ti) ----
+  var CONSTANCIA_DAYS = ['Lunes', 'Miércoles', 'Viernes'];
+
+  function getMondayKey(date) {
+    var d = new Date(date);
+    var day = d.getDay();
+    var diff = (day === 0 ? -6 : 1 - day);
+    d.setDate(d.getDate() + diff);
+    d.setHours(0, 0, 0, 0);
+    return d.toISOString().slice(0, 10);
+  }
+  function loadConstancia() {
+    try { return JSON.parse(localStorage.getItem('aspaen_constancia') || '{}'); } catch (e) { return {}; }
+  }
+  function saveConstancia(data) { localStorage.setItem('aspaen_constancia', JSON.stringify(data)); }
+
+  function renderConstancia(account) {
+    var data = loadConstancia();
+    if (!data[account]) data[account] = {};
+    var todayKey = getMondayKey(new Date());
+    var weekLog = data[account][todayKey] || {};
+
+    document.getElementById('constancia-week').innerHTML = weeklyPosts[account].map(function (p) {
+      var checked = !!weekLog[p.day];
+      return '<label class="constancia-check-row"><input type="checkbox" data-day="' + p.day + '" ' + (checked ? 'checked' : '') + '/> <span>' + p.day + ' — ' + p.title + ' <span class="proposal-fmt">' + p.format + '</span></span></label>';
+    }).join('');
+
+    document.querySelectorAll('#constancia-week input[type=checkbox]').forEach(function (cb) {
+      cb.addEventListener('change', function () {
+        var d = loadConstancia();
+        if (!d[account]) d[account] = {};
+        if (!d[account][todayKey]) d[account][todayKey] = {};
+        d[account][todayKey][cb.dataset.day] = cb.checked;
+        saveConstancia(d);
+        renderConstancia(account);
+      });
+    });
+
+    var streak = 0;
+    var cursor = new Date(todayKey);
+    cursor.setDate(cursor.getDate() - 7);
+    while (true) {
+      var key = getMondayKey(cursor);
+      var wk = data[account][key];
+      if (wk && CONSTANCIA_DAYS.every(function (d) { return wk[d]; })) {
+        streak++;
+        cursor.setDate(cursor.getDate() - 7);
+      } else break;
+    }
+    document.getElementById('constancia-streak').textContent = streak + (streak === 1 ? ' semana' : ' semanas');
+    document.getElementById('constancia-streak-sub').textContent = streak > 0
+      ? 'Semanas seguidas cumpliendo tus 3 posts, antes de esta semana en curso.'
+      : 'Aún no completas una semana entera marcada — empieza marcando tus posts de esta semana.';
+
+    var histRows = [];
+    var hc = new Date(todayKey);
+    for (var i = 0; i < 6; i++) {
+      var key2 = getMondayKey(hc);
+      var wk2 = data[account][key2] || {};
+      var count = CONSTANCIA_DAYS.filter(function (d) { return wk2[d]; }).length;
+      var label = (i === 0 ? 'Esta semana' : 'Semana') + ' (desde ' + key2 + ')';
+      histRows.push({ label: label, count: count });
+      hc.setDate(hc.getDate() - 7);
+    }
+    document.getElementById('constancia-history').innerHTML = histRows.map(function (r) {
+      var pct = Math.round((r.count / 3) * 100);
+      return '<div class="sede-row"><div class="sede-name">' + r.label + '</div>' +
+        '<div class="sede-bar-track"><div class="sede-bar-fill bar-fill-good" style="width:' + pct + '%"></div></div>' +
+        '<div class="sede-counts">' + r.count + '/3</div></div>';
+    }).join('');
+  }
+
+  // ---- Próximos: pega tu cronograma de Excel tal cual ----
+  function parseGenericTable(text) {
+    var lines = text.split(/\r?\n/).filter(function (l) { return l.trim() !== ''; });
+    if (lines.length < 2) return null;
+    var delim = lines[0].indexOf('\t') >= 0 ? '\t' : ',';
+    var headers = lines[0].split(delim).map(function (h) { return h.trim(); });
+    var rows = lines.slice(1).map(function (line) { return line.split(delim).map(function (c) { return c.trim(); }); });
+    return { headers: headers, rows: rows };
+  }
+
+  function renderProximos(parsed) {
+    if (!parsed) {
+      document.getElementById('proximos-output').innerHTML = '<div class="card"><div class="leads-empty-state">No pude leer esas filas — asegúrate de incluir el encabezado y pegar directo desde Excel.</div></div>';
+      return;
+    }
+    var theadHtml = '<tr>' + parsed.headers.map(function (h) { return '<th>' + h + '</th>'; }).join('') + '</tr>';
+    var bodyHtml = parsed.rows.map(function (r) {
+      return '<tr>' + r.map(function (c) { return '<td>' + c + '</td>'; }).join('') + '</tr>';
+    }).join('');
+    document.getElementById('proximos-output').innerHTML =
+      '<div class="card"><div class="simple-table-wrap"><table class="simple-table">' +
+      '<thead>' + theadHtml + '</thead><tbody>' + bodyHtml + '</tbody></table></div>' +
+      '<p class="vc-note">' + parsed.rows.length + ' posts cargados.</p></div>';
+  }
+
+  document.getElementById('show-proximos-btn').addEventListener('click', function () {
+    renderProximos(parseGenericTable(document.getElementById('proximos-input').value));
+  });
+
   document.getElementById('global-cuenta').addEventListener('change', function () {
     renderHome(this.value);
     renderPosts(this.value);
     renderAnalysis(this.value);
     renderCalendario(this.value);
+    renderAudiencia(this.value);
+    renderConstancia(this.value);
   });
   renderHome('tacuri');
   renderPosts('tacuri');
   renderAnalysis('tacuri');
   renderCalendario('tacuri');
+  renderAudiencia('tacuri');
+  renderConstancia('tacuri');
 
   // Carga datos reales de Meta Ads generados por el robot de GitHub Actions (data/live-metrics.json).
   // Si el archivo no existe todavía o falla la carga (ej. abriendo el HTML localmente), se quedan los datos
