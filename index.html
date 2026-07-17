@@ -247,6 +247,41 @@
   .kpi-value { font-size: 21px; font-weight: 800; margin-top: 4px; }
   .kpi-sub { font-size: 11.5px; color: var(--ink-muted); margin-top: 2px; }
 
+  /* ---------- Mini gráficas (donut/línea/barras/pills/tabla) ---------- */
+  .metric-pill-grid { display: flex; flex-direction: column; gap: 8px; }
+  .metric-pill-header, .metric-pill-row { display: grid; grid-template-columns: 108px repeat(3, 1fr); gap: 8px; align-items: center; }
+  .metric-pill-header { font-size: 10.5px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: .04em; padding: 0 2px; }
+  .metric-pill-label { font-size: 12.5px; color: var(--ink-muted); font-weight: 700; }
+  .metric-pill { border-radius: 999px; padding: 9px 6px; text-align: center; font-weight: 800; font-size: 13px; }
+  .metric-pill.pill-good { background: var(--good-soft); color: var(--good-ink); }
+  .metric-pill.pill-accent { background: var(--accent-soft); color: var(--accent-soft-ink); }
+  .metric-pill.pill-warn { background: var(--warn-soft); color: var(--warn-ink); }
+
+  .charts-row { display: flex; gap: 18px; flex-wrap: wrap; align-items: flex-start; }
+  .chart-card-mini { flex: 1 1 220px; min-width: 190px; }
+  .chart-card-mini h4 { font-size: 12px; font-weight: 800; color: var(--ink-muted); margin: 0 0 8px; text-align: center; text-transform: uppercase; letter-spacing: .03em; }
+  .chart-donut-wrap { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .chart-donut-svg svg { display: block; }
+  .chart-legend { display: flex; flex-direction: column; gap: 6px; font-size: 12px; }
+  .chart-legend-item { display: flex; align-items: center; gap: 6px; color: var(--ink-muted); }
+  .chart-legend-item b { color: var(--ink); }
+  .chart-legend-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex: 0 0 9px; }
+  .chart-line-wrap svg { display: block; width: 100%; height: auto; }
+  .chart-bar-wrap { display: flex; justify-content: center; }
+  .chart-bar-wrap svg { display: block; }
+
+  .share-table-wrap { overflow-x: auto; margin-top: 8px; }
+  .share-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .share-table th { text-align: left; padding: 6px 7px; color: var(--ink-faint); font-weight: 700; border-bottom: 1px solid var(--border); white-space: nowrap; font-size: 10.5px; text-transform: uppercase; letter-spacing: .03em; }
+  .share-table td { padding: 6px 7px; border-bottom: 1px solid var(--border); white-space: nowrap; font-size: 12px; }
+  .share-table tr.highlight-row td { background: var(--accent-soft); }
+  .share-table tr.total-row td { font-weight: 800; border-top: 2px solid var(--border); border-bottom: none; }
+  .share-bar-cell { min-width: 96px; }
+  .share-bar-track { position: relative; height: 16px; background: var(--surface-2); border-radius: 4px; overflow: hidden; min-width: 70px; }
+  .share-bar-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; background: var(--accent-soft); }
+  .share-bar-value { position: relative; z-index: 1; padding-left: 6px; font-size: 11.5px; line-height: 16px; color: var(--ink); }
+  .delta-cell { text-align: center; font-weight: 800; border-radius: 6px; }
+
   .campaign-card { border: 1px solid var(--border); border-radius: 12px; padding: 16px; background: var(--surface-2); margin-bottom: 12px; }
   .campaign-card:last-child { margin-bottom: 0; }
   .campaign-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
@@ -652,6 +687,12 @@
       <div class="sub" id="home-lastpost-sub"></div>
     </div>
 
+    <div class="card">
+      <h2>📊 Cumplimiento de metas — marzo 2026</h2>
+      <p class="vc-note" style="margin-top:-4px">Fuente: informe mensual de EMV (agencia) a Aspaen Cali.</p>
+      <div id="home-metas-pills"></div>
+    </div>
+
     <div class="card idea-card">
       <h2>⚡ Esto te toca hoy <span id="home-idea-vc"></span></h2>
       <div class="quote" id="home-idea-quote"></div>
@@ -708,6 +749,22 @@
       <div class="tab">Reels</div>
       <div class="tab">Carruseles</div>
       <div class="tab">Fotos</div>
+    </div>
+
+    <div class="card">
+      <h2>🎬 Mezcla de parrilla — marzo 2026</h2>
+      <p class="vc-note" style="margin-top:-4px">Distribución de piezas publicadas por formato. La línea de publicaciones es de Cali completo (las 4 sedes juntas).</p>
+      <div class="charts-row" id="posts-parrilla-donut"></div>
+      <div style="margin-top:16px">
+        <div class="vc-note" style="margin-bottom:6px">Publicaciones por mes — Cali (agregado)</div>
+        <div id="posts-publicaciones-line"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📋 Planeado vs. ejecutado — mes anterior</h2>
+      <p class="vc-note" style="margin-top:-4px">Lo que se planeó en la parrilla del mes anterior frente a lo que realmente se publicó y logró. Fuente: informe mensual de EMV.</p>
+      <div class="charts-row" id="posts-plan-vs-ejec"></div>
     </div>
 
     <div class="card">
@@ -896,6 +953,7 @@
     <div class="card">
       <h2>🥇 Share of voice en Cali — marzo 2026</h2>
       <p class="vc-note" style="margin-top:-4px">Aspaen Cali (las 4 sedes juntas) vs. cada competidor — % del total de seguidores entre las 12 cuentas comparadas. Fuente: informe mensual de EMV.</p>
+      <div id="referentes-variacion-pills" style="margin-bottom:14px"></div>
       <div id="referentes-share"></div>
       <p class="vc-note" id="referentes-marzo-note"></p>
     </div>
@@ -1138,6 +1196,74 @@
     return '$' + n.toLocaleString('es-CO', { maximumFractionDigits: 0 }) + ' COP';
   }
   var VERDICT_CLASS = { 'Ganadora': 'good', 'Débil': 'warn', 'Fatigada': 'crit' };
+
+  // ---- Mini gráficas reutilizables (SVG, sin dependencias externas) ----
+  function fmtEs(n, dec) {
+    return n.toLocaleString('es-CO', { maximumFractionDigits: dec != null ? dec : 1 });
+  }
+
+  function svgDonut(segments, opts) {
+    opts = opts || {};
+    var size = opts.size || 148, thickness = opts.thickness || (opts.pie ? size / 2 : 20);
+    var r = (size - thickness) / 2;
+    var cx = size / 2, cy = size / 2;
+    var circumference = 2 * Math.PI * r;
+    var total = segments.reduce(function (s, seg) { return s + seg.value; }, 0) || 1;
+    var offset = 0;
+    var arcs = segments.filter(function (s) { return s.value > 0; }).map(function (seg) {
+      var frac = seg.value / total;
+      var dash = frac * circumference;
+      var circle = '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="' + seg.color + '" stroke-width="' + thickness + '" stroke-dasharray="' + dash + ' ' + (circumference - dash) + '" stroke-dashoffset="' + (-offset) + '" transform="rotate(-90 ' + cx + ' ' + cy + ')"></circle>';
+      offset += dash;
+      return circle;
+    }).join('');
+    var centerLabel = opts.centerLabel != null ? '<text x="' + cx + '" y="' + (cy + 7) + '" text-anchor="middle" font-size="20" font-weight="800" fill="var(--ink)">' + opts.centerLabel + '</text>' : '';
+    var svg = '<svg width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size + '">' + arcs + centerLabel + '</svg>';
+    var legend = segments.map(function (seg) {
+      var pctTxt = opts.showPct ? ' (' + fmtEs((seg.value / total) * 100) + '%)' : '';
+      return '<div class="chart-legend-item"><span class="chart-legend-dot" style="background:' + seg.color + '"></span>' + seg.label + ' <b>' + fmtEs(seg.value, opts.dec != null ? opts.dec : 0) + (opts.unit || '') + '</b>' + pctTxt + '</div>';
+    }).join('');
+    return '<div class="chart-donut-wrap"><div class="chart-donut-svg">' + svg + '</div><div class="chart-legend">' + legend + '</div></div>';
+  }
+
+  function svgLineChart(points, opts) {
+    opts = opts || {};
+    var w = opts.width || 460, h = opts.height || 150, pad = 26;
+    var maxV = Math.max.apply(null, points.map(function (p) { return p.value; }).concat([1]));
+    var stepX = points.length > 1 ? (w - pad * 2) / (points.length - 1) : 0;
+    var scaleY = function (v) { return h - pad - (v / maxV) * (h - pad * 2); };
+    var coords = points.map(function (p, i) { return [pad + i * stepX, scaleY(p.value)]; });
+    var pathD = coords.map(function (c, i) { return (i === 0 ? 'M' : 'L') + c[0] + ',' + c[1]; }).join(' ');
+    var areaD = pathD + ' L' + coords[coords.length - 1][0] + ',' + (h - pad) + ' L' + coords[0][0] + ',' + (h - pad) + ' Z';
+    var dots = coords.map(function (c, i) {
+      return '<circle cx="' + c[0] + '" cy="' + c[1] + '" r="3.5" fill="var(--good)"></circle>' +
+        '<text x="' + c[0] + '" y="' + (c[1] - 10) + '" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">' + points[i].value + '</text>' +
+        '<text x="' + c[0] + '" y="' + (h - 6) + '" text-anchor="middle" font-size="9.5" fill="var(--ink-faint)">' + points[i].label + '</text>';
+    }).join('');
+    var svg = '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="xMidYMid meet">' +
+      '<path d="' + areaD + '" fill="var(--good-soft)"></path>' +
+      '<path d="' + pathD + '" fill="none" stroke="var(--good)" stroke-width="2.5"></path>' +
+      dots + '</svg>';
+    return '<div class="chart-line-wrap">' + svg + '</div>';
+  }
+
+  function svgBarPair(meta, ejec, metaLabel, ejecLabel) {
+    var w = 190, h = 130, pad = 22, barW = 44, gap = 26;
+    var maxV = Math.max(meta, ejec, 1);
+    var scaleH = function (v) { return (v / maxV) * (h - pad * 2); };
+    var x1 = w / 2 - gap / 2 - barW, x2 = w / 2 + gap / 2;
+    var h1 = scaleH(meta), h2 = scaleH(ejec);
+    var y1 = h - pad - h1, y2 = h - pad - h2;
+    var svg = '<svg viewBox="0 0 ' + w + ' ' + h + '" width="190" height="130">' +
+      '<rect x="' + x1 + '" y="' + y1 + '" width="' + barW + '" height="' + Math.max(h1, 1) + '" rx="4" fill="var(--accent)"></rect>' +
+      '<text x="' + (x1 + barW / 2) + '" y="' + (y1 - 6) + '" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">' + meta + '</text>' +
+      '<text x="' + (x1 + barW / 2) + '" y="' + (h - 6) + '" text-anchor="middle" font-size="10" fill="var(--ink-faint)">' + (metaLabel || 'Meta') + '</text>' +
+      '<rect x="' + x2 + '" y="' + y2 + '" width="' + barW + '" height="' + Math.max(h2, 1) + '" rx="4" fill="var(--good)"></rect>' +
+      '<text x="' + (x2 + barW / 2) + '" y="' + (y2 - 6) + '" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">' + ejec + '</text>' +
+      '<text x="' + (x2 + barW / 2) + '" y="' + (h - 6) + '" text-anchor="middle" font-size="10" fill="var(--ink-faint)">' + (ejecLabel || 'Ejecutado') + '</text>' +
+      '</svg>';
+    return '<div class="chart-bar-wrap">' + svg + '</div>';
+  }
 
   var accountLabels = {
     'tacuri': 'Tacurí',
@@ -2008,8 +2134,30 @@
     tayana: '@aspaentayana'
   };
 
+  function renderHomeMetasPills(account) {
+    var m = marzoAbrilData[account];
+    var el = document.getElementById('home-metas-pills');
+    if (!m || !el) return;
+    el.innerHTML = '<div class="metric-pill-grid">' +
+      '<div class="metric-pill-header"><span></span><span>Proyectado</span><span>Ejecutado</span><span>Cumplimiento</span></div>' +
+      '<div class="metric-pill-row"><div class="metric-pill-label">Engagement</div>' +
+      '<div class="metric-pill pill-good">' + fmtEs(m.engagement.proy) + '%</div>' +
+      '<div class="metric-pill pill-good">' + fmtEs(m.engagement.ejec) + '%</div>' +
+      '<div class="metric-pill pill-good">' + fmtEs(m.engagement.cumpl) + '%</div></div>' +
+      '<div class="metric-pill-row"><div class="metric-pill-label">Visualizaciones</div>' +
+      '<div class="metric-pill pill-accent">' + fmtNum(m.visualizaciones.proy) + '</div>' +
+      '<div class="metric-pill pill-accent">' + fmtNum(m.visualizaciones.ejec) + '</div>' +
+      '<div class="metric-pill pill-accent">' + fmtEs(m.visualizaciones.cumpl) + '%</div></div>' +
+      '<div class="metric-pill-row"><div class="metric-pill-label">Alcance</div>' +
+      '<div class="metric-pill pill-warn">' + fmtNum(m.alcance.proy) + '</div>' +
+      '<div class="metric-pill pill-warn">' + fmtNum(m.alcance.ejec) + '</div>' +
+      '<div class="metric-pill pill-warn">' + fmtEs(m.alcance.cumpl) + '%</div></div>' +
+      '</div>';
+  }
+
   function renderHome(account) {
     var h = homeData[account];
+    renderHomeMetasPills(account);
     document.getElementById('home-greeting').textContent = 'Buenos días 👋 — ' + accountLabels[account];
     document.getElementById('home-lastpost-stat').textContent = h.lastPost.stat;
     document.getElementById('home-lastpost-sub').textContent = h.lastPost.sub;
@@ -2046,8 +2194,45 @@
     });
   });
 
+  function renderPostsCharts(account) {
+    var m = marzoAbrilData[account];
+    if (!m) return;
+    var donutSegs = [
+      { label: 'Stories', value: m.parrilla.stories, color: '#1f7fc4' },
+      { label: 'Reels', value: m.parrilla.reels, color: '#29abc7' },
+      { label: 'Post', value: m.parrilla.post, color: '#9bc93c' },
+      { label: 'Carruseles', value: m.parrilla.carruseles, color: '#f8be22' }
+    ];
+    document.getElementById('posts-parrilla-donut').innerHTML =
+      '<div class="chart-card-mini"><h4>Parrilla ejecutada (' + m.totalPiezas + ' piezas)</h4>' + svgDonut(donutSegs, { centerLabel: m.totalPiezas, dec: 2, unit: '%' }) + '</div>';
+    document.getElementById('posts-publicaciones-line').innerHTML = svgLineChart(caliMonthlyPosts);
+
+    var planSegs = [
+      { label: 'Reels', value: m.parrillaPlan.reels, color: '#29abc7' },
+      { label: 'Post', value: m.parrillaPlan.post, color: '#9bc93c' },
+      { label: 'Carruseles', value: m.parrillaPlan.carruseles, color: '#f8be22' }
+    ];
+    var ejecSegs = [
+      { label: 'Reels', value: m.parrillaEjecCount.reels, color: '#29abc7' },
+      { label: 'Post', value: m.parrillaEjecCount.post, color: '#9bc93c' },
+      { label: 'Carruseles', value: m.parrillaEjecCount.carruseles, color: '#f8be22' }
+    ];
+    var tipoSegs = [
+      { label: 'Operativo', value: m.tipoComunicacionPlan.operativo, color: '#f8be22' },
+      { label: 'Táctico', value: m.tipoComunicacionPlan.tactico, color: '#1f7fc4' },
+      { label: 'Estratégico', value: m.tipoComunicacionPlan.estrategico, color: '#29abc7' }
+    ];
+    document.getElementById('posts-plan-vs-ejec').innerHTML =
+      '<div class="chart-card-mini"><h4>Parrilla planeada</h4>' + svgDonut(planSegs, { size: 120, thickness: 16 }) + '</div>' +
+      '<div class="chart-card-mini"><h4>Parrilla ejecutada</h4>' + svgDonut(ejecSegs, { size: 120, thickness: 16 }) + '</div>' +
+      '<div class="chart-card-mini"><h4>Leads orgánicos</h4>' + svgBarPair(m.abril.metaLeads, m.abril.ejecMarzoLeads) + '</div>' +
+      '<div class="chart-card-mini"><h4>Matrículas orgánicas</h4>' + svgBarPair(m.abril.metaMatriculas, m.abril.ejecMarzoMatriculas) + '</div>' +
+      '<div class="chart-card-mini"><h4>Tipo de comunicación (planeado)</h4>' + svgDonut(tipoSegs, { size: 120, pie: true, showPct: true }) + '</div>';
+  }
+
   function renderPosts(account) {
     var p = postsData[account];
+    renderPostsCharts(account);
     var maxEng = Math.max.apply(null, p.hashtags.map(function (h) { return parseFloat(h[2]); }));
     document.getElementById('posts-hashtags').innerHTML = p.hashtags.map(function (h) {
       var pct = Math.round((parseFloat(h[2]) / maxEng) * 100);
@@ -2098,6 +2283,9 @@
       alcance: { proy: 1600, ejec: 1695, cumpl: 105.96 },
       parrilla: { stories: 66.67, reels: 22.22, post: 5.56, carruseles: 5.56 },
       totalPiezas: 54, pctNoSeguidores: 63.4,
+      parrillaPlan: { reels: 8, post: 6, carruseles: 2 },
+      parrillaEjecCount: { reels: 8, post: 4, carruseles: 1 },
+      tipoComunicacionPlan: { operativo: 1, tactico: 3, estrategico: 12 },
       abril: { objetivo: 'Fortalecer el descubrimiento sin perder la alta capacidad de conexión, buscando equilibrar mejor alcance e interacción.', kpi: '% de no seguidores / visualizaciones', metaLeads: 3, ejecMarzoLeads: 12, metaMatriculas: 0, ejecMarzoMatriculas: 0 }
     },
     juanambu: {
@@ -2108,6 +2296,9 @@
       alcance: { proy: 2296, ejec: 2723, cumpl: 118.60 },
       parrilla: { stories: 61.82, reels: 23.64, post: 9.09, carruseles: 5.45 },
       totalPiezas: 55, pctNoSeguidores: 78,
+      parrillaPlan: { reels: 6, post: 7, carruseles: 3 },
+      parrillaEjecCount: { reels: 7, post: 2, carruseles: 5 },
+      tipoComunicacionPlan: { operativo: 2, tactico: 2, estrategico: 12 },
       abril: { objetivo: 'Recuperar la capacidad de conexión sin perder el alcance, fortaleciendo la interacción y el vínculo con la audiencia.', kpi: 'Engagement', metaLeads: 2, ejecMarzoLeads: 2, metaMatriculas: 0, ejecMarzoMatriculas: 0 }
     },
     entrevalles: {
@@ -2118,6 +2309,9 @@
       alcance: { proy: 1449, ejec: 1448, cumpl: 99.92 },
       parrilla: { stories: 51.11, reels: 35.56, post: 11.11, carruseles: 2.22 },
       totalPiezas: 45, pctNoSeguidores: 85.2,
+      parrillaPlan: { reels: 11, post: 6, carruseles: 0 },
+      parrillaEjecCount: { reels: 5, post: 4, carruseles: 2 },
+      tipoComunicacionPlan: { operativo: 2, tactico: 4, estrategico: 6 },
       abril: { objetivo: 'Fortalecer el descubrimiento sin perder la eficiencia actual, aprovechando su buen desempeño en visualizaciones para atraer más audiencias nuevas.', kpi: '% de no seguidores / alcance a nuevas audiencias', metaLeads: 6, ejecMarzoLeads: 14, metaMatriculas: 0, ejecMarzoMatriculas: 2 }
     },
     tayana: {
@@ -2128,37 +2322,80 @@
       alcance: { proy: 1363, ejec: 1055, cumpl: 77.42 },
       parrilla: { stories: 69.84, reels: 25.40, post: 3.17, carruseles: 0 },
       totalPiezas: 63, pctNoSeguidores: 71.2,
+      parrillaPlan: { reels: 10, post: 7, carruseles: 0 },
+      parrillaEjecCount: { reels: 5, post: 4, carruseles: 2 },
+      tipoComunicacionPlan: { operativo: 1, tactico: 4, estrategico: 12 },
       abril: { objetivo: 'Corregir la baja capacidad de descubrimiento, reduciendo la dependencia en comunidad y fortaleciendo la expansión hacia nuevas audiencias.', kpi: '% de no seguidores / alcance', metaLeads: 4, ejecMarzoLeads: 7, metaMatriculas: 0, ejecMarzoMatriculas: 5 }
     }
   };
 
+  // ---- Publicaciones por mes, Cali agregado (informe EMV) ----
+  var caliMonthlyPosts = [
+    { label: 'sep', value: 101 }, { label: 'oct', value: 138 }, { label: 'nov', value: 179 },
+    { label: 'dic', value: 142 }, { label: 'ene', value: 91 }, { label: 'feb', value: 150 }, { label: 'mar', value: 217 }
+  ];
+
   // ---- Share of voice en Cali, marzo 2026 (informe EMV) ----
   var marzoShareData = {
     cumplimientoEngagement: 89.87, promedioCiudad: 3.35,
+    variacionCali: { seguidores: 1.22, interacciones: 69.52, noSeguidores: -8.99, leadsOrganicos: 21, matriculasOrganicas: 3 },
+    totales: { seguidores: 83717, post: 107, reels: 118, likes: 17697, comentarios: 260, engagement: 3.35 },
     cuentas: [
-      { nombre: 'Aspaen Cali', seguidores: 13962, share: 16.68, engagement: 7.91, deltaVsPromedio: 4.558, esAspaen: true },
-      { nombre: 'Colegio Berchmans', seguidores: 12917, share: 15.43, engagement: 2.56, deltaVsPromedio: -0.790 },
-      { nombre: 'Colegio Alemán de Cali', seguidores: 9363, share: 11.18, engagement: 1.25, deltaVsPromedio: -2.100 },
-      { nombre: 'Jardines Infantiles Origami', seguidores: 9524, share: 11.38, engagement: 0.38, deltaVsPromedio: -2.970 },
-      { nombre: 'Colegio Philadelphia Int.', seguidores: 8829, share: 10.55, engagement: 2.86, deltaVsPromedio: -0.490 },
-      { nombre: 'Colegio Bennett', seguidores: 7756, share: 9.26, engagement: 2.84, deltaVsPromedio: -0.510 },
-      { nombre: 'Colegio La Arboleda', seguidores: 6789, share: 8.11, engagement: 1.97, deltaVsPromedio: -1.380 },
-      { nombre: 'New Cambridge School Cali', seguidores: 6137, share: 7.33, engagement: 1.97, deltaVsPromedio: -1.380 },
-      { nombre: 'Jardín Infantil Baby Bennett', seguidores: 3178, share: 3.80, engagement: 2.09, deltaVsPromedio: -1.260 },
-      { nombre: 'Estimulemos Jardín Infantil', seguidores: 2390, share: 2.85, engagement: 2.18, deltaVsPromedio: -1.170 },
-      { nombre: 'kinder y Maternal Bam Bam', seguidores: 1903, share: 2.27, engagement: 0.37, deltaVsPromedio: -2.980 },
-      { nombre: 'Estrellita de Mar', seguidores: 969, share: 1.16, engagement: 0.15, deltaVsPromedio: -3.200 }
+      { nombre: 'Aspaen Cali', seguidores: 13962, share: 16.68, post: 15, reels: 57, likes: 2751, comentarios: 59, engagement: 7.91, deltaVsPromedio: 4.558, esAspaen: true },
+      { nombre: 'Colegio Berchmans', seguidores: 12917, share: 15.43, post: 20, reels: 13, likes: 6564, comentarios: 40, engagement: 2.56, deltaVsPromedio: -0.790 },
+      { nombre: 'Colegio Alemán de Cali', seguidores: 9363, share: 11.18, post: 20, reels: 8, likes: 2328, comentarios: 18, engagement: 1.25, deltaVsPromedio: -2.100 },
+      { nombre: 'Jardines Infantiles Origami', seguidores: 9524, share: 11.38, post: 14, reels: 4, likes: 496, comentarios: 10, engagement: 0.38, deltaVsPromedio: -2.970 },
+      { nombre: 'Colegio Philadelphia Int.', seguidores: 8829, share: 10.55, post: 8, reels: 7, likes: 1977, comentarios: 41, engagement: 2.86, deltaVsPromedio: -0.490 },
+      { nombre: 'Colegio Bennett', seguidores: 7756, share: 9.26, post: 6, reels: 5, likes: 1313, comentarios: 7, engagement: 2.84, deltaVsPromedio: -0.510 },
+      { nombre: 'Colegio La Arboleda', seguidores: 6789, share: 8.11, post: 4, reels: 9, likes: 523, comentarios: 11, engagement: 1.97, deltaVsPromedio: -1.380 },
+      { nombre: 'New Cambridge School Cali', seguidores: 6137, share: 7.33, post: 9, reels: 2, likes: 1071, comentarios: 18, engagement: 1.97, deltaVsPromedio: -1.380 },
+      { nombre: 'Jardín Infantil Baby Bennett', seguidores: 3178, share: 3.80, post: 3, reels: 0, likes: 194, comentarios: 5, engagement: 2.09, deltaVsPromedio: -1.260 },
+      { nombre: 'Estimulemos Jardín Infantil', seguidores: 2390, share: 2.85, post: 2, reels: 10, likes: 473, comentarios: 48, engagement: 2.18, deltaVsPromedio: -1.170 },
+      { nombre: 'kinder y Maternal Bam Bam', seguidores: 1903, share: 2.27, post: 1, reels: 1, likes: 7, comentarios: 0, engagement: 0.37, deltaVsPromedio: -2.980 },
+      { nombre: 'Estrellita de Mar', seguidores: 969, share: 1.16, post: 5, reels: 2, likes: 0, comentarios: 3, engagement: 0.15, deltaVsPromedio: -3.200 }
     ]
   };
 
+  function deltaColorClass(delta) {
+    if (delta >= 0) return 'good';
+    if (delta > -1.5) return 'warn';
+    return 'crit';
+  }
+
   function renderReferentesShare() {
-    var maxShare = Math.max.apply(null, marzoShareData.cuentas.map(function (c) { return c.share; }));
-    document.getElementById('referentes-share').innerHTML = marzoShareData.cuentas.map(function (c) {
-      var pct = Math.round((c.share / maxShare) * 100);
-      return '<div class="sede-row"><div class="sede-name"' + (c.esAspaen ? ' style="color:var(--accent-soft-ink)"' : '') + '>' + c.nombre + (c.esAspaen ? ' (tú)' : '') + '</div>' +
-        '<div class="sede-bar-track"><div class="sede-bar-fill ' + (c.esAspaen ? 'bar-fill-good' : 'bar-fill-accent') + '" style="width:' + pct + '%"></div></div>' +
-        '<div class="sede-counts">' + c.share + '%</div></div>';
+    var v = marzoShareData.variacionCali;
+    document.getElementById('referentes-variacion-pills').innerHTML =
+      '<div class="metric-pill-grid"><div class="metric-pill-row" style="grid-template-columns:repeat(5,1fr)">' +
+      '<div class="metric-pill pill-accent">Seguidores<br>' + (v.seguidores >= 0 ? '+' : '') + v.seguidores + '%</div>' +
+      '<div class="metric-pill pill-accent">Interacciones<br>' + (v.interacciones >= 0 ? '+' : '') + v.interacciones + '%</div>' +
+      '<div class="metric-pill pill-warn">No seguidores<br>' + v.noSeguidores + '%</div>' +
+      '<div class="metric-pill pill-good">Leads orgánicos<br>' + v.leadsOrganicos + '</div>' +
+      '<div class="metric-pill pill-good">Matrículas orgánicas<br>' + v.matriculasOrganicas + '</div>' +
+      '</div></div>';
+
+    var maxSeg = Math.max.apply(null, marzoShareData.cuentas.map(function (c) { return c.seguidores; }));
+    var maxEng = Math.max.apply(null, marzoShareData.cuentas.map(function (c) { return c.engagement; }));
+    var t = marzoShareData.totales;
+    var rows = marzoShareData.cuentas.map(function (c) {
+      var segPct = Math.round((c.seguidores / maxSeg) * 100);
+      var engPct = Math.round((c.engagement / maxEng) * 100);
+      return '<tr' + (c.esAspaen ? ' class="highlight-row"' : '') + '>' +
+        '<td>' + c.nombre + (c.esAspaen ? ' (tú)' : '') + '</td>' +
+        '<td class="share-bar-cell"><div class="share-bar-track"><div class="share-bar-fill" style="width:' + segPct + '%"></div><div class="share-bar-value">' + fmtEs(c.seguidores, 0) + '</div></div></td>' +
+        '<td>' + fmtEs(c.share) + '%</td>' +
+        '<td>' + c.post + '</td>' +
+        '<td>' + c.reels + '</td>' +
+        '<td>' + fmtEs(c.likes, 0) + '</td>' +
+        '<td>' + c.comentarios + '</td>' +
+        '<td class="share-bar-cell"><div class="share-bar-track"><div class="share-bar-fill" style="width:' + engPct + '%"></div><div class="share-bar-value">' + fmtEs(c.engagement) + '%</div></div></td>' +
+        '<td class="delta-cell ' + deltaColorClass(c.deltaVsPromedio) + '" style="background:var(--' + deltaColorClass(c.deltaVsPromedio) + '-soft);color:var(--' + deltaColorClass(c.deltaVsPromedio) + '-ink)">' + (c.deltaVsPromedio >= 0 ? '+' : '') + fmtEs(c.deltaVsPromedio, 3) + '%</td>' +
+        '</tr>';
     }).join('');
+    var totalRow = '<tr class="total-row"><td>Total</td><td>' + fmtEs(t.seguidores, 0) + '</td><td>100,00%</td><td>' + t.post + '</td><td>' + t.reels + '</td><td>' + fmtEs(t.likes, 0) + '</td><td>' + t.comentarios + '</td><td>' + fmtEs(t.engagement) + '%</td><td>0,000%</td></tr>';
+    document.getElementById('referentes-share').innerHTML =
+      '<div class="share-table-wrap"><table class="share-table"><thead><tr>' +
+      '<th>Cuenta</th><th>Seguidores</th><th>Share</th><th>Post</th><th>Reels</th><th>Likes</th><th>Comentarios</th><th>Engagement</th><th>Eng. vs prom. ciudad</th>' +
+      '</tr></thead><tbody>' + rows + totalRow + '</tbody></table></div>';
     document.getElementById('referentes-marzo-note').textContent = 'Aspaen Cali (agregado) tuvo el engagement más alto del grupo en marzo (7,91%, +4,56 puntos sobre el promedio de la ciudad de 3,35%) y cumplió el 89,87% de su meta de engagement — pero fue superado en seguidores/share por Colegio Berchmans (15,43%).';
   }
 
