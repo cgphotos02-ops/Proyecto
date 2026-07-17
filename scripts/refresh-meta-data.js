@@ -1,6 +1,9 @@
 // Jala datos reales de Meta Ads (campañas Táctica/Estratégica de las 4 sedes) y actualiza data/live-metrics.json.
 // Se ejecuta automáticamente desde GitHub Actions (.github/workflows/refresh-meta-data.yml).
 // Necesita el secreto de repo META_ACCESS_TOKEN (token de acceso de Meta con permisos ads_read sobre la cuenta).
+//
+// Trae varios periodos (no solo "últimos 30 días") para que el dashboard tenga un selector de rango de fechas,
+// igual que Metricool. Cada periodo usa un date_preset distinto soportado nativamente por la Graph API.
 
 const fs = require('fs');
 const path = require('path');
@@ -35,13 +38,36 @@ const SEDES = {
   }
 };
 
-async function fetchInsights(objectId) {
-  const fields = 'spend,reach,frequency,impressions,actions';
-  const url = `https://graph.facebook.com/${GRAPH_VERSION}/${objectId}/insights?fields=${fields}&date_preset=last_30d&access_token=${TOKEN}`;
+const PERIODS = [
+  { key: 'yesterday', preset: 'yesterday', label: 'Ayer' },
+  { key: 'last_7d', preset: 'last_7d', label: 'Última semana' },
+  { key: 'this_month', preset: 'this_month', label: 'Mes actual' },
+  { key: 'last_30d', preset: 'last_30d', label: 'Últimos 30 días' },
+  { key: 'last_month', preset: 'last_month', label: 'Mes pasado' }
+];
+
+const MONTHS_ES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+
+function fmtDate(iso) {
+  if (!iso) return null;
+  var parts = iso.split('-');
+  var m = parseInt(parts[1], 10) - 1, d = parseInt(parts[2], 10);
+  return d + ' ' + MONTHS_ES[m];
+}
+
+function buildPeriodLabel(label, dateStart, dateStop) {
+  if (!dateStart || !dateStop) return label;
+  var stopYear = dateStop.split('-')[0];
+  return label + ' (' + fmtDate(dateStart) + ' – ' + fmtDate(dateStop) + ' ' + stopYear + ')';
+}
+
+async function fetchInsights(objectId, datePreset) {
+  const fields = 'spend,reach,frequency,impressions,actions,date_start,date_stop';
+  const url = `https://graph.facebook.com/${GRAPH_VERSION}/${objectId}/insights?fields=${fields}&date_preset=${datePreset}&access_token=${TOKEN}`;
   const res = await fetch(url);
   const json = await res.json();
   if (json.error) {
-    console.error(`Error consultando ${objectId}:`, json.error.message);
+    console.error(`Error consultando ${objectId} (${datePreset}):`, json.error.message);
     return null;
   }
   return (json.data && json.data[0]) || null;
@@ -60,11 +86,13 @@ function sumLeads(actions) {
   return 0;
 }
 
-async function aggregate(ids) {
+async function aggregate(ids, datePreset) {
   var totalSpend = 0, totalLeads = 0, totalReach = 0, totalImpressions = 0, weightedFreq = 0, count = 0;
+  var dateStart = null, dateStop = null;
   for (const id of ids) {
-    const row = await fetchInsights(id);
+    const row = await fetchInsights(id, datePreset);
     if (!row) continue;
+    if (!dateStart) { dateStart = row.date_start; dateStop = row.date_stop; }
     const spend = parseFloat(row.spend || 0);
     totalSpend += spend;
     totalLeads += sumLeads(row.actions);
@@ -73,7 +101,11 @@ async function aggregate(ids) {
     weightedFreq += parseFloat(row.frequency || 0) * spend;
     count++;
   }
-  return { spend: totalSpend, leads: totalLeads, reach: totalReach, impressions: totalImpressions, freq: count && totalSpend ? weightedFreq / totalSpend : 0 };
+  return {
+    spend: totalSpend, leads: totalLeads, reach: totalReach, impressions: totalImpressions,
+    freq: count && totalSpend ? weightedFreq / totalSpend : 0,
+    dateStart: dateStart, dateStop: dateStop
+  };
 }
 
 async function main() {
@@ -84,23 +116,31 @@ async function main() {
     const tacticaIds = cfg.tactica.campaignIds.concat(cfg.tactica.adsetIds);
     const estrategicaIds = cfg.estrategica.campaignIds.concat(cfg.estrategica.adsetIds);
 
-    const t = await aggregate(tacticaIds);
-    const e = await aggregate(estrategicaIds);
+    var tacticaPeriods = {};
+    var estrategicaPeriods = {};
 
-    out.accounts[sede] = {
-      tactica: {
+    for (const p of PERIODS) {
+      const t = await aggregate(tacticaIds, p.preset);
+      const e = await aggregate(estrategicaIds, p.preset);
+
+      tacticaPeriods[p.key] = {
         current: Math.round(t.leads),
         cpl: t.leads ? Math.round(t.spend / t.leads) : null,
         spend: Math.round(t.spend),
-        period: 'Últimos 30 días'
-      },
-      estrategica: {
+        period: buildPeriodLabel(p.label, t.dateStart, t.dateStop)
+      };
+      estrategicaPeriods[p.key] = {
         current: Math.round(e.reach),
         freq: Math.round(e.freq * 100) / 100,
         cpm: e.impressions ? Math.round((e.spend / e.impressions) * 1000) : null,
         spend: Math.round(e.spend),
-        period: 'Últimos 30 días'
-      }
+        period: buildPeriodLabel(p.label, e.dateStart, e.dateStop)
+      };
+    }
+
+    out.accounts[sede] = {
+      tactica: { periods: tacticaPeriods },
+      estrategica: { periods: estrategicaPeriods }
     };
     console.log(sede, 'OK ->', JSON.stringify(out.accounts[sede]));
   }

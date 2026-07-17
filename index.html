@@ -851,6 +851,18 @@
       <p class="vc-note" id="live-data-note"></p>
       <p class="vc-note">Nota: los datos orgánicos de Instagram/Facebook (Inicio, Posts, Calendario) todavía son de ejemplo. Ya guardé tus 4 usuarios (@aspaentacuri, @aspaenjuanambu, @aspaenentrevalles, @aspaentayana) — en cuanto Meta habilite la conexión de cuentas de Instagram para tu ad account, quedan listas para jalar datos reales.</p>
 
+      <div class="account-bar" style="margin-bottom:14px">
+        <label for="camp-period">📅 Periodo</label>
+        <select id="camp-period">
+          <option value="yesterday">Ayer</option>
+          <option value="last_7d">Última semana</option>
+          <option value="this_month">Mes actual</option>
+          <option value="last_30d" selected>Últimos 30 días</option>
+          <option value="last_month">Mes pasado</option>
+        </select>
+      </div>
+      <p class="vc-note" id="camp-period-note"></p>
+
       <div id="analysis-kpis" class="kpi-row"></div>
 
       <div class="card">
@@ -1712,7 +1724,7 @@
         '<div class="campaign-name">' + tipoLabels[tipo] + '</div>' +
         '<span class="status-pill ' + (fatigueWarn ? 'warn' : 'good') + '">' + (fatigueWarn ? '⚠️ Revisar frecuencia' : '📡 Datos reales') + '</span></div>' +
         '<div class="campaign-stats">' + statsHtmlReal + '</div>' +
-        '<div class="progress-caption">Meta Ads · período ' + c.period + ' (últimos 30 días) — sin meta mensual definida todavía.</div></div>';
+        '<div class="progress-caption">Meta Ads · ' + c.period + ' — sin meta mensual definida todavía.</div></div>';
     }
 
     var pct = Math.min(100, Math.round((c.current / c.goal) * 100));
@@ -1817,10 +1829,10 @@
 
     if (t.real) {
       document.getElementById('analysis-kpis').innerHTML =
-        '<div class="kpi-tile"><div class="kpi-label">Leads (táctica)</div><div class="kpi-value">' + fmtNum(t.current) + '</div><div class="kpi-sub">Últimos 30 días</div></div>' +
+        '<div class="kpi-tile"><div class="kpi-label">Leads (táctica)</div><div class="kpi-value">' + fmtNum(t.current) + '</div><div class="kpi-sub">' + (t.period || '') + '</div></div>' +
         '<div class="kpi-tile"><div class="kpi-label">CPL promedio</div><div class="kpi-value" style="font-size:17px">' + fmtCOP(t.cpl) + '</div></div>' +
-        '<div class="kpi-tile"><div class="kpi-label">Alcance (estratégica)</div><div class="kpi-value">' + fmtNum(e.current) + '</div><div class="kpi-sub">Últimos 30 días</div></div>' +
-        '<div class="kpi-tile"><div class="kpi-label">Gasto total</div><div class="kpi-value" style="font-size:17px">' + fmtCOP(t.spend + e.spend) + '</div><div class="kpi-sub">Meta Ads · 16 jun–15 jul</div></div>';
+        '<div class="kpi-tile"><div class="kpi-label">Alcance (estratégica)</div><div class="kpi-value">' + fmtNum(e.current) + '</div><div class="kpi-sub">' + (e.period || '') + '</div></div>' +
+        '<div class="kpi-tile"><div class="kpi-label">Gasto total</div><div class="kpi-value" style="font-size:17px">' + fmtCOP(t.spend + e.spend) + '</div><div class="kpi-sub">Meta Ads</div></div>';
     } else {
       document.getElementById('analysis-kpis').innerHTML =
         '<div class="kpi-tile"><div class="kpi-label">Leads (táctica)</div><div class="kpi-value">' + fmtNum(t.current) + '</div><div class="kpi-sub">Meta: ' + fmtNum(t.goal) + '</div></div>' +
@@ -2082,6 +2094,7 @@
     renderCalendario(this.value);
     renderAudiencia(this.value);
     renderConstancia(this.value);
+    updateCampPeriodNote(this.value);
   });
   renderHome('tacuri');
   renderPosts('tacuri');
@@ -2093,26 +2106,63 @@
   // Carga datos reales de Meta Ads generados por el robot de GitHub Actions (data/live-metrics.json).
   // Si el archivo no existe todavía o falla la carga (ej. abriendo el HTML localmente), se quedan los datos
   // de referencia ya guardados en este archivo — el panel nunca se rompe por esto.
+  var liveAccounts = null;
+  var currentPeriod = 'last_30d';
+
+  function periodDataFor(sede, tipo, period) {
+    var acc = liveAccounts && liveAccounts[sede];
+    var block = acc && acc[tipo];
+    // Compatibilidad: acepta tanto el formato viejo (campos planos) como el nuevo (por periodo).
+    if (block && block.periods) return block.periods[period] || null;
+    if (block && block.current != null && period === 'last_30d') return block;
+    return null;
+  }
+
+  function applyPeriodToCampData(period) {
+    if (!liveAccounts) return;
+    Object.keys(liveAccounts).forEach(function (sede) {
+      if (!campData[sede]) return;
+      var tData = periodDataFor(sede, 'tactica', period);
+      var eData = periodDataFor(sede, 'estrategica', period);
+      if (tData) Object.assign(campData[sede].tactica.camp, tData, { real: true });
+      if (eData) Object.assign(campData[sede].estrategica.camp, eData, { real: true });
+    });
+  }
+
+  function updateCampPeriodNote(account) {
+    var note = document.getElementById('camp-period-note');
+    if (!note) return;
+    var hasData = periodDataFor(account, 'tactica', currentPeriod) || periodDataFor(account, 'estrategica', currentPeriod);
+    note.textContent = (liveAccounts && !hasData)
+      ? '⚠️ Aún no hay datos reales cargados para este periodo — se completan en el próximo refresco automático.'
+      : '';
+  }
+
+  var campPeriodSelect = document.getElementById('camp-period');
+  if (campPeriodSelect) {
+    campPeriodSelect.addEventListener('change', function () {
+      currentPeriod = this.value;
+      applyPeriodToCampData(currentPeriod);
+      var account = document.getElementById('global-cuenta').value;
+      updateCampPeriodNote(account);
+      renderAnalysis(account);
+    });
+  }
+
   fetch('data/live-metrics.json', { cache: 'no-store' })
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (live) {
       if (!live || !live.accounts) return;
-      Object.keys(live.accounts).forEach(function (sede) {
-        if (!campData[sede]) return;
-        var acc = live.accounts[sede];
-        if (acc.tactica && acc.tactica.current != null) {
-          Object.assign(campData[sede].tactica.camp, acc.tactica, { real: true });
-        }
-        if (acc.estrategica && acc.estrategica.current != null) {
-          Object.assign(campData[sede].estrategica.camp, acc.estrategica, { real: true });
-        }
-      });
+      liveAccounts = live.accounts;
+      applyPeriodToCampData(currentPeriod);
       var liveNote = document.getElementById('live-data-note');
       if (liveNote) {
         var when = new Date(live.generatedAt).toLocaleString('es-CO', { dateStyle: 'medium', timeStyle: 'short' });
         liveNote.textContent = '🔄 Última actualización automática: ' + when;
       }
-      renderAnalysis(document.getElementById('global-cuenta').value);
+      var account = document.getElementById('global-cuenta').value;
+      updateCampPeriodNote(account);
+      renderAnalysis(account);
     })
     .catch(function () { /* sin conexión al archivo de datos: se quedan los valores de referencia */ });
 
