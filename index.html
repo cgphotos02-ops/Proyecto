@@ -513,7 +513,7 @@
 </style>
 </head>
 <body>
-<div class="banner">📡 Campañas: datos reales (Meta Ads, las 4 sedes) · Inicio/Posts de Juanambú: datos reales (Metricool) · El resto todavía es ilustrativo</div>
+<div class="banner">📡 Campañas: datos reales (Meta Ads, las 4 sedes) · Inicio/Posts de Juanambú (Metricool) y Tacurí (Instagram): datos reales · El resto todavía es ilustrativo</div>
 
 <aside class="sidebar" style="margin-top:28px;">
   <div class="profile">
@@ -1101,13 +1101,14 @@
   // ---- Datos de Inicio y Posts (contenido orgánico) por cuenta ----
   var homeData = {
     'tacuri': {
-      lastPost: { stat: '812K vistas', sub: '+142% sobre tu promedio en Instagram' },
+      real: true,
+      lastPost: { stat: '7,2 mil visualizaciones', sub: 'Reel más visto en 30 días · 221 me gusta · 10 comentarios (Instagram)' },
       idea: { vc: 'ambiente', quote: '"¿Cómo es un día normal de clases en Tacurí?"', title: 'Un día en la vida de un estudiante de Tacurí', tag: 'Vlog', tagClass: 'vlog' },
       agenda: { title: 'Rutina de la mañana en el colegio', sub: 'Carrusel · borrador guardado' },
-      ig: { followers: '18.4K', delta: '+64 esta semana', er: '6,2%' },
-      fb: { followers: '9.1K', delta: '+12 esta semana', er: '3,8%' },
-      bestTime: '06:00–09:00',
-      bestTimeSub: 'Franja de más alcance con papás,<br>basado en 54 posts analizados'
+      ig: { followers: '3.415', delta: '+39 netos en 30 días', er: '—' },
+      fb: { followers: 'Sin datos aún', delta: '—', er: '—' },
+      bestTime: 'Dom 15:00–21:00 · Mar 18:00–21:00',
+      bestTimeSub: 'Momentos de mayor actividad de tus seguidores,<br>según Instagram (últimos 30 días)'
     },
     'juanambu': {
       real: true,
@@ -1141,11 +1142,12 @@
 
   var postsData = {
     'tacuri': {
-      hashtags: [['#undíaensanrafael','92','8.4K'],['#papasenrafael','71','5.9K'],['#inmersionsanrafael','52','3.8K'],['#deportessanrafael','34','2.1K'],['#egresadossanrafael','22','1.3K']],
-      series: [['#undíaensanrafael','6 posts · 8.4K eng. prom.','3.0x tu mediana'],['#inmersionsanrafael','3 posts · 3.8K eng. prom.','1.7x tu mediana'],['#deportessanrafael','5 posts · 2.1K eng. prom.','1.1x tu mediana']],
-      pattern: [['Mejor formato','Reel corto (día a día)'],['Duración','15 a 30 seg']],
-      themes: ['Rutina escolar', 'Bilingüismo / inmersiones', 'Deportes'],
-      patternText: 'El contenido con más alcance combina rutina escolar relatable, un momento de inglés/inmersión, y cierre con niños sonriendo.',
+      real: true,
+      hashtags: [['La doble titulación de Tacurí','221 me gusta','7200'],['¡El debate nos vuelve a…! (promocionado)','156 me gusta','5500'],['Cada logro alcanzado…','154 me gusta','4100'],['Los sueños encuentran…','127 me gusta','3400'],['Algunas noches se convierten…','129 me gusta','3300']],
+      series: [['Todo el contenido (últimos 30 días)','151.306 visualizaciones · 38.088 cuentas alcanzadas','2.081 interacciones']],
+      pattern: [['Mejor formato','Reels: 32 mil vis. (vs 7,6 mil en publicaciones, 25 mil en historias)'],['Mejor momento','Domingo 15:00–21:00 y martes 18:00–21:00']],
+      themes: ['Graduaciones / doble titulación', 'Bilingüismo / inmersiones', 'Vida escolar diaria'],
+      patternText: 'Los Reels de graduación y doble titulación son los que más alcance logran. Tu audiencia es 77% mujeres, mayoría de 25 a 44 años, y 91% en Colombia (Instagram, últimos 30 días).',
       organic: [
         { vc: 'ambiente', format: 'Reel', title: 'Un día en la vida de un estudiante de Tacurí', why: 'Refuerza Ambiente educativo — la variable #1 en importancia junto a Infraestructura, y la más explorada primero por el segmento alto-alto.' },
         { vc: 'proyeccion', format: 'Reel', title: 'Así se ve una clase de inmersión con profesor nativo', why: 'Proyección Internacional es, según la encuesta, la razón #1 (71%) por la que una familia considera un colegio Aspaen — y hoy casi no aparece en tu contenido orgánico.' },
