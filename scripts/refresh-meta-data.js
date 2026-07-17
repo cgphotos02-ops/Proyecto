@@ -47,11 +47,17 @@ async function fetchInsights(objectId) {
   return (json.data && json.data[0]) || null;
 }
 
+// Meta reporta el mismo lead bajo varias etiquetas a la vez (lead, onsite_conversion.lead_grouped, etc.).
+// Sumarlas todas cuenta el mismo lead varias veces, así que se toma solo una, en orden de prioridad.
+var LEAD_ACTION_TYPES = ['onsite_conversion.lead_grouped', 'lead', 'onsite_conversion.total_messaging_connection'];
+
 function sumLeads(actions) {
   if (!actions) return 0;
-  return actions
-    .filter(function (a) { return /lead/i.test(a.action_type); })
-    .reduce(function (sum, a) { return sum + parseFloat(a.value || 0); }, 0);
+  for (const type of LEAD_ACTION_TYPES) {
+    const match = actions.find(function (a) { return a.action_type === type; });
+    if (match) return parseFloat(match.value || 0);
+  }
+  return 0;
 }
 
 async function aggregate(ids) {
